@@ -40,5 +40,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "stylelint": "15.8.0",
+    "stylelint-config-clean-order": "5.0.1",
+    "stylelint-order": "6.0.3",
+    "stylelint-prettier": "3.0.0"
   }
 }
