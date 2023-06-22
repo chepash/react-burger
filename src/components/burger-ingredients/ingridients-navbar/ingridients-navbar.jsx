@@ -7,13 +7,13 @@ const IngridientsNavbar = ({ currentTab, setCurrentTab }) => {
   return (
     <div className={styles.navbar}>
       <Tab value='one' active={currentTab === 'one'} onClick={setCurrentTab}>
-        One
+        Булки
       </Tab>
       <Tab value='two' active={currentTab === 'two'} onClick={setCurrentTab}>
-        Two
+        Соусы
       </Tab>
       <Tab value='three' active={currentTab === 'three'} onClick={setCurrentTab}>
-        Three
+        Начинки
       </Tab>
     </div>
   );
