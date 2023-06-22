@@ -1,0 +1,17 @@
+.category {
+  box-sizing: border-box;
+  height: min-content;
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    justify-items: center;
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+}

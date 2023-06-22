@@ -1,18 +1,9 @@
 import React from 'react';
-import styles from './burger-constructor.module.css';
+import styles from './burger-constructor.module.scss';
 
 class BurgerConstructor extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    return (
-      <>
-        <></>
-        <></>
-      </>
-    );
+    return <div></div>;
   }
 }
 
