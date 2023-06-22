@@ -2,7 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: min-content;
+
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
 
   &__footer {
     display: flex;

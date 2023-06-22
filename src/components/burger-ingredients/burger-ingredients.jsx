@@ -21,10 +21,12 @@ const BurgerIngredients = ({ ingridients }) => {
     <section className={styles.section} aria-label='Ингридиенты'>
       <h1 className={cn('text text_type_main-large', 'mt-10 mb-5')}>Соберите бургер</h1>
       <IngridientsNavbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
-      <div className={styles.section__content}>
-        <IngridientsCategory title='Булки' ingridients={buns} />
-        <IngridientsCategory title='Соусы' ingridients={sauce} />
-        <IngridientsCategory title='Начинки' ingridients={main} />
+      <div className={cn(styles.section__content)}>
+        <div className={cn(styles.section__content_scrollable)}>
+          <IngridientsCategory title='Булки' ingridients={buns} />
+          <IngridientsCategory title='Соусы' ingridients={sauce} />
+          <IngridientsCategory title='Начинки' ingridients={main} />
+        </div>
       </div>
     </section>
   );

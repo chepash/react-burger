@@ -1,4 +1,3 @@
-import React from 'react';
 import cn from 'classnames';
 import styles from './app.module.scss';
 import AppHeader from '../app-header/app-header';
