@@ -23,6 +23,7 @@
   },
   "include": [
     "src",
-    "src/components/app/app.jsx"
+    "src/components/app/app.jsx",
+    "./declaration.d.ts"
   ]
 }
