@@ -1,4 +1,5 @@
 {
+  "homepage": "https://chepash.github.io/react-burger/",
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
@@ -22,6 +23,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -44,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "prettier": "^2.8.8",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "15.8.0",
