@@ -3,16 +3,16 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingridients-navbar.module.scss';
 import PropTypes from 'prop-types';
 
-const IngridientsNavbar = ({ currentTab, setCurrentTab }) => {
+const IngridientsNavbar = ({ currentTab, handleCategoryClick }) => {
   return (
     <div className={styles.navbar}>
-      <Tab value='one' active={currentTab === 'one'} onClick={setCurrentTab}>
+      <Tab value='bun' active={currentTab === 'bun'} onClick={handleCategoryClick}>
         Булки
       </Tab>
-      <Tab value='two' active={currentTab === 'two'} onClick={setCurrentTab}>
+      <Tab value='sauce' active={currentTab === 'sauce'} onClick={handleCategoryClick}>
         Соусы
       </Tab>
-      <Tab value='three' active={currentTab === 'three'} onClick={setCurrentTab}>
+      <Tab value='main' active={currentTab === 'main'} onClick={handleCategoryClick}>
         Начинки
       </Tab>
     </div>
@@ -21,7 +21,7 @@ const IngridientsNavbar = ({ currentTab, setCurrentTab }) => {
 
 IngridientsNavbar.propTypes = {
   currentTab: PropTypes.string.isRequired,
-  setCurrentTab: PropTypes.func.isRequired,
+  handleCategoryClick: PropTypes.func.isRequired,
 };
 
 export default IngridientsNavbar;

@@ -5,10 +5,12 @@ import { burgerIngridientPropType } from '../../../utils/prop-types';
 import IngridientCard from '../ingridient-card/ingridient-card';
 
 // @ts-ignore
-const IngridientsCategory = ({ title, ingridients }) => {
+const IngridientsCategory = ({ title, ingridients, categoryId }) => {
   return (
     <div className={styles.category}>
-      <h3 className={cn('text text_type_main-medium', 'mt-10 mb-6')}>{title}</h3>
+      <h3 id={categoryId} className={cn('text text_type_main-medium', 'pt-10 mb-6')}>
+        {title}
+      </h3>
       <ul className={cn(styles.category__list)}>
         {ingridients.map(
           (
@@ -27,6 +29,7 @@ const IngridientsCategory = ({ title, ingridients }) => {
 IngridientsCategory.propTypes = {
   title: PropTypes.string.isRequired,
   ingridients: PropTypes.arrayOf(burgerIngridientPropType),
+  categoryId: PropTypes.string.isRequired,
 };
 
 export default IngridientsCategory;

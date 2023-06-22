@@ -8,7 +8,7 @@ import { burgerIngridientPropType } from '../../utils/prop-types';
 
 // @ts-ignore
 const BurgerIngredients = ({ ingridients }) => {
-  const [currentTab, setCurrentTab] = React.useState('one');
+  const [currentTab, setCurrentTab] = React.useState('bun');
 
   // @ts-ignore
   const buns = ingridients.filter((item) => item.type === 'bun');
@@ -17,15 +17,33 @@ const BurgerIngredients = ({ ingridients }) => {
   // @ts-ignore
   const sauce = ingridients.filter((item) => item.type === 'sauce');
 
+  // @ts-ignore
+  const scrollTo = (categoryId) => {
+    const section = document.getElementById(categoryId);
+
+    if (section !== null) {
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  // @ts-ignore
+  const handleCategoryClick = (categoryId) => {
+    setCurrentTab(categoryId);
+    scrollTo(categoryId);
+  };
+
   return (
     <section className={styles.section} aria-label='Ингридиенты'>
       <h1 className={cn('text text_type_main-large', 'mt-10 mb-5')}>Соберите бургер</h1>
-      <IngridientsNavbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <IngridientsNavbar currentTab={currentTab} handleCategoryClick={handleCategoryClick} />
       <div className={cn(styles.section__content)}>
         <div className={cn(styles.section__content_scrollable)}>
-          <IngridientsCategory title='Булки' ingridients={buns} />
-          <IngridientsCategory title='Соусы' ingridients={sauce} />
-          <IngridientsCategory title='Начинки' ingridients={main} />
+          <IngridientsCategory title='Булки' ingridients={buns} categoryId='bun' />
+          <IngridientsCategory title='Соусы' ingridients={sauce} categoryId='sauce' />
+          <IngridientsCategory title='Начинки' ingridients={main} categoryId='main' />
         </div>
       </div>
     </section>
