@@ -1,10 +1,16 @@
 import React from 'react';
+import cn from 'classnames';
 import styles from './burger-constructor.module.scss';
+import Checkout from './checkout/checkout';
+import ConstructorKit from './constructor-kit/constructor-kit';
 
-class BurgerConstructor extends React.Component {
-  render() {
-    return <div></div>;
-  }
-}
+const BurgerConstructor = () => {
+  return (
+    <section className={cn(styles.section, 'pt-25')} aria-label='Конструктор бургера'>
+      <ConstructorKit />
+      <Checkout />
+    </section>
+  );
+};
 
 export default BurgerConstructor;

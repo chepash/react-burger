@@ -1,12 +1,10 @@
 .section {
-  z-index: 0;
-
   display: flex;
   flex-direction: column;
 
   box-sizing: border-box;
-  width: 100%; // minus header height
-  height: 90vh; // minus header height
+  width: 100%;
+  height: 90vh;
 
   &__content {
     position: relative;

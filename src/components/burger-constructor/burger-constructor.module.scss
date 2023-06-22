@@ -1,0 +1,10 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-width: fit-content;
+  height: 90vh;
+}
