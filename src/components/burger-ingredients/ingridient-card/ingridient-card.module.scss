@@ -9,7 +9,7 @@
 
   &:hover {
     cursor: pointer;
-    opacity: 0.6;
+    box-shadow: 0 0 10px 8px #3333ff40, inset 0 0 8px 8px #3333ff40;
   }
 
   &__footer {
