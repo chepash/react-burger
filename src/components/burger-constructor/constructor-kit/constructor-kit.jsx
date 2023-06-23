@@ -8,7 +8,7 @@ const ConstructorKit = () => {
   const listItems = [];
   for (let i = 0; i < 10; i++) {
     listItems.push(
-      <li className={cn(styles.list__item)}>
+      <li key={i} className={cn(styles.list__item)}>
         <DragIcon type='primary' />
         <ConstructorElement
           text='Мясо бессмертных моллюсков Protostomia'
