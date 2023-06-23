@@ -1,4 +1,5 @@
 {
+  "homepage": "https://chepash.github.io/react-burger/",
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
@@ -10,15 +11,20 @@
     "@types/node": "16.18.36",
     "@types/react": "18.2.13",
     "@types/react-dom": "18.2.6",
+    "@ya.praktikum/react-developer-burger-ui-components": "1.14.0",
+    "classnames": "^2.3.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.63.6",
     "typescript": "4.9.5",
     "web-vitals": "2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,5 +45,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0",
+    "prettier": "^2.8.8",
+    "prettier-stylelint": "^0.4.2",
+    "stylelint": "15.8.0",
+    "stylelint-config-clean-order": "5.0.1",
+    "stylelint-config-standard-scss": "^9.0.0",
+    "stylelint-order": "6.0.3",
+    "stylelint-prettier": "^3.0.0"
   }
 }
