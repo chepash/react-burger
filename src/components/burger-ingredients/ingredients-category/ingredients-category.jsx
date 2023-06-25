@@ -1,24 +1,24 @@
-import styles from './ingridients-category.module.scss';
+import styles from './ingredients-category.module.scss';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { burgerIngridientPropType } from '../../../utils/prop-types';
-import IngridientCard from '../ingridient-card/ingridient-card';
+import { burgerIngredientPropType } from '../../../utils/prop-types';
+import IngredientCard from '../ingredient-card/ingredient-card';
 
 // @ts-ignore
-const IngridientsCategory = ({ title, ingridients, categoryId }) => {
+const IngredientsCategory = ({ title, ingredients, categoryId }) => {
   return (
     <div className={styles.category}>
       <h3 id={categoryId} className={cn('text text_type_main-medium', 'pt-10 mb-6')}>
         {title}
       </h3>
       <ul className={cn(styles.category__list)}>
-        {ingridients.map(
+        {ingredients.map(
           (
             // @ts-ignore
             item
           ) => (
             // @ts-ignore
-            <IngridientCard key={item._id} ingridient={item} />
+            <IngredientCard key={item._id} ingredient={item} />
           )
         )}
       </ul>
@@ -26,10 +26,10 @@ const IngridientsCategory = ({ title, ingridients, categoryId }) => {
   );
 };
 
-IngridientsCategory.propTypes = {
+IngredientsCategory.propTypes = {
   title: PropTypes.string.isRequired,
-  ingridients: PropTypes.arrayOf(burgerIngridientPropType),
+  ingredients: PropTypes.arrayOf(burgerIngredientPropType),
   categoryId: PropTypes.string.isRequired,
 };
 
-export default IngridientsCategory;
+export default IngredientsCategory;
