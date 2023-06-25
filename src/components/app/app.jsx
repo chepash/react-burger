@@ -1,23 +1,23 @@
-import cn from 'classnames';
-import styles from './app.module.scss';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getIngredients } from '../../utils/ingredients-api';
-import { useEffect, useState } from 'react';
+import cn from 'classnames'
+import styles from './app.module.scss'
+import AppHeader from '../app-header/app-header'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
+import BurgerConstructor from '../burger-constructor/burger-constructor'
+import { getIngredients } from '../../utils/ingredients-api'
+import { useEffect, useState } from 'react'
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([])
 
   useEffect(() => {
     getIngredients()
       .then((res) => {
-        setIngredients(res.data);
+        setIngredients(res.data)
       })
       .catch((err) => {
-        console.log('Ошибка api промиса getIngredients: ', err);
-      });
-  }, []);
+        console.log('Ошибка api промиса getIngredients: ', err)
+      })
+  }, [])
 
   return (
     <div className={styles.page}>
@@ -27,7 +27,7 @@ function App() {
         <BurgerConstructor />
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
