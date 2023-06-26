@@ -1,7 +1,9 @@
 import cn from 'classnames'
+import PropTypes from 'prop-types'
 import styles from './ingredient-details.module.scss'
 
 import Modal from '../modal'
+import { burgerIngredientPropType } from '../../../utils/prop-types'
 
 // @ts-ignore
 function IngredientDetails({ ingredient, onClose }) {
@@ -50,6 +52,11 @@ function IngredientDetails({ ingredient, onClose }) {
       </ul>
     </Modal>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredient: burgerIngredientPropType.isRequired,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default IngredientDetails
