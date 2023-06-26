@@ -5,8 +5,6 @@ import Modal from '../modal'
 
 // @ts-ignore
 function IngredientDetails({ ingredient, onClose }) {
-  console.log('ingredient : ', ingredient)
-
   return (
     <Modal header="Детали ингредиента" onClose={onClose}>
       <img
