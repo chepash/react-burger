@@ -5,7 +5,8 @@ import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetails from '../../modal/order-details/order-details'
+import OrderDetails from '../order-details/order-details'
+import Modal from '../../modal/modal'
 
 const Checkout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,7 +41,9 @@ const Checkout = () => {
         </Button>
       </div>
       {isModalOpen && (
-        <OrderDetails orderNumber={'034536'} onClose={handleCloseModal} />
+        <Modal onClose={handleCloseModal}>
+          <OrderDetails orderNumber={'034536'} onClose={handleCloseModal} />
+        </Modal>
       )}
     </>
   )

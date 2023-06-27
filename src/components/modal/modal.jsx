@@ -8,16 +8,13 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const modalRoot = document.getElementById('react-modals')
 
-// @ts-ignore
 function Modal({ children, header, onClose }) {
   useEffect(() => {
-    const handleEscClose =
-      // @ts-ignore
-      (e) => {
-        if (e.key === 'Escape') {
-          onClose()
-        }
+    const handleEscClose = (e) => {
+      if (e.key === 'Escape') {
+        onClose()
       }
+    }
 
     document.addEventListener('keydown', handleEscClose)
     return () => {
@@ -51,7 +48,7 @@ function Modal({ children, header, onClose }) {
         {children}
       </div>
     </div>,
-    // @ts-ignore
+
     modalRoot
   )
 }

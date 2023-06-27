@@ -4,8 +4,12 @@ import PropTypes from 'prop-types'
 import { burgerIngredientPropType } from '../../../utils/prop-types'
 import IngredientCard from '../ingredient-card/ingredient-card'
 
-// @ts-ignore
-const IngredientsCategory = ({ title, ingredients, categoryId }) => {
+const IngredientsCategory = ({
+  title,
+  ingredients,
+  categoryId,
+  onIngredientClick,
+}) => {
   return (
     <div className={styles.category}>
       <h3
@@ -15,15 +19,13 @@ const IngredientsCategory = ({ title, ingredients, categoryId }) => {
         {title}
       </h3>
       <ul className={cn(styles.category__list)}>
-        {ingredients.map(
-          (
-            // @ts-ignore
-            item
-          ) => (
-            // @ts-ignore
-            <IngredientCard key={item._id} ingredient={item} />
-          )
-        )}
+        {ingredients.map((item) => (
+          <IngredientCard
+            key={item._id}
+            ingredient={item}
+            onIngredientClick={onIngredientClick}
+          />
+        ))}
       </ul>
     </div>
   )
@@ -31,8 +33,9 @@ const IngredientsCategory = ({ title, ingredients, categoryId }) => {
 
 IngredientsCategory.propTypes = {
   title: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(burgerIngredientPropType),
+  ingredients: PropTypes.arrayOf(burgerIngredientPropType).isRequired,
   categoryId: PropTypes.string.isRequired,
+  onIngredientClick: PropTypes.func.isRequired,
 }
 
 export default IngredientsCategory

@@ -12,11 +12,10 @@ const AppHeader = () => {
   // временные анимации
   const [isHovered, setIsHovered] = useState({ 1: false, 2: false })
 
-  // @ts-ignore
   const handleMouseEnter = (id) => {
     setIsHovered((prevState) => ({ ...prevState, [id]: true }))
   }
-  // @ts-ignore
+
   const handleMouseLeave = (id) => {
     setIsHovered((prevState) => ({ ...prevState, [id]: false }))
   }
