@@ -5,28 +5,25 @@ import styles from './modal.module.scss'
 import cn from 'classnames'
 import ModalOverlay from './modal-overlay/modal-overlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react'
 
 const modalRoot = document.getElementById('react-modals')
 
 // @ts-ignore
 function Modal({ children, header, onClose }) {
-  const handleEscClose = React.useCallback(
-    // @ts-ignore
-    (e) => {
-      if (e.key === 'Escape') {
-        onClose()
-      }
-    },
-    [onClose]
-  )
-
   useEffect(() => {
+    const handleEscClose =
+      // @ts-ignore
+      (e) => {
+        if (e.key === 'Escape') {
+          onClose()
+        }
+      }
+
     document.addEventListener('keydown', handleEscClose)
     return () => {
       document.removeEventListener('keydown', handleEscClose)
     }
-  }, [handleEscClose])
+  }, [onClose])
 
   return ReactDOM.createPortal(
     <div className={styles.modal}>
