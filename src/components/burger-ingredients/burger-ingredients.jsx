@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
@@ -7,11 +7,15 @@ import IngredientsCategory from './ingredients-category/ingredients-category'
 import { burgerIngredientPropType } from '../../utils/prop-types'
 import Modal from '../modal/modal'
 import IngredientDetails from './ingredient-details/ingredient-details'
+import { IngredientsContext } from '../../utils/context/appContext'
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
   const [selectedIngredient, setSelectedIngredient] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // @ts-ignore
+  const { ingredients } = useContext(IngredientsContext)
 
   const handleOpenModal = (currentIngredient) => {
     setSelectedIngredient(currentIngredient)
@@ -79,15 +83,14 @@ const BurgerIngredients = ({ ingredients }) => {
       </section>{' '}
       {isModalOpen && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails ingredient={selectedIngredient} />
+          <IngredientDetails
+            // @ts-ignore
+            ingredient={selectedIngredient}
+          />
         </Modal>
       )}
     </>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(burgerIngredientPropType).isRequired,
 }
 
 export default BurgerIngredients

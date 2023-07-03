@@ -6,6 +6,8 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import { getIngredients } from '../../utils/ingredients-api'
 import { useEffect, useState } from 'react'
 
+import { IngredientsContext } from '../../utils/context/appContext'
+
 function App() {
   const [ingredients, setIngredients] = useState([])
 
@@ -20,13 +22,15 @@ function App() {
   }, [])
 
   return (
-    <div className={styles.page}>
-      <AppHeader />
-      <main className={cn(styles.main, 'pl-5 pr-5')}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor />
-      </main>
-    </div>
+    <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
+      <div className={styles.page}>
+        <AppHeader />
+        <main className={cn(styles.main, 'pl-5 pr-5')}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </main>
+      </div>
+    </IngredientsContext.Provider>
   )
 }
 
