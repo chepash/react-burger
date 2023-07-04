@@ -2,20 +2,18 @@ import { useContext, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
-import PropTypes from 'prop-types'
 import IngredientsCategory from './ingredients-category/ingredients-category'
-import { burgerIngredientPropType } from '../../utils/prop-types'
 import Modal from '../modal/modal'
 import IngredientDetails from './ingredient-details/ingredient-details'
-import { IngredientsContext } from '../../utils/context/appContext'
+
+import { AppContext } from '../../services/appContext'
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
   const [selectedIngredient, setSelectedIngredient] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // @ts-ignore
-  const { ingredients } = useContext(IngredientsContext)
+  const { state } = useContext(AppContext)
 
   const handleOpenModal = (currentIngredient) => {
     setSelectedIngredient(currentIngredient)
@@ -26,11 +24,11 @@ const BurgerIngredients = () => {
     setIsModalOpen(false)
   }
 
-  const buns = ingredients.filter((item) => item.type === 'bun')
+  const buns = state.ingredients.filter((item) => item.type === 'bun')
 
-  const main = ingredients.filter((item) => item.type === 'main')
+  const main = state.ingredients.filter((item) => item.type === 'main')
 
-  const sauce = ingredients.filter((item) => item.type === 'sauce')
+  const sauce = state.ingredients.filter((item) => item.type === 'sauce')
 
   const scrollTo = (categoryId) => {
     const section = document.getElementById(categoryId)
@@ -83,10 +81,7 @@ const BurgerIngredients = () => {
       </section>{' '}
       {isModalOpen && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails
-            // @ts-ignore
-            ingredient={selectedIngredient}
-          />
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
     </>

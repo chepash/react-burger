@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import { getIngredients } from '../../utils/ingredients-api'
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 
 import { AppContext } from '../../services/appContext'
 
