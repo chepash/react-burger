@@ -1,12 +1,24 @@
 import { PropTypes } from 'prop-types'
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import {
+  Counter,
+  CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredient-card.module.scss'
 import cn from 'classnames'
 import { burgerIngredientPropType } from '../../../utils/prop-types'
+import { useContext } from 'react'
+import { AppContext } from '../../../services/appContext'
 
 const IngredientCard = ({ ingredient, onIngredientClick }) => {
+  const { state } = useContext(AppContext)
+
+  const amount = state.orderIngredientIds.filter(
+    (id) => id === ingredient._id
+  ).length
+
   return (
     <li className={styles.card} onClick={() => onIngredientClick(ingredient)}>
+      {amount > 0 && <Counter count={amount} size="default" extraClass="m-1" />}
       <img
         className={cn(styles.card__img, 'mr-4 ml-4')}
         alt={ingredient.name}
