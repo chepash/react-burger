@@ -90,14 +90,9 @@ function App() {
   useEffect(() => {
     getIngredients()
       .then((res) => {
-        const ingredientsWithAmount = res.data.map((ingredient) => ({
-          ...ingredient,
-          picked: 0,
-        }))
-
         dispatch({
           type: 'SET_ALL_INGREDIENTS',
-          payload: ingredientsWithAmount,
+          payload: res.data,
         })
       })
       .catch((err) => {
