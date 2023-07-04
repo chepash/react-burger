@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AppContext } from '../../../services/appContext'
 import cn from 'classnames'
 import styles from './checkout.module.scss'
 import {
@@ -9,6 +10,7 @@ import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
 
 const Checkout = () => {
+  const { state } = useContext(AppContext)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleOpenModal = () => {
@@ -28,7 +30,7 @@ const Checkout = () => {
             'mr-10'
           )}
         >
-          610
+          {state.orderSum}
           <CurrencyIcon type="primary" />
         </p>
         <Button
