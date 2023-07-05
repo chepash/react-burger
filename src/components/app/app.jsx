@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import * as api from '../../utils/api'
-import { useEffect, useReducer, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 
 import { AppContext } from '../../services/appContext'
 import {
@@ -153,16 +153,20 @@ function App() {
     })
   }, [state.orderSum])
 
-  const handleOpenErrorModal = () => {
+  const handleOpenErrorModal = useCallback(() => {
     setIsErrorModalOpen(true)
-  }
+  }, [])
 
   const handleCloseErrorModal = () => {
     setIsErrorModalOpen(false)
   }
 
+  const contextValue = useMemo(() => {
+    return { state, dispatch, handleOpenErrorModal }
+  }, [state, dispatch, handleOpenErrorModal])
+
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={contextValue}>
       <div className={styles.page}>
         <AppHeader />
         <main className={cn(styles.main, 'pl-5 pr-5')}>
