@@ -153,32 +153,6 @@ function App() {
     })
   }, [state.orderSum])
 
-  const handleOrder = () => {
-    dispatch({
-      type: SET_LOADER_STATUS,
-      payload: true,
-    })
-
-    api
-      .createOrder(state.orderIngredientIds)
-      .then((orderDetails) => {
-        console.log('res.data : ', orderDetails)
-        dispatch({
-          type: SET_ORDER_DETAILS,
-          payload: orderDetails,
-        })
-      })
-      .catch(() => {
-        handleOpenErrorModal()
-      })
-      .finally(() => {
-        dispatch({
-          type: SET_LOADER_STATUS,
-          payload: false,
-        })
-      })
-  }
-
   const handleOpenErrorModal = () => {
     setIsErrorModalOpen(true)
   }
@@ -188,7 +162,7 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{ state, handleOrder }}>
+    <AppContext.Provider value={{ state, dispatch }}>
       <div className={styles.page}>
         <AppHeader />
         <main className={cn(styles.main, 'pl-5 pr-5')}>

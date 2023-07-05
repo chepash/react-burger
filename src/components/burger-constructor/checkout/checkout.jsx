@@ -8,18 +8,41 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
+import { SET_LOADER_STATUS, SET_ORDER_DETAILS } from '../../../utils/constants'
+import * as api from '../../../utils/api'
 
 const Checkout = () => {
-  const { state, handleOrder } = useContext(AppContext)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { state, dispatch, handleOpenErrorModal } = useContext(AppContext)
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
 
-  const handleOnClick = () => {
-    handleOrder()
-    setIsModalOpen(true)
+  const handleOrder = () => {
+    dispatch({
+      type: SET_LOADER_STATUS,
+      payload: true,
+    })
+
+    api
+      .createOrder(state.orderIngredientIds)
+      .then((orderDetails) => {
+        dispatch({
+          type: SET_ORDER_DETAILS,
+          payload: orderDetails,
+        })
+        setIsOrderModalOpen(true)
+      })
+      .catch(() => {
+        handleOpenErrorModal()
+      })
+      .finally(() => {
+        dispatch({
+          type: SET_LOADER_STATUS,
+          payload: false,
+        })
+      })
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    setIsOrderModalOpen(false)
   }
 
   return (
@@ -36,7 +59,7 @@ const Checkout = () => {
           <CurrencyIcon type="primary" />
         </p>
         <Button
-          onClick={handleOnClick}
+          onClick={handleOrder}
           htmlType="button"
           type="primary"
           size="large"
@@ -44,7 +67,7 @@ const Checkout = () => {
           Оформить заказ
         </Button>
       </div>
-      {isModalOpen && !state.isLoading && (
+      {isOrderModalOpen && !state.isLoading && (
         <Modal onClose={handleCloseModal}>
           <OrderDetails orderNumber={state.orderDetails.order.number} />
         </Modal>
