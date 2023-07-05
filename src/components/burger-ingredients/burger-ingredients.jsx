@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
@@ -24,11 +24,20 @@ const BurgerIngredients = () => {
     setIsModalOpen(false)
   }
 
-  const buns = state.ingredients.filter((item) => item.type === 'bun')
+  const buns = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'bun'),
+    [state.ingredients]
+  )
 
-  const main = state.ingredients.filter((item) => item.type === 'main')
+  const main = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'main'),
+    [state.ingredients]
+  )
 
-  const sauce = state.ingredients.filter((item) => item.type === 'sauce')
+  const sauce = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'sauce'),
+    [state.ingredients]
+  )
 
   const scrollTo = (categoryId) => {
     const section = document.getElementById(categoryId)
