@@ -3,7 +3,7 @@ import styles from './app.module.scss'
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { getIngredients } from '../../utils/ingredients-api'
+import * as api from '../../utils/api'
 import { useEffect, useReducer } from 'react'
 
 import { AppContext } from '../../services/appContext'
@@ -14,6 +14,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         ingredients: action.payload,
+      }
+    case 'SET_ORDER_DETAILS':
+      return {
+        ...state,
+        orderDetails: action.payload,
+      }
+    case 'SET_LOADER_STATUS':
+      return {
+        ...state,
+        isLoading: action.payload,
       }
     case 'PICK_BUN':
       const buns = state.ingredients.filter(
@@ -83,12 +93,16 @@ function App() {
 
     orderSum: 0,
     orderIngredientIds: [],
+
+    isLoading: false,
+    orderDetails: {},
   }
 
   const [state, dispatch] = useReducer(reducer, initialState, undefined)
 
   useEffect(() => {
-    getIngredients()
+    api
+      .getIngredients()
       .then((res) => {
         dispatch({
           type: 'SET_ALL_INGREDIENTS',
@@ -109,7 +123,7 @@ function App() {
       dispatch({
         type: 'PICK_PRIMARY_INGREDIENTS',
         payload: {
-          numberOfRandomIngredients: 8,
+          numberOfRandomIngredients: 8, // please choose a number of random ingredients
         },
       })
     }
@@ -127,17 +141,41 @@ function App() {
     })
   }, [state.orderSum])
 
+  const handleOrder = () => {
+    dispatch({
+      type: 'SET_LOADER_STATUS',
+      payload: true,
+    })
+
+    api
+      .createOrder(state.orderIngredientIds)
+      .then((orderDetails) => {
+        console.log('res.data : ', orderDetails)
+        dispatch({
+          type: 'SET_ORDER_DETAILS',
+          payload: orderDetails,
+        })
+      })
+      .catch((err) => {
+        console.log('Ошибка api промиса createOrder: ', err)
+      })
+      .finally(() => {
+        dispatch({
+          type: 'SET_LOADER_STATUS',
+          payload: false,
+        })
+      })
+  }
+
   return (
-    <AppContext.Provider value={{ state }}>
-      {state.ingredients && (
-        <div className={styles.page}>
-          <AppHeader />
-          <main className={cn(styles.main, 'pl-5 pr-5')}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </div>
-      )}
+    <AppContext.Provider value={{ state, handleOrder }}>
+      <div className={styles.page}>
+        <AppHeader />
+        <main className={cn(styles.main, 'pl-5 pr-5')}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </main>
+      </div>
     </AppContext.Provider>
   )
 }

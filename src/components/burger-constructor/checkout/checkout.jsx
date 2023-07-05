@@ -10,16 +10,18 @@ import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
 
 const Checkout = () => {
-  const { state } = useContext(AppContext)
+  const { state, handleOrder } = useContext(AppContext)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleOpenModal = () => {
+  const handleOnClick = () => {
+    handleOrder()
     setIsModalOpen(true)
   }
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
+
   return (
     <>
       <div className={cn(styles.checkout, 'mt-10', 'pr-4')}>
@@ -34,7 +36,7 @@ const Checkout = () => {
           <CurrencyIcon type="primary" />
         </p>
         <Button
-          onClick={handleOpenModal}
+          onClick={handleOnClick}
           htmlType="button"
           type="primary"
           size="large"
@@ -42,9 +44,9 @@ const Checkout = () => {
           Оформить заказ
         </Button>
       </div>
-      {isModalOpen && (
+      {isModalOpen && !state.isLoading && (
         <Modal onClose={handleCloseModal}>
-          <OrderDetails orderNumber={'034536'} onClose={handleCloseModal} />
+          <OrderDetails orderNumber={state.orderDetails.order.number} />
         </Modal>
       )}
     </>
