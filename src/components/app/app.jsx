@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import * as api from '../../utils/api'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 import { AppContext } from '../../services/appContext'
 import {
@@ -16,6 +16,8 @@ import {
   UPDATE_ORDER_INGREDIENTS_ID,
   UPDATE_ORDER_SUM,
 } from '../../utils/constants'
+import Modal from '../modal/modal'
+import ModalError from '../modal/modal-error/modal-error'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -108,6 +110,7 @@ function App() {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState, undefined)
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
 
   useEffect(() => {
     api
@@ -118,8 +121,8 @@ function App() {
           payload: res.data,
         })
       })
-      .catch((err) => {
-        console.log('Ошибка api промиса getIngredients: ', err)
+      .catch(() => {
+        handleOpenErrorModal()
       })
   }, [])
 
@@ -165,8 +168,8 @@ function App() {
           payload: orderDetails,
         })
       })
-      .catch((err) => {
-        console.log('Ошибка api промиса createOrder: ', err)
+      .catch(() => {
+        handleOpenErrorModal()
       })
       .finally(() => {
         dispatch({
@@ -174,6 +177,14 @@ function App() {
           payload: false,
         })
       })
+  }
+
+  const handleOpenErrorModal = () => {
+    setIsErrorModalOpen(true)
+  }
+
+  const handleCloseErrorModal = () => {
+    setIsErrorModalOpen(false)
   }
 
   return (
@@ -185,6 +196,11 @@ function App() {
           <BurgerConstructor />
         </main>
       </div>
+      {isErrorModalOpen && (
+        <Modal onClose={handleCloseErrorModal}>
+          <ModalError />
+        </Modal>
+      )}
     </AppContext.Provider>
   )
 }
