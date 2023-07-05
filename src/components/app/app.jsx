@@ -7,25 +7,34 @@ import * as api from '../../utils/api'
 import { useEffect, useReducer } from 'react'
 
 import { AppContext } from '../../services/appContext'
+import {
+  PICK_BUN,
+  PICK_PRIMARY_INGREDIENTS,
+  SET_ALL_INGREDIENTS,
+  SET_LOADER_STATUS,
+  SET_ORDER_DETAILS,
+  UPDATE_ORDER_INGREDIENTS_ID,
+  UPDATE_ORDER_SUM,
+} from '../../utils/constants'
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_ALL_INGREDIENTS':
+    case SET_ALL_INGREDIENTS:
       return {
         ...state,
         ingredients: action.payload,
       }
-    case 'SET_ORDER_DETAILS':
+    case SET_ORDER_DETAILS:
       return {
         ...state,
         orderDetails: action.payload,
       }
-    case 'SET_LOADER_STATUS':
+    case SET_LOADER_STATUS:
       return {
         ...state,
         isLoading: action.payload,
       }
-    case 'PICK_BUN':
+    case PICK_BUN:
       const buns = state.ingredients.filter(
         (ingredient) => ingredient.type === 'bun'
       )
@@ -34,7 +43,7 @@ const reducer = (state, action) => {
         ...state,
         pickedBun: pickedBun,
       }
-    case 'PICK_PRIMARY_INGREDIENTS':
+    case PICK_PRIMARY_INGREDIENTS:
       const primaryIngredients = state.ingredients.filter(
         (ingredient) => ingredient.type !== 'bun'
       )
@@ -50,7 +59,7 @@ const reducer = (state, action) => {
         ...state,
         pickedPrimaryIngredients: result,
       }
-    case 'UPDATE_ORDER_SUM':
+    case UPDATE_ORDER_SUM:
       if (state.pickedBun) {
         const allIngredientPrices =
           state.pickedBun.price * 2 +
@@ -65,7 +74,7 @@ const reducer = (state, action) => {
       } else {
         return state
       }
-    case 'UPDATE_ORDER_INGREDIENTS_ID':
+    case UPDATE_ORDER_INGREDIENTS_ID:
       if (state.orderSum > 0) {
         const bunId = state.pickedBun._id
         const primaryIngredientIds = state.pickedPrimaryIngredients.map(
@@ -105,7 +114,7 @@ function App() {
       .getIngredients()
       .then((res) => {
         dispatch({
-          type: 'SET_ALL_INGREDIENTS',
+          type: SET_ALL_INGREDIENTS,
           payload: res.data,
         })
       })
@@ -117,11 +126,11 @@ function App() {
   useEffect(() => {
     if (state.ingredients) {
       dispatch({
-        type: 'PICK_BUN',
+        type: PICK_BUN,
       })
 
       dispatch({
-        type: 'PICK_PRIMARY_INGREDIENTS',
+        type: PICK_PRIMARY_INGREDIENTS,
         payload: {
           numberOfRandomIngredients: 8, // please choose a number of random ingredients
         },
@@ -131,19 +140,19 @@ function App() {
 
   useEffect(() => {
     dispatch({
-      type: 'UPDATE_ORDER_SUM',
+      type: UPDATE_ORDER_SUM,
     })
   }, [state.pickedBun, state.pickedPrimaryIngredients])
 
   useEffect(() => {
     dispatch({
-      type: 'UPDATE_ORDER_INGREDIENTS_ID',
+      type: UPDATE_ORDER_INGREDIENTS_ID,
     })
   }, [state.orderSum])
 
   const handleOrder = () => {
     dispatch({
-      type: 'SET_LOADER_STATUS',
+      type: SET_LOADER_STATUS,
       payload: true,
     })
 
@@ -152,7 +161,7 @@ function App() {
       .then((orderDetails) => {
         console.log('res.data : ', orderDetails)
         dispatch({
-          type: 'SET_ORDER_DETAILS',
+          type: SET_ORDER_DETAILS,
           payload: orderDetails,
         })
       })
@@ -161,7 +170,7 @@ function App() {
       })
       .finally(() => {
         dispatch({
-          type: 'SET_LOADER_STATUS',
+          type: SET_LOADER_STATUS,
           payload: false,
         })
       })
