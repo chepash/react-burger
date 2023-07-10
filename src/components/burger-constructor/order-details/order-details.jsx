@@ -6,7 +6,7 @@ function OrderDetails({ orderNumber }) {
   return (
     <>
       <h2 className={cn('text', 'text_type_digits-large', 'mt-30', 'mb-8')}>
-        {orderNumber}
+        {orderNumber.toString()}
       </h2>
       <p className={cn('text text_type_main-medium', 'mb-15')}>
         индетификатор заказа
@@ -30,7 +30,7 @@ function OrderDetails({ orderNumber }) {
 }
 
 OrderDetails.propTypes = {
-  orderNumber: PropTypes.string.isRequired,
+  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails

@@ -1,33 +1,40 @@
-import React from 'react';
-import cn from 'classnames';
-import styles from './constructor-kit.module.scss';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { AppContext } from '../../../services/appContext'
+import { useContext } from 'react'
+
+import cn from 'classnames'
+import styles from './constructor-kit.module.scss'
+import {
+  ConstructorElement,
+  DragIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components'
 
 const ConstructorKit = () => {
-  // временная заглушка
-  const listItems = [];
-  for (let i = 0; i < 10; i++) {
+  const { state } = useContext(AppContext)
+
+  const listItems = []
+
+  for (let i = 0; i < state.pickedPrimaryIngredients.length; i++) {
     listItems.push(
       <li key={i} className={cn(styles.list__item)}>
-        <DragIcon type='primary' />
+        <DragIcon type="primary" />
         <ConstructorElement
-          text='Мясо бессмертных моллюсков Protostomia'
-          price={50}
-          thumbnail={'https://code.s3.yandex.net/react/code/meat-02-mobile.png'}
+          text={state.pickedPrimaryIngredients[i]?.name}
+          price={state.pickedPrimaryIngredients[i]?.price}
+          thumbnail={state.pickedPrimaryIngredients[i]?.image_mobile}
         />
       </li>
-    );
+    )
   }
 
   return (
     <div className={cn(styles.burger, 'pl-4')}>
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
-          type='top'
+          type="top"
           isLocked={true}
-          text='Краторная булка N-200i (верх)'
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+          text={`${state.pickedBun?.name} (верх)`}
+          price={state.pickedBun?.price}
+          thumbnail={state.pickedBun?.image_mobile}
         />
       </div>
 
@@ -35,15 +42,15 @@ const ConstructorKit = () => {
 
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
-          type='bottom'
+          type="bottom"
           isLocked={true}
-          text='Краторная булка N-200i (низ)'
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+          text={`${state.pickedBun?.name} (низ)`}
+          price={state.pickedBun?.price}
+          thumbnail={state.pickedBun?.image_mobile}
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConstructorKit;
+export default ConstructorKit

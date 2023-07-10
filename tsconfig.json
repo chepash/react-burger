@@ -14,8 +14,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
-    // "checkJs": true
+    "jsx": "react-jsx",
+    // "checkJs": true,
+    "noImplicitAny": false // обязательно удалить когда начнём typesript
   },
   "include": ["src", "src/components/app/app.jsx", "./declaration.d.ts"]
 }

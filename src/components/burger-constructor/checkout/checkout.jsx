@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AppContext } from '../../../services/appContext'
 import cn from 'classnames'
 import styles from './checkout.module.scss'
 import {
@@ -7,17 +8,43 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
+import { SET_LOADER_STATUS, SET_ORDER_DETAILS } from '../../../utils/constants'
+import * as api from '../../../utils/api'
 
 const Checkout = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { state, dispatch, handleOpenErrorModal } = useContext(AppContext)
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
+  const handleOrder = () => {
+    dispatch({
+      type: SET_LOADER_STATUS,
+      payload: true,
+    })
+
+    api
+      .createOrder(state.orderIngredientIds)
+      .then((orderDetails) => {
+        dispatch({
+          type: SET_ORDER_DETAILS,
+          payload: orderDetails,
+        })
+        setIsOrderModalOpen(true)
+      })
+      .catch(() => {
+        handleOpenErrorModal()
+      })
+      .finally(() => {
+        dispatch({
+          type: SET_LOADER_STATUS,
+          payload: false,
+        })
+      })
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    setIsOrderModalOpen(false)
   }
+
   return (
     <>
       <div className={cn(styles.checkout, 'mt-10', 'pr-4')}>
@@ -28,11 +55,11 @@ const Checkout = () => {
             'mr-10'
           )}
         >
-          610
+          {state.orderSum}
           <CurrencyIcon type="primary" />
         </p>
         <Button
-          onClick={handleOpenModal}
+          onClick={handleOrder}
           htmlType="button"
           type="primary"
           size="large"
@@ -40,9 +67,9 @@ const Checkout = () => {
           Оформить заказ
         </Button>
       </div>
-      {isModalOpen && (
+      {isOrderModalOpen && !state.isLoading && (
         <Modal onClose={handleCloseModal}>
-          <OrderDetails orderNumber={'034536'} onClose={handleCloseModal} />
+          <OrderDetails orderNumber={state.orderDetails.order.number} />
         </Modal>
       )}
     </>

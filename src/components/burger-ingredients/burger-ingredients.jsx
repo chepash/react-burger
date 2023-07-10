@@ -1,17 +1,19 @@
-import { useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
-import PropTypes from 'prop-types'
 import IngredientsCategory from './ingredients-category/ingredients-category'
-import { burgerIngredientPropType } from '../../utils/prop-types'
 import Modal from '../modal/modal'
 import IngredientDetails from './ingredient-details/ingredient-details'
 
-const BurgerIngredients = ({ ingredients }) => {
+import { AppContext } from '../../services/appContext'
+
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
   const [selectedIngredient, setSelectedIngredient] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { state } = useContext(AppContext)
 
   const handleOpenModal = (currentIngredient) => {
     setSelectedIngredient(currentIngredient)
@@ -22,11 +24,20 @@ const BurgerIngredients = ({ ingredients }) => {
     setIsModalOpen(false)
   }
 
-  const buns = ingredients.filter((item) => item.type === 'bun')
+  const buns = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'bun'),
+    [state.ingredients]
+  )
 
-  const main = ingredients.filter((item) => item.type === 'main')
+  const main = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'main'),
+    [state.ingredients]
+  )
 
-  const sauce = ingredients.filter((item) => item.type === 'sauce')
+  const sauce = useMemo(
+    () => state.ingredients.filter((item) => item.type === 'sauce'),
+    [state.ingredients]
+  )
 
   const scrollTo = (categoryId) => {
     const section = document.getElementById(categoryId)
@@ -84,10 +95,6 @@ const BurgerIngredients = ({ ingredients }) => {
       )}
     </>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(burgerIngredientPropType).isRequired,
 }
 
 export default BurgerIngredients
