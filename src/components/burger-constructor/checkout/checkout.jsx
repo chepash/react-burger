@@ -1,5 +1,3 @@
-import { useState, useContext } from 'react'
-import { AppContext } from '../../../services/appContext'
 import cn from 'classnames'
 import styles from './checkout.module.scss'
 import {
@@ -8,41 +6,34 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
-import { SET_LOADER_STATUS, SET_ORDER_DETAILS } from '../../../utils/constants'
-import * as api from '../../../utils/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { CLOSE_ORDER_MODAL, createOrder } from '../../../services/actions/order'
 
 const Checkout = () => {
-  const { state, dispatch, handleOpenErrorModal } = useContext(AppContext)
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
+  const dispatch = useDispatch()
+
+  const { constructorIngredients, constructorBun } = useSelector(
+    // @ts-ignore
+    (store) => store.constructorState
+  )
+
+  const { isLoading, response, isOrderModalOpen } = useSelector(
+    // @ts-ignore
+    (store) => store.orderState
+  )
+
+  const orderSum = constructorIngredients.reduce(
+    (acc, item) => acc + item.price,
+    constructorBun.price * 2
+  )
 
   const handleOrder = () => {
-    dispatch({
-      type: SET_LOADER_STATUS,
-      payload: true,
-    })
-
-    api
-      .createOrder(state.orderIngredientIds)
-      .then((orderDetails) => {
-        dispatch({
-          type: SET_ORDER_DETAILS,
-          payload: orderDetails,
-        })
-        setIsOrderModalOpen(true)
-      })
-      .catch(() => {
-        handleOpenErrorModal()
-      })
-      .finally(() => {
-        dispatch({
-          type: SET_LOADER_STATUS,
-          payload: false,
-        })
-      })
+    // @ts-ignore
+    dispatch(createOrder(constructorIngredients, constructorBun))
   }
 
   const handleCloseModal = () => {
-    setIsOrderModalOpen(false)
+    dispatch({ type: CLOSE_ORDER_MODAL })
   }
 
   return (
@@ -55,7 +46,7 @@ const Checkout = () => {
             'mr-10'
           )}
         >
-          {state.orderSum}
+          {orderSum}
           <CurrencyIcon type="primary" />
         </p>
         <Button
@@ -67,9 +58,9 @@ const Checkout = () => {
           Оформить заказ
         </Button>
       </div>
-      {isOrderModalOpen && !state.isLoading && (
+      {!isLoading && response?.success && isOrderModalOpen && (
         <Modal onClose={handleCloseModal}>
-          <OrderDetails orderNumber={state.orderDetails.order.number} />
+          <OrderDetails orderNumber={response.order.number} />
         </Modal>
       )}
     </>

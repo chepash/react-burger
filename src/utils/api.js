@@ -14,12 +14,12 @@ const getResponse = (res) => {
   })
 }
 
-export const getIngredients = () =>
+export const fetchIngredients = () =>
   fetch(`${API_BASE_URL}/ingredients`, {
     method: 'GET',
   }).then(getResponse)
 
-export const createOrder = (ingredientsIds) =>
+export const placeOrder = (ingredientsIds) =>
   fetch(`${API_BASE_URL}/orders`, {
     method: 'POST',
     headers: {

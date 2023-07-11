@@ -4,9 +4,8 @@ import './index.scss'
 import App from './components/app/app'
 import { Provider } from 'react-redux'
 import { configureStore } from './services/store'
-import { initialState } from './services/reducer'
 
-const store = configureStore(initialState)
+const store = configureStore()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

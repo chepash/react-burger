@@ -1,30 +1,16 @@
-import { AppContext } from '../../../services/appContext'
-import { useContext } from 'react'
-
 import cn from 'classnames'
 import styles from './constructor-kit.module.scss'
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useSelector } from 'react-redux'
 
 const ConstructorKit = () => {
-  const { state } = useContext(AppContext)
-
-  const listItems = []
-
-  for (let i = 0; i < state.pickedPrimaryIngredients.length; i++) {
-    listItems.push(
-      <li key={i} className={cn(styles.list__item)}>
-        <DragIcon type="primary" />
-        <ConstructorElement
-          text={state.pickedPrimaryIngredients[i]?.name}
-          price={state.pickedPrimaryIngredients[i]?.price}
-          thumbnail={state.pickedPrimaryIngredients[i]?.image_mobile}
-        />
-      </li>
-    )
-  }
+  const { constructorIngredients, constructorBun } = useSelector(
+    // @ts-ignore
+    (store) => store.constructorState
+  )
 
   return (
     <div className={cn(styles.burger, 'pl-4')}>
@@ -32,21 +18,32 @@ const ConstructorKit = () => {
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={`${state.pickedBun?.name} (верх)`}
-          price={state.pickedBun?.price}
-          thumbnail={state.pickedBun?.image_mobile}
+          text={`${constructorBun.name} (верх)`}
+          price={constructorBun.price}
+          thumbnail={constructorBun.image_mobile}
         />
       </div>
 
-      <ul className={cn(styles.list)}>{listItems}</ul>
+      <ul className={cn(styles.list)}>
+        {constructorIngredients.map((item) => (
+          <li key={item.uuid} className={cn(styles.list__item)}>
+            <DragIcon type="primary" />
+            <ConstructorElement
+              text={item.name}
+              price={item.price}
+              thumbnail={item.image_mobile}
+            />
+          </li>
+        ))}
+      </ul>
 
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${state.pickedBun?.name} (низ)`}
-          price={state.pickedBun?.price}
-          thumbnail={state.pickedBun?.image_mobile}
+          text={`${constructorBun.name} (низ)`}
+          price={constructorBun.price}
+          thumbnail={constructorBun.image_mobile}
         />
       </div>
     </div>

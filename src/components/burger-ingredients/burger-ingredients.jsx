@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
@@ -6,37 +6,44 @@ import IngredientsCategory from './ingredients-category/ingredients-category'
 import Modal from '../modal/modal'
 import IngredientDetails from './ingredient-details/ingredient-details'
 
-import { AppContext } from '../../services/appContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  SET_CURRENT_INGREDIENT,
+  SET_IS_INGREDIENT_MODAL_OPEN,
+} from '../../services/actions/ingredients'
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
-  const [selectedIngredient, setSelectedIngredient] = useState({})
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { state } = useContext(AppContext)
+  const dispatch = useDispatch()
+
+  const { ingredients, currentIngredient, isIngredientModalOpen } = useSelector(
+    // @ts-ignore
+    (store) => store.ingredientsState
+  )
 
   const handleOpenModal = (currentIngredient) => {
-    setSelectedIngredient(currentIngredient)
-    setIsModalOpen(true)
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: currentIngredient })
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
   }
 
   const buns = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'bun'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'bun'),
+    [ingredients]
   )
 
   const main = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'main'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'main'),
+    [ingredients]
   )
 
   const sauce = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'sauce'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'sauce'),
+    [ingredients]
   )
 
   const scrollTo = (categoryId) => {
@@ -88,9 +95,12 @@ const BurgerIngredients = () => {
           </div>
         </div>
       </section>{' '}
-      {isModalOpen && (
+      {isIngredientModalOpen && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails ingredient={selectedIngredient} />
+          <IngredientDetails
+            // @ts-ignore
+            ingredient={currentIngredient}
+          />
         </Modal>
       )}
     </>
