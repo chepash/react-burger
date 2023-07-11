@@ -3,7 +3,6 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   IGNORE_INGREDIENTS_ERROR,
-  SET_IS_INGREDIENT_MODAL_OPEN,
   SET_CURRENT_INGREDIENT,
 } from '../actions/ingredients'
 
@@ -14,7 +13,6 @@ const initialState = {
   error: null,
 
   currentIngredient: {},
-  isIngredientModalOpen: false,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -45,11 +43,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentIngredient: action.payload,
-      }
-    case SET_IS_INGREDIENT_MODAL_OPEN:
-      return {
-        ...state,
-        isIngredientModalOpen: action.payload,
       }
     default:
       return state

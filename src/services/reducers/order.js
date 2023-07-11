@@ -1,5 +1,4 @@
 import {
-  CLOSE_ORDER_MODAL,
   CREATE_ORDER_ERROR,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
@@ -11,8 +10,6 @@ const initialState = {
 
   isLoading: false,
   error: null,
-
-  isOrderModalOpen: false,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -26,7 +23,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         response: action.payload,
-        isOrderModalOpen: true,
         isLoading: false,
       }
     case CREATE_ORDER_ERROR:
@@ -34,11 +30,6 @@ export const reducer = (state = initialState, action) => {
         ...state,
         error: true,
         isLoading: false,
-      }
-    case CLOSE_ORDER_MODAL:
-      return {
-        ...state,
-        isOrderModalOpen: false,
       }
     case IGNORE_ORDER_ERROR:
       return {

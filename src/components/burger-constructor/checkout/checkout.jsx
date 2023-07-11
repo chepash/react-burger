@@ -7,7 +7,8 @@ import {
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { CLOSE_ORDER_MODAL, createOrder } from '../../../services/actions/order'
+import { createOrder } from '../../../services/actions/order'
+import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal'
 
 const Checkout = () => {
   const dispatch = useDispatch()
@@ -17,9 +18,13 @@ const Checkout = () => {
     (store) => store.constructorState
   )
 
-  const { isLoading, response, isOrderModalOpen } = useSelector(
+  const { isLoading, response } = useSelector(
     // @ts-ignore
     (store) => store.orderState
+  )
+  const { isOrderModalOpen } = useSelector(
+    // @ts-ignore
+    (store) => store.modalState
   )
 
   const orderSum = constructorIngredients.reduce(
@@ -30,10 +35,11 @@ const Checkout = () => {
   const handleOrder = () => {
     // @ts-ignore
     dispatch(createOrder(constructorIngredients, constructorBun))
+    dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
   }
 
   const handleCloseModal = () => {
-    dispatch({ type: CLOSE_ORDER_MODAL })
+    dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: false })
   }
 
   return (

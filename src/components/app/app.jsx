@@ -8,11 +8,8 @@ import { useEffect } from 'react'
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  IGNORE_INGREDIENTS_ERROR,
-  getAllIngredients,
-} from '../../services/actions/ingredients'
-import { IGNORE_ORDER_ERROR } from '../../services/actions/order'
+import { getAllIngredients } from '../../services/actions/ingredients'
+import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal'
 
 function App() {
   const dispatch = useDispatch()
@@ -20,25 +17,33 @@ function App() {
   // @ts-ignore
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
-  const ingredientsFetchError = useSelector(
+  const fetchIngredientsError = useSelector(
     // @ts-ignore
     (store) => store.ingredientsState.error
   )
+  // @ts-ignore
+  const placeOrderError = useSelector((store) => store.orderState.error)
 
-  const orderError = useSelector(
+  const isErrorModalOpen = useSelector(
     // @ts-ignore
-    (store) => store.orderState.error
+    (store) => store.modalState.isErrorModalOpen
   )
 
   useEffect(() => {
     // @ts-ignore
     dispatch(getAllIngredients())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleCloseErrorModal = () => {
+  useEffect(() => {
     // @ts-ignore
-    dispatch({ type: IGNORE_INGREDIENTS_ERROR })
-    dispatch({ type: IGNORE_ORDER_ERROR })
+    if (fetchIngredientsError || placeOrderError) {
+      dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+    }
+  }, [dispatch, fetchIngredientsError, placeOrderError])
+
+  const handleCloseErrorModal = () => {
+    dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: false })
   }
 
   return (
@@ -56,7 +61,7 @@ function App() {
           )}
         </main>
       </div>
-      {(ingredientsFetchError || orderError) && (
+      {isErrorModalOpen && (
         <Modal onClose={handleCloseErrorModal}>
           <ModalError />
         </Modal>

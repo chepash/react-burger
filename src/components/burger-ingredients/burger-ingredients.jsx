@@ -17,9 +17,13 @@ const BurgerIngredients = () => {
 
   const dispatch = useDispatch()
 
-  const { ingredients, currentIngredient, isIngredientModalOpen } = useSelector(
+  const { ingredients, currentIngredient } = useSelector(
     // @ts-ignore
     (store) => store.ingredientsState
+  )
+  const { isIngredientModalOpen } = useSelector(
+    // @ts-ignore
+    (store) => store.modalState
   )
 
   const handleOpenModal = (currentIngredient) => {

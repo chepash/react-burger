@@ -7,9 +7,7 @@ export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL'
 export const IGNORE_ORDER_ERROR = 'IGNORE_ORDER_ERROR'
 
 export const createOrder =
-  (constructorIngredients, constructorBun) => (dispatch, store) => {
-    console.log('constructorState : ', store)
-
+  (constructorIngredients, constructorBun) => (dispatch) => {
     dispatch({ type: CREATE_ORDER_REQUEST })
 
     const bunId = constructorBun._id
