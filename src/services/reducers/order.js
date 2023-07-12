@@ -28,6 +28,7 @@ export const reducer = (state = initialState, action) => {
     case CREATE_ORDER_ERROR:
       return {
         ...state,
+        response: null,
         error: true,
         isLoading: false,
       }

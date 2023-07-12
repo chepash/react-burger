@@ -28,6 +28,7 @@ export const reducer = (state = initialState, action) => {
     case GET_INGREDIENTS_ERROR:
       return {
         ...state,
+        ingredients: [],
         error: true,
         isLoading: false,
       }
