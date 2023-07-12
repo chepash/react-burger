@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
@@ -14,6 +14,48 @@ import {
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
+
+  const rootRef = useRef(null)
+
+  const bunRef = useRef(null)
+  const sauceRef = useRef(null)
+  const mainRef = useRef(null)
+
+  const updateCurrentTab = () => {
+    const rootRect = rootRef?.current?.getBoundingClientRect()
+    const bunRect = bunRef?.current?.getBoundingClientRect()
+    const sauceRect = sauceRef?.current?.getBoundingClientRect()
+    const mainRect = mainRef?.current?.getBoundingClientRect()
+
+    const bunDistance = Math.abs(rootRect.top - bunRect.top)
+    const sauceDistance = Math.abs(rootRect.top - sauceRect.top)
+    const mainDistance = Math.abs(rootRect.top - mainRect.top)
+
+    if (bunDistance <= sauceDistance && bunDistance <= mainDistance) {
+      setCurrentTab('bun')
+    } else if (sauceDistance <= bunDistance && sauceDistance <= mainDistance) {
+      setCurrentTab('sauce')
+    } else {
+      setCurrentTab('main')
+    }
+  }
+
+  useEffect(() => {
+    const rootElement = rootRef?.current
+    const handleScroll = () => {
+      updateCurrentTab()
+    }
+
+    if (rootElement) {
+      rootElement.addEventListener('scroll', handleScroll)
+    }
+
+    return () => {
+      if (rootElement) {
+        rootElement.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [currentTab])
 
   const dispatch = useDispatch()
 
@@ -77,21 +119,24 @@ const BurgerIngredients = () => {
           currentTab={currentTab}
           handleCategoryClick={handleCategoryClick}
         />
-        <div className={cn(styles.section__content)}>
+        <div ref={rootRef} className={cn(styles.section__content)}>
           <div className={cn(styles.section__content_scrollable)}>
             <IngredientsCategory
+              ref={bunRef}
               title="Булки"
               ingredients={buns}
               categoryId="bun"
               onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
+              ref={sauceRef}
               title="Соусы"
               ingredients={sauce}
               categoryId="sauce"
               onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
+              ref={mainRef}
               title="Начинки"
               ingredients={main}
               categoryId="main"
