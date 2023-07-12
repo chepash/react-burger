@@ -6,7 +6,7 @@ import IngredientCard from '../ingredient-card/ingredient-card'
 import { forwardRef } from 'react'
 
 const IngredientsCategory = forwardRef(
-  ({ title, ingredients, categoryId, onIngredientClick }, ref) => {
+  ({ title, ingredients, categoryId }, ref) => {
     return (
       <div className={styles.category}>
         <h3
@@ -18,11 +18,7 @@ const IngredientsCategory = forwardRef(
         </h3>
         <ul className={cn(styles.category__list)}>
           {ingredients.map((item) => (
-            <IngredientCard
-              key={item._id}
-              ingredient={item}
-              onIngredientClick={onIngredientClick}
-            />
+            <IngredientCard key={item._id} ingredient={item} />
           ))}
         </ul>
       </div>
@@ -34,7 +30,6 @@ IngredientsCategory.propTypes = {
   title: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(burgerIngredientPropType).isRequired,
   categoryId: PropTypes.string.isRequired,
-  onIngredientClick: PropTypes.func.isRequired,
 }
 
 export default IngredientsCategory

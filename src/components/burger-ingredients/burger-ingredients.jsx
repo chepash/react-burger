@@ -68,11 +68,6 @@ const BurgerIngredients = () => {
     (store) => store.modalState
   )
 
-  const handleOpenModal = (currentIngredient) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: currentIngredient })
-    // dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
-  }
-
   const handleCloseModal = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: {} })
     dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
@@ -126,21 +121,18 @@ const BurgerIngredients = () => {
               title="Булки"
               ingredients={buns}
               categoryId="bun"
-              onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
               ref={sauceRef}
               title="Соусы"
               ingredients={sauce}
               categoryId="sauce"
-              onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
               ref={mainRef}
               title="Начинки"
               ingredients={main}
               categoryId="main"
-              onIngredientClick={handleOpenModal}
             />
           </div>
         </div>

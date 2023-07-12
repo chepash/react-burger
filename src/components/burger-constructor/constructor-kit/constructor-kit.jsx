@@ -5,7 +5,12 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteIngredient } from '../../../services/actions/constructor'
+import {
+  addIngredient,
+  deleteIngredient,
+} from '../../../services/actions/constructor'
+
+import { useDrop } from 'react-dnd'
 
 const ConstructorKit = () => {
   const { constructorIngredients, constructorBun } = useSelector(
@@ -15,8 +20,25 @@ const ConstructorKit = () => {
 
   const dispatch = useDispatch()
 
+  const [{ canDrop, isOver }, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient))
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  })
+
   return (
-    <div className={cn(styles.burger, 'pl-4')}>
+    <div
+      ref={dropTarget}
+      className={cn(styles.burger, 'pl-4', {
+        [styles.border_pink]: !isOver && canDrop,
+        [styles.border_green]: isOver && canDrop,
+      })}
+    >
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
           type="top"

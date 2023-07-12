@@ -8,6 +8,16 @@
   max-height: 70vh;
 }
 
+.border {
+  &_green {
+    outline: 1px solid rgb(30 255 0) !important;
+  }
+
+  &_pink {
+    outline: 1px solid rgb(255 0 255) !important;
+  }
+}
+
 .list {
   top: 0;
   right: 8px;

@@ -1,9 +1,11 @@
 import cn from 'classnames'
 import styles from './app.module.scss'
+import { useEffect } from 'react'
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { useEffect } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
@@ -50,17 +52,20 @@ function App() {
     <>
       <div className={styles.page}>
         <AppHeader />
-        <main className={cn(styles.main, 'pl-5 pr-5')}>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </>
-          )}
-        </main>
+        <DndProvider backend={HTML5Backend}>
+          <main className={cn(styles.main, 'pl-5 pr-5')}>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <>
+                <BurgerIngredients />
+                <BurgerConstructor />
+              </>
+            )}
+          </main>
+        </DndProvider>
       </div>
+
       {isErrorModalOpen && (
         <Modal onClose={handleCloseErrorModal}>
           <ModalError />
