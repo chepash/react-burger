@@ -11,7 +11,9 @@ export const addIngredient = (ingredient) => {
   }
 }
 
-export const deleteIngredient = (uuid) => ({
-  type: DELETE_INGREDIENT,
-  payload: uuid,
-})
+export const deleteIngredient = (uuid) => {
+  return {
+    type: DELETE_INGREDIENT,
+    payload: uuid,
+  }
+}

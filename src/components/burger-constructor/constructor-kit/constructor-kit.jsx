@@ -4,13 +4,16 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteIngredient } from '../../../services/actions/constructor'
 
 const ConstructorKit = () => {
   const { constructorIngredients, constructorBun } = useSelector(
     // @ts-ignore
     (store) => store.constructorState
   )
+
+  const dispatch = useDispatch()
 
   return (
     <div className={cn(styles.burger, 'pl-4')}>
@@ -32,6 +35,7 @@ const ConstructorKit = () => {
               text={item.name}
               price={item.price}
               thumbnail={item.image_mobile}
+              handleClose={() => dispatch(deleteIngredient(item.uuid))}
             />
           </li>
         ))}

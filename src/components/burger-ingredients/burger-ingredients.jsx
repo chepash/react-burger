@@ -28,7 +28,7 @@ const BurgerIngredients = () => {
 
   const handleOpenModal = (currentIngredient) => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: currentIngredient })
-    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+    // dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
   }
 
   const handleCloseModal = () => {
