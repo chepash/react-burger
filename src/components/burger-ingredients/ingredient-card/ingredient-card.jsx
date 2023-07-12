@@ -11,6 +11,7 @@ import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
 } from '../../../services/actions/ingredients'
+import { addIngredient } from '../../../services/actions/constructor'
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
@@ -22,7 +23,9 @@ const IngredientCard = ({ ingredient }) => {
 
   const onClick = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient })
-    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+    // dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+
+    dispatch(addIngredient(ingredient))
   }
 
   const [, dragRef] = useDrag({

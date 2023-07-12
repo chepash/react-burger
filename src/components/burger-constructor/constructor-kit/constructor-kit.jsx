@@ -1,23 +1,17 @@
 import cn from 'classnames'
 import styles from './constructor-kit.module.scss'
-import {
-  ConstructorElement,
-  DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addIngredient,
-  deleteIngredient,
-} from '../../../services/actions/constructor'
+import { addIngredient } from '../../../services/actions/constructor'
 
 import { useDrop } from 'react-dnd'
+import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 
 const ConstructorKit = () => {
   const { constructorIngredients, constructorBun } = useSelector(
     // @ts-ignore
     (store) => store.constructorState
   )
-
   const dispatch = useDispatch()
 
   const [{ canDrop, isOver }, dropTarget] = useDrop({
@@ -50,16 +44,8 @@ const ConstructorKit = () => {
       </div>
 
       <ul className={cn(styles.list)}>
-        {constructorIngredients.map((item) => (
-          <li key={item.uuid} className={cn(styles.list__item)}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image_mobile}
-              handleClose={() => dispatch(deleteIngredient(item.uuid))}
-            />
-          </li>
+        {constructorIngredients.map((item, index) => (
+          <PrimaryIngredient ingredient={item} key={item.uuid} index={index} />
         ))}
       </ul>
 

@@ -1,4 +1,8 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT } from '../actions/constructor'
+import {
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  MOVE_INGREDIENT,
+} from '../actions/constructor'
 import defaultBun from '../../images/default-bun.svg'
 
 const initialState = {
@@ -35,6 +39,18 @@ export const reducer = (state = initialState, action) => {
           (ingredient) => ingredient.uuid !== action.payload
         ),
       }
+    case MOVE_INGREDIENT:
+      const { fromIndex, toIndex } = action.payload
+      console.log('fromIndex : ', fromIndex)
+      console.log('toIndex : ', toIndex)
+      const ingredients = [...state.constructorIngredients]
+
+      ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0])
+      return {
+        ...state,
+        constructorIngredients: ingredients,
+      }
+
     default:
       return state
   }

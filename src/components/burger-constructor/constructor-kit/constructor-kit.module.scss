@@ -47,20 +47,4 @@
   &::-webkit-scrollbar-thumb {
     background-color: #8585ad;
   }
-
-  &__item {
-    display: flex;
-    column-gap: 8px;
-    align-items: center;
-
-    margin: 0;
-    padding: 0;
-
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      cursor: pointer;
-      opacity: 0.9;
-    }
-  }
 }
