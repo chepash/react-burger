@@ -3,7 +3,6 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   IGNORE_INGREDIENTS_ERROR,
-  SET_CURRENT_INGREDIENT,
 } from '../actions/ingredients'
 
 const initialState = {
@@ -11,8 +10,6 @@ const initialState = {
 
   isLoading: false,
   error: null,
-
-  currentIngredient: {},
 }
 
 export const reducer = (state = initialState, action) => {
@@ -39,11 +36,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         error: false,
       }
-    case SET_CURRENT_INGREDIENT:
-      return {
-        ...state,
-        currentIngredient: action.payload,
-      }
+
     default:
       return state
   }

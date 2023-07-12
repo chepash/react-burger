@@ -35,7 +35,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         constructorIngredients: state.constructorIngredients.filter(
-          // @ts-ignore
           (ingredient) => ingredient.uuid !== action.payload
         ),
       }

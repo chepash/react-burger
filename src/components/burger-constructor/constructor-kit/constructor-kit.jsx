@@ -9,12 +9,11 @@ import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 
 const ConstructorKit = () => {
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
   const dispatch = useDispatch()
 
-  const [{ canDrop, isOver }, dropTarget] = useDrop({
+  const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(ingredient) {
       dispatch(addIngredient(ingredient))
@@ -26,13 +25,7 @@ const ConstructorKit = () => {
   })
 
   return (
-    <div
-      ref={dropTarget}
-      className={cn(styles.burger, 'pl-4', {
-        [styles.border_pink]: !isOver && canDrop,
-        [styles.border_green]: isOver && canDrop,
-      })}
-    >
+    <div ref={dropTarget} className={cn(styles.burger, 'pl-4')}>
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
           type="top"

@@ -14,18 +14,11 @@ const Checkout = () => {
   const dispatch = useDispatch()
 
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
 
-  const { isLoading, response } = useSelector(
-    // @ts-ignore
-    (store) => store.orderState
-  )
-  const { isOrderModalOpen } = useSelector(
-    // @ts-ignore
-    (store) => store.modalState
-  )
+  const { isLoading, response } = useSelector((store) => store.orderState)
+  const { isOrderModalOpen } = useSelector((store) => store.modalState)
 
   const orderSum = constructorIngredients.reduce(
     (acc, item) => acc + item.price,
@@ -33,7 +26,6 @@ const Checkout = () => {
   )
 
   const handleOrder = () => {
-    // @ts-ignore
     dispatch(createOrder(constructorIngredients, constructorBun))
     dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
   }

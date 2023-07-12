@@ -1,4 +1,3 @@
-// @ts-ignore
 import { PropTypes } from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { burgerIngredientPropType } from '../../../utils/prop-types'
@@ -74,7 +73,7 @@ const PrimaryIngredient = ({ ingredient, index }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'primary-ingredient',
     item: () => {
-      return { id: ingredient.uuid, index }
+      return { index }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

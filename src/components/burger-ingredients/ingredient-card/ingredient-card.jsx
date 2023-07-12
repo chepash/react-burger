@@ -10,22 +10,18 @@ import { useDrag } from 'react-dnd'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../../services/actions/ingredients'
-import { addIngredient } from '../../../services/actions/constructor'
+} from '../../../services/actions/modal'
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
 
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
 
   const onClick = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient })
-    // dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
-
-    dispatch(addIngredient(ingredient))
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
   }
 
   const [, dragRef] = useDrag({

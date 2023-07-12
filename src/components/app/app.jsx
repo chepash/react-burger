@@ -16,29 +16,23 @@ import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal'
 function App() {
   const dispatch = useDispatch()
 
-  // @ts-ignore
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
   const fetchIngredientsError = useSelector(
-    // @ts-ignore
     (store) => store.ingredientsState.error
   )
-  // @ts-ignore
+
   const placeOrderError = useSelector((store) => store.orderState.error)
 
   const isErrorModalOpen = useSelector(
-    // @ts-ignore
     (store) => store.modalState.isErrorModalOpen
   )
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getAllIngredients())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
-    // @ts-ignore
     if (fetchIngredientsError || placeOrderError) {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
     }

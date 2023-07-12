@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../services/actions/ingredients'
+} from '../../services/actions/modal'
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
@@ -60,13 +60,9 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch()
 
   const { ingredients, currentIngredient } = useSelector(
-    // @ts-ignore
     (store) => store.ingredientsState
   )
-  const { isIngredientModalOpen } = useSelector(
-    // @ts-ignore
-    (store) => store.modalState
-  )
+  const { isIngredientModalOpen } = useSelector((store) => store.modalState)
 
   const handleCloseModal = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: {} })
@@ -139,10 +135,7 @@ const BurgerIngredients = () => {
       </section>{' '}
       {isIngredientModalOpen && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails
-            // @ts-ignore
-            ingredient={currentIngredient}
-          />
+          <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
     </>
