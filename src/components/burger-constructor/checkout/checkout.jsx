@@ -9,6 +9,7 @@ import Modal from '../../modal/modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { createOrder } from '../../../services/actions/order'
 import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal'
+import Preloader from '../../preloader/preloader'
 
 const Checkout = () => {
   const dispatch = useDispatch()
@@ -56,9 +57,12 @@ const Checkout = () => {
           Оформить заказ
         </Button>
       </div>
-      {!isLoading && response?.success && isOrderModalOpen && (
+      {isOrderModalOpen && (
         <Modal onClose={handleCloseModal}>
-          <OrderDetails orderNumber={response.order.number} />
+          {isLoading && <Preloader />}
+          {!isLoading && response?.success && (
+            <OrderDetails orderNumber={response.order.number} />
+          )}
         </Modal>
       )}
     </>
