@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
+  EMPTY_CONSTRUCTOR,
 } from '../actions/constructor'
 import defaultBun from '../../images/default-bun.svg'
 
@@ -37,6 +38,16 @@ export const reducer = (state = initialState, action) => {
         constructorIngredients: state.constructorIngredients.filter(
           (ingredient) => ingredient.uuid !== action.payload
         ),
+      }
+    case EMPTY_CONSTRUCTOR:
+      return {
+        ...state,
+        constructorIngredients: [],
+        constructorBun: {
+          image_mobile: defaultBun,
+          name: 'Выберите тип булки',
+          price: 0,
+        },
       }
     case MOVE_INGREDIENT:
       const { fromIndex, toIndex } = action.payload

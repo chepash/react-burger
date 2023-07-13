@@ -1,4 +1,5 @@
 import * as api from '../../utils/api'
+import { EMPTY_CONSTRUCTOR } from './constructor'
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST'
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
@@ -21,6 +22,7 @@ export const createOrder =
     return api
       .placeOrder(ingredientsIds)
       .then((res) => {
+        dispatch({ type: EMPTY_CONSTRUCTOR })
         return dispatch({ type: CREATE_ORDER_SUCCESS, payload: res })
       })
       .catch(() => {
