@@ -12,6 +12,7 @@ import ModalError from '../modal/modal-error/modal-error'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllIngredients } from '../../services/actions/ingredients'
 import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal'
+import Preloader from '../preloader/preloader'
 
 function App() {
   const dispatch = useDispatch()
@@ -47,16 +48,14 @@ function App() {
       <div className={styles.page}>
         <AppHeader />
         <DndProvider backend={HTML5Backend}>
-          <main className={cn(styles.main, 'pl-5 pr-5')}>
-            {isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              <>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </>
-            )}
-          </main>
+          {isLoading ? (
+            <Preloader />
+          ) : (
+            <main className={cn(styles.main, 'pl-5 pr-5')}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </main>
+          )}
         </DndProvider>
       </div>
 
