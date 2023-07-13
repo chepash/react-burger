@@ -53,6 +53,7 @@ const Checkout = () => {
           htmlType="button"
           type="primary"
           size="large"
+          disabled={!constructorBun._id}
         >
           Оформить заказ
         </Button>
