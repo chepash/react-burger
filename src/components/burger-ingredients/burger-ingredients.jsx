@@ -59,10 +59,10 @@ const BurgerIngredients = () => {
 
   const dispatch = useDispatch()
 
-  const { ingredients, currentIngredient } = useSelector(
-    (store) => store.ingredientsState
+  const { ingredients } = useSelector((store) => store.ingredientsState)
+  const { isIngredientModalOpen, currentIngredient } = useSelector(
+    (store) => store.modalState
   )
-  const { isIngredientModalOpen } = useSelector((store) => store.modalState)
 
   const handleCloseModal = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: {} })
@@ -133,7 +133,7 @@ const BurgerIngredients = () => {
           </div>
         </div>
       </section>{' '}
-      {isIngredientModalOpen && (
+      {isIngredientModalOpen && currentIngredient && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
           <IngredientDetails ingredient={currentIngredient} />
         </Modal>
