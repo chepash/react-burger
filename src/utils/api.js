@@ -14,17 +14,28 @@ const getResponse = (res) => {
   })
 }
 
-export const getIngredients = () =>
-  fetch(`${API_BASE_URL}/ingredients`, {
-    method: 'GET',
-  }).then(getResponse)
+const request = (endpoint, options) => {
+  const url = `${API_BASE_URL}/${endpoint}`
+  return fetch(url, options).then(getResponse)
+}
 
-export const createOrder = (ingredientsIds) =>
-  fetch(`${API_BASE_URL}/orders`, {
+export const fetchIngredients = () => {
+  const endpoint = 'ingredients'
+  const options = {
+    method: 'GET',
+  }
+  return request(endpoint, options)
+}
+
+export const placeOrder = (ingredientsIds) => {
+  const endpoint = 'orders'
+  const options = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ ingredients: ingredientsIds }),
-  }).then(getResponse)
+  }
+  return request(endpoint, options)
+}

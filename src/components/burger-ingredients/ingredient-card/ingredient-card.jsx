@@ -1,4 +1,4 @@
-import { PropTypes } from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Counter,
   CurrencyIcon,
@@ -6,18 +6,41 @@ import {
 import styles from './ingredient-card.module.scss'
 import cn from 'classnames'
 import { burgerIngredientPropType } from '../../../utils/prop-types'
-import { useContext } from 'react'
-import { AppContext } from '../../../services/appContext'
+import { useDrag } from 'react-dnd'
+import {
+  SET_CURRENT_INGREDIENT,
+  SET_IS_INGREDIENT_MODAL_OPEN,
+} from '../../../services/actions/modal'
 
-const IngredientCard = ({ ingredient, onIngredientClick }) => {
-  const { state } = useContext(AppContext)
+const IngredientCard = ({ ingredient }) => {
+  const dispatch = useDispatch()
 
-  const amount = state.orderIngredientIds.filter(
-    (id) => id === ingredient._id
-  ).length
+  const { constructorIngredients, constructorBun } = useSelector(
+    (store) => store.constructorState
+  )
+
+  const onClick = () => {
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient })
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+  }
+
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: ingredient,
+  })
+
+  let amount
+
+  if (ingredient.type === 'bun') {
+    amount = ingredient._id === constructorBun._id ? 2 : 0
+  } else {
+    amount = constructorIngredients.filter(
+      (item) => item._id === ingredient._id
+    ).length
+  }
 
   return (
-    <li className={styles.card} onClick={() => onIngredientClick(ingredient)}>
+    <li className={styles.card} onClick={onClick} ref={dragRef}>
       {amount > 0 && <Counter count={amount} size="default" extraClass="m-1" />}
       <img
         className={cn(styles.card__img, 'mr-4 ml-4')}
@@ -44,7 +67,6 @@ const IngredientCard = ({ ingredient, onIngredientClick }) => {
 
 IngredientCard.propTypes = {
   ingredient: burgerIngredientPropType.isRequired,
-  onIngredientClick: PropTypes.func.isRequired,
 }
 
 export default IngredientCard

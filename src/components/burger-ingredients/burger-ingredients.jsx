@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
 import styles from './burger-ingredients.module.scss'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
@@ -6,37 +6,82 @@ import IngredientsCategory from './ingredients-category/ingredients-category'
 import Modal from '../modal/modal'
 import IngredientDetails from './ingredient-details/ingredient-details'
 
-import { AppContext } from '../../services/appContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  SET_CURRENT_INGREDIENT,
+  SET_IS_INGREDIENT_MODAL_OPEN,
+} from '../../services/actions/modal'
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')
-  const [selectedIngredient, setSelectedIngredient] = useState({})
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { state } = useContext(AppContext)
+  const rootRef = useRef(null)
 
-  const handleOpenModal = (currentIngredient) => {
-    setSelectedIngredient(currentIngredient)
-    setIsModalOpen(true)
+  const bunRef = useRef(null)
+  const sauceRef = useRef(null)
+  const mainRef = useRef(null)
+
+  const updateCurrentTab = () => {
+    const rootRect = rootRef?.current?.getBoundingClientRect()
+    const bunRect = bunRef?.current?.getBoundingClientRect()
+    const sauceRect = sauceRef?.current?.getBoundingClientRect()
+    const mainRect = mainRef?.current?.getBoundingClientRect()
+
+    const bunDistance = Math.abs(rootRect.top - bunRect.top)
+    const sauceDistance = Math.abs(rootRect.top - sauceRect.top)
+    const mainDistance = Math.abs(rootRect.top - mainRect.top)
+
+    if (bunDistance <= sauceDistance && bunDistance <= mainDistance) {
+      setCurrentTab('bun')
+    } else if (sauceDistance <= bunDistance && sauceDistance <= mainDistance) {
+      setCurrentTab('sauce')
+    } else {
+      setCurrentTab('main')
+    }
   }
 
+  useEffect(() => {
+    const rootElement = rootRef?.current
+    const handleScroll = () => {
+      updateCurrentTab()
+    }
+
+    if (rootElement) {
+      rootElement.addEventListener('scroll', handleScroll)
+    }
+
+    return () => {
+      if (rootElement) {
+        rootElement.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [currentTab])
+
+  const dispatch = useDispatch()
+
+  const { ingredients } = useSelector((store) => store.ingredientsState)
+  const { isIngredientModalOpen, currentIngredient } = useSelector(
+    (store) => store.modalState
+  )
+
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: {} })
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
   }
 
   const buns = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'bun'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'bun'),
+    [ingredients]
   )
 
   const main = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'main'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'main'),
+    [ingredients]
   )
 
   const sauce = useMemo(
-    () => state.ingredients.filter((item) => item.type === 'sauce'),
-    [state.ingredients]
+    () => ingredients.filter((item) => item.type === 'sauce'),
+    [ingredients]
   )
 
   const scrollTo = (categoryId) => {
@@ -65,32 +110,32 @@ const BurgerIngredients = () => {
           currentTab={currentTab}
           handleCategoryClick={handleCategoryClick}
         />
-        <div className={cn(styles.section__content)}>
+        <div ref={rootRef} className={cn(styles.section__content)}>
           <div className={cn(styles.section__content_scrollable)}>
             <IngredientsCategory
+              ref={bunRef}
               title="Булки"
               ingredients={buns}
               categoryId="bun"
-              onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
+              ref={sauceRef}
               title="Соусы"
               ingredients={sauce}
               categoryId="sauce"
-              onIngredientClick={handleOpenModal}
             />
             <IngredientsCategory
+              ref={mainRef}
               title="Начинки"
               ingredients={main}
               categoryId="main"
-              onIngredientClick={handleOpenModal}
             />
           </div>
         </div>
       </section>{' '}
-      {isModalOpen && (
+      {isIngredientModalOpen && currentIngredient && (
         <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails ingredient={selectedIngredient} />
+          <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
     </>
