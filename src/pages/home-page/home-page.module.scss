@@ -1,0 +1,10 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}

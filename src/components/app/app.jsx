@@ -1,18 +1,15 @@
-import cn from 'classnames'
-import styles from './app.module.scss'
 import { useEffect } from 'react'
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-
-import Modal from '../modal/modal'
-import ModalError from '../modal/modal-error/modal-error'
 import { useDispatch, useSelector } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
+import HomePage from '../../pages/home-page/home-page'
 import { getAllIngredients } from '../../services/actions/ingredients'
 import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal'
+import AppHeader from '../app-header/app-header'
+import Modal from '../modal/modal'
+import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
+import styles from './app.module.scss'
+import Login from '../../pages/login/login'
 
 function App() {
   const dispatch = useDispatch()
@@ -47,16 +44,21 @@ function App() {
     <>
       <div className={styles.page}>
         <AppHeader />
-        <DndProvider backend={HTML5Backend}>
-          {isLoading ? (
-            <Preloader />
-          ) : (
-            <main className={cn(styles.main, 'pl-5 pr-5')}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          )}
-        </DndProvider>
+
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<PersonPage />} />
+        <Route path="/reset-password" element={<PersonPage />} />
+        <Route path="/profile" element={<PersonPage />} />
+        <Route path="/ingredients/:id" element={<PersonPage />} />
+        <Route path="*" element={<NotFound404 />} /> */}
+          </Routes>
+        )}
       </div>
 
       {isErrorModalOpen && (

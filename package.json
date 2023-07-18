@@ -1,5 +1,5 @@
 {
-  "homepage": "https://chepash.github.io/react-burger/",
+  "homepage": "./login",
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
@@ -19,6 +19,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "react-redux": "8.1.1",
+    "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "redux": "4.2.1",
     "redux-devtools-extension": "^2.13.9",
