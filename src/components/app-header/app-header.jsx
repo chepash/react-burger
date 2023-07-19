@@ -7,7 +7,7 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 const AppHeader = () => {
   const location = useLocation()
@@ -82,24 +82,18 @@ const AppHeader = () => {
         </div>
         <div className={cn(styles.header__box)}>
           <div className={styles.link__wrap}>
-            <NavLink
+            <Link
               to="/profile"
-              className={
-                // callback ({isActive})=>{} не подходит так как сработает и на /profile/orders
-                location.pathname === '/profile'
-                  ? cn(
-                      styles.link,
-                      'mt-4 mr-5 mb-4 ml-5',
-                      'text text_type_main-default',
-                      styles.link_active
-                    )
-                  : cn(
-                      styles.link,
-                      'mt-4 mr-5 mb-4 ml-5',
-                      'text text_type_main-default',
-                      'text_color_inactive'
-                    )
-              }
+              // callback ({isActive})=>{} не подходит так как срабатывает и на "/profile/orders"
+              className={cn(
+                styles.link,
+                'mt-4 mr-5 mb-4 ml-5',
+                'text text_type_main-default',
+                'text_color_inactive',
+                {
+                  [styles.link_active]: location.pathname === '/profile',
+                }
+              )}
             >
               <ProfileIcon
                 type={
@@ -109,7 +103,7 @@ const AppHeader = () => {
               <label className={cn(styles.link__label, 'ml-2')}>
                 Личный кабинет
               </label>
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>
