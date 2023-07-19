@@ -39,3 +39,16 @@ export const placeOrder = (ingredientsIds) => {
   }
   return request(endpoint, options)
 }
+
+export const sendPasswordRecoveryEmail = (email) => {
+  const endpoint = 'password-reset'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  }
+  return request(endpoint, options)
+}
