@@ -10,7 +10,7 @@ const initialState = {
   constructorIngredients: [],
   constructorBun: {
     image_mobile: defaultBun,
-    name: 'Выберите тип булки',
+    name: 'Добавьте булку',
     price: 0,
   },
 }
