@@ -7,18 +7,10 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { NavLink, useLocation } from 'react-router-dom'
 
 const AppHeader = () => {
-  // временные анимации
-  const [isHovered, setIsHovered] = useState({ 1: false, 2: false })
-
-  const handleMouseEnter = (id) => {
-    setIsHovered((prevState) => ({ ...prevState, [id]: true }))
-  }
-
-  const handleMouseLeave = (id) => {
-    setIsHovered((prevState) => ({ ...prevState, [id]: false }))
-  }
+  const location = useLocation()
 
   return (
     <header className={cn(styles.header, 'p-4')}>
@@ -26,42 +18,62 @@ const AppHeader = () => {
         <nav className={cn(styles.header__box)}>
           <ul className={styles.list}>
             <li className={styles.list__item}>
-              <a
-                href="/constructor"
-                className={cn(styles.link, 'mt-4 mr-5 mb-4 ml-5')}
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? cn(
+                        styles.link,
+                        'mt-4 mr-5 mb-4 ml-5',
+                        'text text_type_main-default',
+                        styles.link_active
+                      )
+                    : cn(
+                        styles.link,
+                        'mt-4 mr-5 mb-4 ml-5',
+                        'text text_type_main-default',
+                        'text_color_inactive'
+                      )
+                }
               >
-                <BurgerIcon type={'primary'} />
-                <label
-                  className={cn(
-                    styles.link__label,
-                    'text text_type_main-default',
-                    'ml-2'
-                  )}
-                >
+                <BurgerIcon
+                  type={location.pathname === '/' ? 'primary' : 'secondary'}
+                />
+                <label className={cn(styles.link__label, 'ml-2')}>
                   Конструктор
                 </label>
-              </a>
+              </NavLink>
             </li>
             <li className={cn(styles.list__item, 'ml-2')}>
-              <a
-                href="/orders"
-                className={cn(styles.link, 'mt-4 mr-5 mb-4 ml-5')}
+              <NavLink
+                to="/profile/orders"
+                className={({ isActive }) =>
+                  isActive
+                    ? cn(
+                        styles.link,
+                        'mt-4 mr-5 mb-4 ml-5',
+                        'text text_type_main-default',
+                        styles.link_active
+                      )
+                    : cn(
+                        styles.link,
+                        'mt-4 mr-5 mb-4 ml-5',
+                        'text text_type_main-default',
+                        'text_color_inactive'
+                      )
+                }
               >
-                <ListIcon type="secondary" />
-                <label
-                  className={cn(
-                    styles.link__label,
-                    'text text_type_main-default',
-                    { text_color_inactive: !isHovered[1] },
-                    'ml-2'
-                  )}
-                  // временные анимации
-                  onMouseEnter={() => handleMouseEnter(1)}
-                  onMouseLeave={() => handleMouseLeave(1)}
-                >
+                <ListIcon
+                  type={
+                    location.pathname === '/profile/orders'
+                      ? 'primary'
+                      : 'secondary'
+                  }
+                />
+                <label className={cn(styles.link__label, 'ml-2')}>
                   Лента заказов
                 </label>
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -70,25 +82,34 @@ const AppHeader = () => {
         </div>
         <div className={cn(styles.header__box)}>
           <div className={styles.link__wrap}>
-            <a
-              href="/profile"
-              className={cn(styles.link, 'mt-4 mr-5 mb-4 ml-5')}
+            <NavLink
+              to="/profile"
+              className={
+                // callback ({isActive})=>{} не подходит так как сработает и на /profile/orders
+                location.pathname === '/profile'
+                  ? cn(
+                      styles.link,
+                      'mt-4 mr-5 mb-4 ml-5',
+                      'text text_type_main-default',
+                      styles.link_active
+                    )
+                  : cn(
+                      styles.link,
+                      'mt-4 mr-5 mb-4 ml-5',
+                      'text text_type_main-default',
+                      'text_color_inactive'
+                    )
+              }
             >
-              <ProfileIcon type="secondary" />
-              <label
-                className={cn(
-                  styles.link__label,
-                  'text text_type_main-default',
-                  { text_color_inactive: !isHovered[2] },
-                  'ml-2'
-                )}
-                // временные анимации
-                onMouseEnter={() => handleMouseEnter(2)}
-                onMouseLeave={() => handleMouseLeave(2)}
-              >
+              <ProfileIcon
+                type={
+                  location.pathname === '/profile' ? 'primary' : 'secondary'
+                }
+              />
+              <label className={cn(styles.link__label, 'ml-2')}>
                 Личный кабинет
               </label>
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>
