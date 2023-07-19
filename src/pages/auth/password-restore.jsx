@@ -3,13 +3,30 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './auth.module.scss'
+import { useRef, useState } from 'react'
+import * as api from '../../utils/api'
 
 function PasswordRestore() {
+  const [value, setValue] = useState('')
+  const navigate = useNavigate()
+
+  const onButtonClick = (e) => {
+    e.preventDefault()
+    api
+      .sendPasswordRecoveryEmail(value)
+      .then((res) => {
+        if (res.success) {
+          navigate('/reset-password', { replace: true })
+        }
+      })
+      .catch(console.log)
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
-      <form className={styles.form} action="">
+      <form className={styles.form} action="submit">
         <h1 className={cn('text text_type_main-medium', 'mb-6')}>
           Восстановление пароля
         </h1>
@@ -18,19 +35,24 @@ function PasswordRestore() {
           <Input
             type={'email'}
             placeholder={'Укажите E-mail'}
-            // onChange={(e) => setValue(e.target.value)}
-            // value={value}
+            onChange={(e) => setValue(e.target.value)}
+            value={value}
             name={'email'}
-            error={false}
+            // error={true}
             // ref={inputRef}
-            // onIconClick={onIconClick}
-            errorText={'Ошибка'}
+            // errorText={'Ошибка'}
             size={'default'}
             // extraClass="ml-1"
           />
         </div>
 
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          disabled={!value}
+          onClick={onButtonClick}
+        >
           Восстановить
         </Button>
 
