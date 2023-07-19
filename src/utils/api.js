@@ -40,6 +40,19 @@ export const placeOrder = (ingredientsIds) => {
   return request(endpoint, options)
 }
 
+export const registerUser = (email, password, name) => {
+  const endpoint = 'auth/register'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password, name }),
+  }
+  return request(endpoint, options)
+}
+
 export const sendPasswordRecoveryEmail = (email) => {
   const endpoint = 'password-reset'
   const options = {
@@ -49,6 +62,19 @@ export const sendPasswordRecoveryEmail = (email) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email }),
+  }
+  return request(endpoint, options)
+}
+
+export const sendPasswordResetRequest = (password, token) => {
+  const endpoint = 'password-reset/reset'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password, token }),
   }
   return request(endpoint, options)
 }
