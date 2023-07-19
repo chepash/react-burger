@@ -1,0 +1,53 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  &__item {
+    // 64px + 24px у инпута может появиться ниже текст валидации
+    height: 88px;
+  }
+}
+
+.text {
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: #4c4cff;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  &__wrapper {
+    display: flex;
+    column-gap: 8px;
+  }
+}
