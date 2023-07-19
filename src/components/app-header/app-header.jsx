@@ -46,7 +46,7 @@ const AppHeader = () => {
             </li>
             <li className={cn(styles.list__item, 'ml-2')}>
               <NavLink
-                to="/profile/orders"
+                to="/feed"
                 className={({ isActive }) =>
                   isActive
                     ? cn(
@@ -64,11 +64,7 @@ const AppHeader = () => {
                 }
               >
                 <ListIcon
-                  type={
-                    location.pathname === '/profile/orders'
-                      ? 'primary'
-                      : 'secondary'
-                  }
+                  type={location.pathname === '/feed' ? 'primary' : 'secondary'}
                 />
                 <label className={cn(styles.link__label, 'ml-2')}>
                   Лента заказов
