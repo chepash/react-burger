@@ -1,18 +1,13 @@
-.main {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 60px;
-
+.nav {
   box-sizing: border-box;
-  width: 100%;
-  max-width: 1280px;
-  height: 90vh;
+  margin: 0;
+  padding: 0;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 
   box-sizing: border-box;
   margin: 0;
@@ -22,10 +17,9 @@
 
   &__item {
     display: flex;
+    align-items: center;
     width: 100%;
-
-    // 64px + 24px у инпута может появиться ниже текст валидации
-    height: 88px;
+    height: 64px;
   }
 }
 

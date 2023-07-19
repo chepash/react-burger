@@ -1,70 +1,16 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import ProfileNav from '../../components/profile-nav/profile-nav'
 import styles from './profile.module.scss'
-import { Link, NavLink, useLocation } from 'react-router-dom'
 
 function Profile() {
-  const location = useLocation()
-
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
       <section
         aria-label="Навигация по личному кабиенту"
         className={cn(styles.section)}
       >
-        <nav>
-          <ul className={cn(styles.list, styles.list_type_nav)}>
-            <li className={cn(styles.list__item, styles.list__item_type_nav)}>
-              <Link
-                to={'/profile'}
-                className={cn(
-                  styles.link,
-                  'text',
-                  'text_type_main-medium',
-                  'text_color_inactive',
-                  {
-                    [styles.link_active]: location.pathname === '/profile',
-                  }
-                )}
-              >
-                Профиль
-              </Link>
-            </li>
-            <li className={cn(styles.list__item, styles.list__item_type_nav)}>
-              <NavLink
-                to={'/profile/orders'}
-                className={cn(
-                  styles.link,
-                  'text',
-                  'text_type_main-medium',
-                  'text_color_inactive',
-                  {
-                    [styles.link_active]:
-                      location.pathname === '/profile/orders',
-                  }
-                )}
-              >
-                История заказов
-              </NavLink>
-            </li>
-            <li className={cn(styles.list__item, styles.list__item_type_nav)}>
-              <NavLink
-                className={cn(
-                  styles.link,
-                  'text',
-                  'text_type_main-medium',
-                  'text_color_inactive',
-                  {
-                    [styles.link_active]:
-                      location.pathname === '/profile/orders',
-                  }
-                )}
-              >
-                Выход
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
+        <ProfileNav />
         <p
           className={cn(
             'mt-20',
