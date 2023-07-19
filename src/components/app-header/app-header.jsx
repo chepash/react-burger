@@ -12,6 +12,15 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 const AppHeader = () => {
   const location = useLocation()
 
+  const commonLinkClassNames = cn(
+    styles.link,
+    'mt-4 mr-5 mb-4 ml-5',
+    'text',
+    'text_type_main-default'
+  )
+  const activeLinkClassNames = cn(commonLinkClassNames, styles.link_active)
+  const inactiveLinkClassNames = cn(commonLinkClassNames, 'text_color_inactive')
+
   return (
     <header className={cn(styles.header, 'p-4')}>
       <div className={styles.header__container}>
@@ -21,19 +30,7 @@ const AppHeader = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive
-                    ? cn(
-                        styles.link,
-                        'mt-4 mr-5 mb-4 ml-5',
-                        'text text_type_main-default',
-                        styles.link_active
-                      )
-                    : cn(
-                        styles.link,
-                        'mt-4 mr-5 mb-4 ml-5',
-                        'text text_type_main-default',
-                        'text_color_inactive'
-                      )
+                  isActive ? activeLinkClassNames : inactiveLinkClassNames
                 }
               >
                 <BurgerIcon
@@ -48,19 +45,7 @@ const AppHeader = () => {
               <NavLink
                 to="/feed"
                 className={({ isActive }) =>
-                  isActive
-                    ? cn(
-                        styles.link,
-                        'mt-4 mr-5 mb-4 ml-5',
-                        'text text_type_main-default',
-                        styles.link_active
-                      )
-                    : cn(
-                        styles.link,
-                        'mt-4 mr-5 mb-4 ml-5',
-                        'text text_type_main-default',
-                        'text_color_inactive'
-                      )
+                  isActive ? activeLinkClassNames : inactiveLinkClassNames
                 }
               >
                 <ListIcon
@@ -78,28 +63,23 @@ const AppHeader = () => {
         </div>
         <div className={cn(styles.header__box)}>
           <div className={styles.link__wrap}>
-            <Link
+            <NavLink
               to="/profile"
-              // callback ({isActive})=>{} не подходит так как срабатывает и на "/profile/orders"
-              className={cn(
-                styles.link,
-                'mt-4 mr-5 mb-4 ml-5',
-                'text text_type_main-default',
-                'text_color_inactive',
-                {
-                  [styles.link_active]: location.pathname === '/profile',
-                }
-              )}
+              className={({ isActive }) =>
+                isActive ? activeLinkClassNames : inactiveLinkClassNames
+              }
             >
               <ProfileIcon
                 type={
-                  location.pathname === '/profile' ? 'primary' : 'secondary'
+                  location.pathname.includes('/profile')
+                    ? 'primary'
+                    : 'secondary'
                 }
               />
               <label className={cn(styles.link__label, 'ml-2')}>
                 Личный кабинет
               </label>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
