@@ -9,7 +9,10 @@ import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
 import styles from './app.module.scss'
-import Login from '../../pages/login/login'
+import Login from '../../pages/auth/login'
+import Register from '../../pages/auth/register'
+import PasswordRestore from '../../pages/auth/password-restore'
+import PasswordReset from '../../pages/auth/password-reset'
 
 function App() {
   const dispatch = useDispatch()
@@ -51,11 +54,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<PersonPage />} />
-        <Route path="/reset-password" element={<PersonPage />} />
-        <Route path="/profile" element={<PersonPage />} />
-        <Route path="/ingredients/:id" element={<PersonPage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<PasswordRestore />} />
+            <Route path="/reset-password" element={<PasswordReset />} />
+            {/*       <Route path="/profile" element={<Profile />} />
+        <Route path="/ingredients/:id" element={<Modal />} />
         <Route path="*" element={<NotFound404 />} /> */}
           </Routes>
         )}
