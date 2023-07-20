@@ -4,10 +4,31 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './auth.module.scss'
+import { REGISTER_FORM } from '../../utils/constants'
+import { UPDATE_FORM_STATE } from '../../services/actions/forms'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Register() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const { name, email, password } = useSelector(
+    (store) => store.formsState.registerForm
+  )
+
+  const onChange = (e) => {
+    dispatch({
+      type: UPDATE_FORM_STATE,
+      payload: {
+        form: REGISTER_FORM,
+        field: e.target.name,
+        value: e.target.value,
+      },
+    })
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
       <form className={styles.form} action="">
@@ -19,8 +40,8 @@ function Register() {
             <Input
               type={'text'}
               placeholder={'Имя'}
-              // onChange={(e) => setValue(e.target.value)}
-              // value={value}
+              onChange={onChange}
+              value={name}
               name={'name'}
               error={false}
               // ref={inputRef}
@@ -34,8 +55,8 @@ function Register() {
             <Input
               type={'email'}
               placeholder={'E-mail'}
-              // onChange={(e) => setValue(e.target.value)}
-              // value={value}
+              onChange={onChange}
+              value={email}
               name={'email'}
               error={false}
               // ref={inputRef}
@@ -47,8 +68,8 @@ function Register() {
           </li>
           <li className={cn(styles.list__item)}>
             <PasswordInput
-              // onChange={onChange}
-              // value={value}
+              onChange={onChange}
+              value={password}
               name={'password'}
               // extraClass="mb-2"
             />

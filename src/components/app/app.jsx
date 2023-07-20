@@ -13,6 +13,7 @@ import Login from '../../pages/auth/login'
 import Register from '../../pages/auth/register'
 import PasswordRestore from '../../pages/auth/password-restore'
 import PasswordReset from '../../pages/auth/password-reset'
+import Profile from '../../pages/profile/profile'
 
 function App() {
   const dispatch = useDispatch()
@@ -57,8 +58,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<PasswordRestore />} />
             <Route path="/reset-password" element={<PasswordReset />} />
-            {/*       <Route path="/profile" element={<Profile />} />
-        <Route path="/ingredients/:id" element={<Modal />} />
+            <Route path="/profile" element={<Profile />} />
+            {/*         <Route path="/ingredients/:id" element={<Modal />} />
         <Route path="*" element={<NotFound404 />} /> */}
           </Routes>
         )}

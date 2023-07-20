@@ -43,11 +43,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         constructorIngredients: [],
-        constructorBun: {
-          image_mobile: defaultBun,
-          name: 'Выберите тип булки',
-          price: 0,
-        },
+        constructorBun: initialState.constructorBun,
       }
     case MOVE_INGREDIENT:
       const { fromIndex, toIndex } = action.payload

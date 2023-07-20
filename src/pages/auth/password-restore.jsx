@@ -3,25 +3,42 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import styles from './auth.module.scss'
-import { useRef, useState } from 'react'
+import { UPDATE_FORM_STATE } from '../../services/actions/forms'
 import * as api from '../../utils/api'
+import styles from './auth.module.scss'
+import { PASSWORD_RESTORE_FORM } from '../../utils/constants'
 
 function PasswordRestore() {
-  const [value, setValue] = useState('')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const { email } = useSelector((store) => store.formsState.passwordRestoreForm)
+
+  const onChange = (e) => {
+    dispatch({
+      type: UPDATE_FORM_STATE,
+      payload: {
+        form: PASSWORD_RESTORE_FORM,
+        field: e.target.name,
+        value: e.target.value,
+      },
+    })
+  }
 
   const onButtonClick = (e) => {
     e.preventDefault()
     api
-      .sendPasswordRecoveryEmail(value)
+      .sendPasswordRecoveryEmail(email)
       .then((res) => {
         if (res.success) {
           navigate('/reset-password', { replace: true })
         }
       })
-      .catch(console.log)
+      .catch((err) => {
+        console.log(`Ошибка sendPasswordRecoveryEmail: ${err}`)
+      })
   }
 
   return (
@@ -35,8 +52,8 @@ function PasswordRestore() {
           <Input
             type={'email'}
             placeholder={'Укажите E-mail'}
-            onChange={(e) => setValue(e.target.value)}
-            value={value}
+            onChange={onChange}
+            value={email}
             name={'email'}
             // error={true}
             // ref={inputRef}
@@ -50,7 +67,7 @@ function PasswordRestore() {
           htmlType="button"
           type="primary"
           size="medium"
-          disabled={!value}
+          disabled={!email}
           onClick={onButtonClick}
         >
           Восстановить

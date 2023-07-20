@@ -2,8 +2,30 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import ProfileNav from '../../components/profile-nav/profile-nav'
 import styles from './profile.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { UPDATE_FORM_STATE } from '../../services/actions/forms'
+import { PROFILE_FORM } from '../../utils/constants'
 
 function Profile() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const { name, email, password } = useSelector(
+    (store) => store.formsState.profileForm
+  )
+
+  const onChange = (e) => {
+    dispatch({
+      type: UPDATE_FORM_STATE,
+      payload: {
+        form: PROFILE_FORM,
+        field: e.target.name,
+        value: e.target.value,
+      },
+    })
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
       <section
@@ -32,9 +54,9 @@ function Profile() {
               <Input
                 type={'text'}
                 placeholder={'Имя'}
-                // onChange={(e) => setValue(e.target.value)}
-                // value={value}
-                name={'email'}
+                onChange={onChange}
+                value={name}
+                name={'name'}
                 error={false}
                 // ref={inputRef}
                 // onIconClick={onIconClick}
@@ -48,8 +70,8 @@ function Profile() {
               <Input
                 type={'email'}
                 placeholder={'Логин'}
-                // onChange={(e) => setValue(e.target.value)}
-                // value={value}
+                onChange={onChange}
+                value={email}
                 name={'email'}
                 error={false}
                 // ref={inputRef}
@@ -64,8 +86,8 @@ function Profile() {
               <Input
                 type={'password'}
                 placeholder={'Пароль'}
-                // onChange={(e) => setValue(e.target.value)}
-                // value={value}
+                onChange={onChange}
+                value={password}
                 name={'password'}
                 error={false}
                 // ref={inputRef}
