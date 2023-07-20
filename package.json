@@ -1,7 +1,7 @@
 {
-  "homepage": "./login",
+  "homepage": "./profile",
   "name": "react-burger",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

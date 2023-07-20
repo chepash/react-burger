@@ -1,6 +1,6 @@
 export const API_BASE_URL = 'https://norma.nomoreparties.space/api'
 
-// reducer cases
+// form state names in redux store
 export const PASSWORD_RESTORE_FORM = 'passwordRestoreForm'
 export const PASSWORD_RESET_FORM = 'passwordResetForm'
 export const LOGIN_FORM = 'loginForm'
