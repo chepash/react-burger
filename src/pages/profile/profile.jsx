@@ -1,18 +1,25 @@
 import {
   Button,
   Input,
+  PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileNav from '../../components/profile-nav/profile-nav'
 import { UPDATE_PROFILE_FORM_STATE } from '../../services/actions/profile-actions'
 import styles from './profile.module.scss'
+import { useEffect, useState } from 'react'
 
 function Profile() {
   const dispatch = useDispatch()
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { name, email, password } = useSelector(
     (store) => store.profileState.form
+  )
+
+  const { name: userName, email: userEmail } = useSelector(
+    (store) => store.userState.user
   )
 
   const onChange = (e) => {
@@ -24,12 +31,48 @@ function Profile() {
       },
     })
   }
+  const onPasswordIconClick = (e) => {
+    setIsPasswordVisible(!isPasswordVisible)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
   }
 
-  const isButtonsVisible = true
+  const handleCancel = (e) => {
+    dispatch({
+      type: UPDATE_PROFILE_FORM_STATE,
+      payload: {
+        field: 'name',
+        value: userName,
+      },
+    })
+    dispatch({
+      type: UPDATE_PROFILE_FORM_STATE,
+      payload: {
+        field: 'email',
+        value: userEmail,
+      },
+    })
+    dispatch({
+      type: UPDATE_PROFILE_FORM_STATE,
+      payload: {
+        field: 'password',
+        value: '',
+      },
+    })
+  }
+
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+  const isPasswordValid = (password) => {
+    if (password === '') {
+      return true
+    }
+    return passwordPattern.test(password)
+  }
+
+  const isButtonsVisible = name !== userName || email !== userEmail || password
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
@@ -89,29 +132,53 @@ function Profile() {
             </li>
             <li className={cn(styles.list__item)}>
               <Input
-                type={'password'}
+                type={isPasswordVisible ? 'text' : 'password'}
                 placeholder={'Пароль'}
                 onChange={onChange}
+                onIconClick={password ? onPasswordIconClick : undefined}
                 value={password}
                 name={'password'}
-                error={false}
+                error={!isPasswordValid(password)}
                 // ref={inputRef}
-                // onIconClick={onIconClick}
-                errorText={'Ошибка'}
+                errorText={
+                  'Минимум 8 символов. Хотя бы одна заглавная буква, одна строчная букву и одна цифра.'
+                }
                 size={'default'}
-                // extraClass="ml-1"
-                icon={'EditIcon'}
+                icon={
+                  !password
+                    ? 'EditIcon'
+                    : isPasswordVisible
+                    ? 'HideIcon'
+                    : 'ShowIcon'
+                }
               />
             </li>
           </ul>
-          {isButtonsVisible && (
-            <div className={styles.buttons}>
-              <button className={cn(styles.button, 'mr-6')}>Отменить</button>
-              <Button htmlType="submit" type="primary" size="medium">
-                Сохранить
-              </Button>
-            </div>
-          )}
+
+          <div
+            className={cn(styles.buttons, {
+              [styles.buttons_visible]: isButtonsVisible,
+            })}
+          >
+            <button
+              type="button"
+              onClick={handleCancel}
+              className={cn(styles.button, 'mr-6', {
+                [styles.button_clickable]: isButtonsVisible,
+              })}
+              disabled={!isButtonsVisible}
+            >
+              Отменить
+            </button>
+            <Button
+              disabled={!isButtonsVisible || !isPasswordValid(password)}
+              htmlType="submit"
+              type="primary"
+              size="medium"
+            >
+              Сохранить
+            </Button>
+          </div>
         </form>
       </section>
     </main>

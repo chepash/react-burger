@@ -129,7 +129,7 @@ export const fetchUserData = () => {
     },
     method: 'GET',
   }
-  return request(endpoint, options)
+  return requestWithRefresh(endpoint, options)
 }
 
 export const updateUserData = (updatedFields) => {

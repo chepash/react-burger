@@ -1,6 +1,9 @@
 import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
 import * as api from '../../utils/api'
-import { CLEAR_PROFILE_FORM_STATE } from './profile-actions'
+import {
+  CLEAR_PROFILE_FORM_STATE,
+  UPDATE_PROFILE_FORM_STATE,
+} from './profile-actions'
 
 export const GET_USER_DATA_REQUEST = 'GET_USER_DATA_REQUEST'
 export const GET_USER_DATA_SUCCESS = 'GET_USER_DATA_SUCCESS'
@@ -21,9 +24,22 @@ export const getUser = () => (dispatch) => {
     .then((res) => {
       dispatch({ type: SET_USER_DATA, payload: res.user })
       dispatch({ type: GET_USER_DATA_SUCCESS, payload: res })
+      dispatch({
+        type: UPDATE_PROFILE_FORM_STATE,
+        payload: {
+          field: 'name',
+          value: res.user.name,
+        },
+      })
+      dispatch({
+        type: UPDATE_PROFILE_FORM_STATE,
+        payload: {
+          field: 'email',
+          value: res.user.email,
+        },
+      })
     })
     .catch((err) => {
-      dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
       console.log(`Ошибка fetchUserData: ${err}`)
       return dispatch({ type: GET_USER_DATA_ERROR })
     })
