@@ -1,21 +1,28 @@
 import {
   Button,
   Input,
-  PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileNav from '../../components/profile-nav/profile-nav'
-import { UPDATE_PROFILE_FORM_STATE } from '../../services/actions/profile-actions'
+import {
+  TOGGLE_PASSWORD_VISIBILITY,
+  UPDATE_PROFILE_FORM_STATE,
+  profileFormSubmit,
+} from '../../services/actions/profile-actions'
 import styles from './profile.module.scss'
-import { useEffect, useState } from 'react'
 
 function Profile() {
   const dispatch = useDispatch()
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  const { name, email, password } = useSelector(
-    (store) => store.profileState.form
+  const {
+    name: inputNameValue,
+    email: inputEmailValue,
+    password: inputPasswordValue,
+  } = useSelector((store) => store.profileState.form)
+
+  const isPasswordVisible = useSelector(
+    (store) => store.profileState.isPasswordVisible
   )
 
   const { name: userName, email: userEmail } = useSelector(
@@ -31,12 +38,24 @@ function Profile() {
       },
     })
   }
-  const onPasswordIconClick = (e) => {
-    setIsPasswordVisible(!isPasswordVisible)
+  const onPasswordIconClick = () => {
+    dispatch({ type: TOGGLE_PASSWORD_VISIBILITY })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    dispatch(
+      profileFormSubmit(
+        {
+          name: inputNameValue,
+          email: inputEmailValue,
+          password: inputPasswordValue,
+        },
+        userName,
+        userEmail
+      )
+    )
   }
 
   const handleCancel = (e) => {
@@ -72,7 +91,10 @@ function Profile() {
     return passwordPattern.test(password)
   }
 
-  const isButtonsVisible = name !== userName || email !== userEmail || password
+  const isButtonsVisible =
+    inputNameValue !== userName ||
+    inputEmailValue !== userEmail ||
+    inputPasswordValue
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
@@ -103,7 +125,7 @@ function Profile() {
                 type={'text'}
                 placeholder={'Имя'}
                 onChange={onChange}
-                value={name}
+                value={inputNameValue}
                 name={'name'}
                 error={false}
                 // ref={inputRef}
@@ -119,7 +141,7 @@ function Profile() {
                 type={'email'}
                 placeholder={'Логин'}
                 onChange={onChange}
-                value={email}
+                value={inputEmailValue}
                 name={'email'}
                 error={false}
                 // ref={inputRef}
@@ -135,17 +157,19 @@ function Profile() {
                 type={isPasswordVisible ? 'text' : 'password'}
                 placeholder={'Пароль'}
                 onChange={onChange}
-                onIconClick={password ? onPasswordIconClick : undefined}
-                value={password}
+                onIconClick={
+                  inputPasswordValue ? onPasswordIconClick : undefined
+                }
+                value={inputPasswordValue}
                 name={'password'}
-                error={!isPasswordValid(password)}
+                error={!isPasswordValid(inputPasswordValue)}
                 // ref={inputRef}
                 errorText={
                   'Минимум 8 символов. Хотя бы одна заглавная буква, одна строчная букву и одна цифра.'
                 }
                 size={'default'}
                 icon={
-                  !password
+                  !inputPasswordValue
                     ? 'EditIcon'
                     : isPasswordVisible
                     ? 'HideIcon'
@@ -171,7 +195,9 @@ function Profile() {
               Отменить
             </button>
             <Button
-              disabled={!isButtonsVisible || !isPasswordValid(password)}
+              disabled={
+                !isButtonsVisible || !isPasswordValid(inputPasswordValue)
+              }
               htmlType="submit"
               type="primary"
               size="medium"
