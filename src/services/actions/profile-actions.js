@@ -30,6 +30,13 @@ export const profileFormSubmit =
       .updateUserData(changedInputs)
       .then((res) => {
         dispatch({ type: PROFILE_FORM_SUBMIT_SUCCESS, payload: res })
+        dispatch({
+          type: UPDATE_PROFILE_FORM_STATE,
+          payload: {
+            field: 'password',
+            value: '',
+          },
+        })
         dispatch(getUser())
       })
       .catch((err) => {
