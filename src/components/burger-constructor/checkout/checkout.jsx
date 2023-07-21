@@ -59,7 +59,7 @@ const Checkout = () => {
         </Button>
       </div>
       {isOrderModalOpen && (
-        <Modal onClose={handleCloseModal}>
+        <Modal onClose={handleCloseModal} header={'Оформление заказа...'}>
           {isLoading && <Preloader />}
           {!isLoading && response?.success && (
             <OrderDetails orderNumber={response.order.number} />
