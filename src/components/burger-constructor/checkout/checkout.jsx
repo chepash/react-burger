@@ -7,8 +7,8 @@ import {
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { createOrder } from '../../../services/actions/order'
-import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal'
+import { createOrder } from '../../../services/actions/order-actions'
+import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal-actions'
 import Preloader from '../../preloader/preloader'
 
 const Checkout = () => {

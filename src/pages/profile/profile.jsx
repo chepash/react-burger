@@ -1,30 +1,35 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import {
+  Button,
+  Input,
+} from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import ProfileNav from '../../components/profile-nav/profile-nav'
-import styles from './profile.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { UPDATE_FORM_STATE } from '../../services/actions/forms'
-import { PROFILE_FORM } from '../../utils/constants'
+import ProfileNav from '../../components/profile-nav/profile-nav'
+import { UPDATE_PROFILE_FORM_STATE } from '../../services/actions/profile-actions'
+import styles from './profile.module.scss'
 
 function Profile() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const { name, email, password } = useSelector(
-    (store) => store.formsState.profileForm
+    (store) => store.profileState.form
   )
 
   const onChange = (e) => {
     dispatch({
-      type: UPDATE_FORM_STATE,
+      type: UPDATE_PROFILE_FORM_STATE,
       payload: {
-        form: PROFILE_FORM,
         field: e.target.name,
         value: e.target.value,
       },
     })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  const isButtonsVisible = true
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
@@ -48,7 +53,7 @@ function Profile() {
         aria-label="Изменение персональных данных"
         className={cn(styles.section)}
       >
-        <form className={styles.form} action="">
+        <form className={styles.form} onSubmit={handleSubmit}>
           <ul className={styles.list}>
             <li className={cn(styles.list__item)}>
               <Input
@@ -99,6 +104,14 @@ function Profile() {
               />
             </li>
           </ul>
+          {isButtonsVisible && (
+            <div className={styles.buttons}>
+              <button className={cn(styles.button, 'mr-6')}>Отменить</button>
+              <Button htmlType="submit" type="primary" size="medium">
+                Сохранить
+              </Button>
+            </div>
+          )}
         </form>
       </section>
     </main>

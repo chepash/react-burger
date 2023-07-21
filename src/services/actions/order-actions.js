@@ -1,5 +1,5 @@
 import * as api from '../../utils/api'
-import { EMPTY_CONSTRUCTOR } from './constructor'
+import { EMPTY_CONSTRUCTOR } from './constructor-actions'
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST'
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'

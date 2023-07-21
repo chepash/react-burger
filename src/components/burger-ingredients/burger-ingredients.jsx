@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../services/actions/modal'
+} from '../../services/actions/modal-actions'
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun')

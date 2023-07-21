@@ -2,7 +2,7 @@ import cn from 'classnames'
 import styles from './constructor-kit.module.scss'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../../services/actions/constructor'
+import { addIngredient } from '../../../services/actions/constructor-actions'
 
 import { useDrop } from 'react-dnd'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'

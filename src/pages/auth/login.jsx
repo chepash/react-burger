@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import {
   Button,
   Input,
@@ -6,28 +7,37 @@ import {
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import styles from './auth.module.scss'
-import { UPDATE_FORM_STATE } from '../../services/actions/forms'
+
 import { useDispatch, useSelector } from 'react-redux'
-import { LOGIN_FORM } from '../../utils/constants'
+import {
+  UPDATE_LOGIN_FORM_STATE,
+  loginFormSubmit,
+} from '../../services/actions/login-actions'
 
 function Login() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { email, password } = useSelector((store) => store.formsState.loginForm)
+  const { email, password } = useSelector((store) => store.loginState.form)
 
   const onChange = (e) => {
     dispatch({
-      type: UPDATE_FORM_STATE,
+      type: UPDATE_LOGIN_FORM_STATE,
       payload: {
-        form: LOGIN_FORM,
         field: e.target.name,
         value: e.target.value,
       },
     })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(loginFormSubmit(email, password, navigate))
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
-      <form className={styles.form} action="">
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={cn('text text_type_main-medium', 'mb-6')}>Вход</h1>
         <ul className={styles.list}>
           <li className={cn(styles.list__item)}>
@@ -55,7 +65,12 @@ function Login() {
           </li>
         </ul>
 
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="medium"
+          disabled={!email && !password}
+        >
           Войти
         </Button>
 

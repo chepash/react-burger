@@ -10,7 +10,7 @@ import { useDrag } from 'react-dnd'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../../services/actions/modal'
+} from '../../../services/actions/modal-actions'
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()

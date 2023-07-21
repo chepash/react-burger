@@ -4,50 +4,50 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link, useNavigate } from 'react-router-dom'
-import styles from './auth.module.scss'
-import { useState } from 'react'
-import * as api from '../../utils/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { UPDATE_FORM_STATE } from '../../services/actions/forms'
-import { PASSWORD_RESET_FORM } from '../../utils/constants'
+import { Link, useNavigate } from 'react-router-dom'
+import * as api from '../../utils/api'
+import styles from './auth.module.scss'
+
+import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
+import { UPDATE_PWD_RESET_FORM_STATE } from '../../services/actions/password-reset-actions'
 
 function PasswordReset() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { code, password } = useSelector(
-    (store) => store.formsState.passwordResetForm
+  const { token, password } = useSelector(
+    (store) => store.passwordResetState.form
   )
 
   const onChange = (e) => {
     dispatch({
-      type: UPDATE_FORM_STATE,
+      type: UPDATE_PWD_RESET_FORM_STATE,
       payload: {
-        form: PASSWORD_RESET_FORM,
         field: e.target.name,
         value: e.target.value,
       },
     })
   }
 
-  const onButtonClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     api
-      .sendPasswordResetRequest(password, code)
+      .sendPasswordResetRequest(password, token)
       .then((res) => {
         if (res.success) {
           navigate('/', { replace: true })
         }
       })
       .catch((err) => {
+        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
         console.log(`Ошибка sendPasswordResetRequest: ${err}`)
       })
   }
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
-      <form className={styles.form} action="">
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={cn('text text_type_main-medium', 'mb-6')}>
           Восстановление пароля
         </h1>
@@ -67,8 +67,8 @@ function PasswordReset() {
               type={'text'}
               placeholder={'Введите код из письма'}
               onChange={onChange}
-              value={code}
-              name={'code'}
+              value={token}
+              name={'token'}
               error={false}
               // ref={inputRef}
               // onIconClick={onIconClick}
@@ -80,9 +80,8 @@ function PasswordReset() {
         </ul>
 
         <Button
-          disabled={!code || !password}
-          onClick={onButtonClick}
-          htmlType="button"
+          disabled={!token || !password}
+          htmlType="submit"
           type="primary"
           size="medium"
         >

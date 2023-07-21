@@ -40,7 +40,7 @@ export const placeOrder = (ingredientsIds) => {
   return request(endpoint, options)
 }
 
-export const registerUser = (email, password, name) => {
+export const registerUser = (name, email, password) => {
   const endpoint = 'auth/register'
   const options = {
     method: 'POST',
@@ -48,7 +48,72 @@ export const registerUser = (email, password, name) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password, name }),
+    body: JSON.stringify({ name, email, password }),
+  }
+  return request(endpoint, options)
+}
+
+export const loginUser = (email, password) => {
+  const endpoint = 'auth/login'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  }
+  return request(endpoint, options)
+}
+
+export const logoutUser = () => {
+  const refreshToken = localStorage.getItem('refreshToken')
+
+  const endpoint = 'auth/logout'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: refreshToken }),
+  }
+  return request(endpoint, options)
+}
+
+export const fetchUserData = () => {
+  const accessToken = localStorage.getItem('accessToken')
+
+  const endpoint = 'auth/user'
+  const options = {
+    authorization: `Bearer ${accessToken}`,
+    method: 'GET',
+  }
+  return request(endpoint, options)
+}
+
+export const updateUserData = (updatedFields) => {
+  const endpoint = 'auth/user'
+  const options = {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ...updatedFields }),
+  }
+  return request(endpoint, options)
+}
+
+export const updateToken = (refreshToken) => {
+  const endpoint = 'auth/token'
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: refreshToken }),
   }
   return request(endpoint, options)
 }

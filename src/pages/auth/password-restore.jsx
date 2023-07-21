@@ -5,29 +5,29 @@ import {
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { UPDATE_FORM_STATE } from '../../services/actions/forms'
+
+import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
+import { UPDATE_PWD_RESTORE_FORM_STATE } from '../../services/actions/password-restore-actions'
 import * as api from '../../utils/api'
 import styles from './auth.module.scss'
-import { PASSWORD_RESTORE_FORM } from '../../utils/constants'
 
 function PasswordRestore() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { email } = useSelector((store) => store.formsState.passwordRestoreForm)
+  const { email } = useSelector((store) => store.passwordRestoreState.form)
 
   const onChange = (e) => {
     dispatch({
-      type: UPDATE_FORM_STATE,
+      type: UPDATE_PWD_RESTORE_FORM_STATE,
       payload: {
-        form: PASSWORD_RESTORE_FORM,
         field: e.target.name,
         value: e.target.value,
       },
     })
   }
 
-  const onButtonClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     api
       .sendPasswordRecoveryEmail(email)
@@ -37,13 +37,14 @@ function PasswordRestore() {
         }
       })
       .catch((err) => {
+        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
         console.log(`Ошибка sendPasswordRecoveryEmail: ${err}`)
       })
   }
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
-      <form className={styles.form} action="submit">
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={cn('text text_type_main-medium', 'mb-6')}>
           Восстановление пароля
         </h1>
@@ -64,11 +65,10 @@ function PasswordRestore() {
         </div>
 
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
           disabled={!email}
-          onClick={onButtonClick}
         >
           Восстановить
         </Button>

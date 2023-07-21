@@ -3,7 +3,7 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
   EMPTY_CONSTRUCTOR,
-} from '../actions/constructor'
+} from '../actions/constructor-actions'
 import defaultBun from '../../images/default-bun.svg'
 
 const initialState = {

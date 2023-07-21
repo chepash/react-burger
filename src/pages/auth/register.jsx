@@ -4,34 +4,40 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link, useNavigate } from 'react-router-dom'
-import styles from './auth.module.scss'
-import { REGISTER_FORM } from '../../utils/constants'
-import { UPDATE_FORM_STATE } from '../../services/actions/forms'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import {
+  UPDATE_REGISTER_FORM_STATE,
+  registratioFormSubmit,
+} from '../../services/actions/register-actions'
+import styles from './auth.module.scss'
 
 function Register() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const { name, email, password } = useSelector(
-    (store) => store.formsState.registerForm
+    (store) => store.registerState.form
   )
 
   const onChange = (e) => {
     dispatch({
-      type: UPDATE_FORM_STATE,
+      type: UPDATE_REGISTER_FORM_STATE,
       payload: {
-        form: REGISTER_FORM,
         field: e.target.name,
         value: e.target.value,
       },
     })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(registratioFormSubmit(name, email, password, navigate))
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
-      <form className={styles.form} action="">
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={cn('text text_type_main-medium', 'mb-6')}>
           Регистрация
         </h1>
@@ -76,7 +82,12 @@ function Register() {
           </li>
         </ul>
 
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          disabled={!name && !email && !password}
+          htmlType="submit"
+          type="primary"
+          size="medium"
+        >
           Зарегистрироваться
         </Button>
 
