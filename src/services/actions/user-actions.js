@@ -19,8 +19,7 @@ export const getUser = () => (dispatch) => {
   return api
     .fetchUserData()
     .then((res) => {
-      dispatch({ type: SET_USER_DATA, payload: res })
-
+      dispatch({ type: SET_USER_DATA, payload: res.user })
       dispatch({ type: GET_USER_DATA_SUCCESS, payload: res })
     })
     .catch((err) => {
