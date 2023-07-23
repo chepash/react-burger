@@ -15,6 +15,7 @@ import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
 import styles from './app.module.scss'
+import { ProtectedRouteElement } from '../protected-route-element/protected-route-element'
 
 function App() {
   const dispatch = useDispatch()
@@ -67,8 +68,11 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<PasswordRestore />} />
             <Route path="/reset-password" element={<PasswordReset />} />
-            <Route path="/profile" element={<Profile />} />
-            {/*         <Route path="/ingredients/:id" element={<Modal />} />
+            <Route
+              path="/profile"
+              element={<ProtectedRouteElement element={<Profile />} />}
+            />
+            {/* <Route path="/ingredients/:id" element={<Modal />} />
         <Route path="*" element={<NotFound404 />} /> */}
           </Routes>
         )}
