@@ -10,7 +10,10 @@ import * as api from '../../utils/api'
 import styles from './auth.module.scss'
 
 import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
-import { UPDATE_PWD_RESET_FORM_STATE } from '../../services/actions/password-reset-actions'
+import {
+  UPDATE_PWD_RESET_FORM_STATE,
+  passwordResetFormSubmit,
+} from '../../services/actions/password-reset-actions'
 
 function PasswordReset() {
   const dispatch = useDispatch()
@@ -32,17 +35,8 @@ function PasswordReset() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    api
-      .sendPasswordResetRequest(password, token)
-      .then((res) => {
-        if (res.success) {
-          navigate('/', { replace: true })
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        console.log(`Ошибка sendPasswordResetRequest: ${err}`)
-      })
+
+    dispatch(passwordResetFormSubmit({ token, password }, navigate))
   }
 
   return (
@@ -58,7 +52,6 @@ function PasswordReset() {
               onChange={onChange}
               value={password}
               name={'password'}
-              // extraClass="mb-2"
             />
           </li>
 
@@ -70,11 +63,8 @@ function PasswordReset() {
               value={token}
               name={'token'}
               error={false}
-              // ref={inputRef}
-              // onIconClick={onIconClick}
               errorText={'Ошибка'}
               size={'default'}
-              // extraClass="ml-1"
             />
           </li>
         </ul>

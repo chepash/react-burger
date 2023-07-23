@@ -160,7 +160,7 @@ export const sendPasswordRecoveryEmail = (email) => {
   return request(endpoint, options)
 }
 
-export const sendPasswordResetRequest = (password, token) => {
+export const sendPasswordResetRequest = ({ token, password }) => {
   const endpoint = 'password-reset/reset'
   const options = {
     method: 'POST',

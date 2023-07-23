@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
-import { UPDATE_PWD_RESTORE_FORM_STATE } from '../../services/actions/password-restore-actions'
+import {
+  UPDATE_PWD_RESTORE_FORM_STATE,
+  passwordRestoreFormSubmit,
+} from '../../services/actions/password-restore-actions'
 import * as api from '../../utils/api'
 import styles from './auth.module.scss'
 
@@ -29,17 +32,8 @@ function PasswordRestore() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    api
-      .sendPasswordRecoveryEmail(email)
-      .then((res) => {
-        if (res.success) {
-          navigate('/reset-password', { replace: true })
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        console.log(`Ошибка sendPasswordRecoveryEmail: ${err}`)
-      })
+
+    dispatch(passwordRestoreFormSubmit(email, navigate))
   }
 
   return (
