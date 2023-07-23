@@ -1,19 +1,18 @@
 import {
   Button,
   Input,
-  PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import * as api from '../../utils/api'
 import styles from './auth.module.scss'
 
-import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
 import {
+  TOGGLE_PWD_RESET_PASSWORD_VISIBILITY,
   UPDATE_PWD_RESET_FORM_STATE,
   passwordResetFormSubmit,
 } from '../../services/actions/password-reset-actions'
+import { passwordPattern } from '../../utils/constants'
 
 function PasswordReset() {
   const dispatch = useDispatch()
@@ -22,6 +21,14 @@ function PasswordReset() {
   const { token, password } = useSelector(
     (store) => store.passwordResetState.form
   )
+
+  const isPasswordVisible = useSelector(
+    (store) => store.passwordResetState.isPasswordVisible
+  )
+
+  const onPasswordIconClick = () => {
+    dispatch({ type: TOGGLE_PWD_RESET_PASSWORD_VISIBILITY })
+  }
 
   const onChange = (e) => {
     dispatch({
@@ -39,6 +46,13 @@ function PasswordReset() {
     dispatch(passwordResetFormSubmit({ token, password }, navigate))
   }
 
+  const isPasswordValid = (password) => {
+    if (password === '') {
+      return true
+    }
+    return passwordPattern.test(password)
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -47,11 +61,25 @@ function PasswordReset() {
         </h1>
         <ul className={styles.list}>
           <li className={cn(styles.list__item)}>
-            <PasswordInput
-              placeholder={'Введите новый пароль'}
+            <Input
+              type={isPasswordVisible ? 'text' : 'password'}
+              placeholder={'Пароль'}
               onChange={onChange}
+              onIconClick={password ? onPasswordIconClick : undefined}
               value={password}
               name={'password'}
+              error={!isPasswordValid(password)}
+              errorText={
+                'Минимум 8 символов. Хотя бы одна заглавная буква, одна строчная букву и одна цифра.'
+              }
+              size={'default'}
+              icon={
+                !password
+                  ? 'EditIcon'
+                  : isPasswordVisible
+                  ? 'HideIcon'
+                  : 'ShowIcon'
+              }
             />
           </li>
 

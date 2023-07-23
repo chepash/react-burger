@@ -5,6 +5,7 @@ import {
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   PWD_RESET_FORM_SUBMIT_ERROR,
   CLEAR_PWD_RESET_STATE,
+  TOGGLE_PWD_RESET_PASSWORD_VISIBILITY,
 } from '../actions/password-reset-actions'
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   response: null,
   isLoading: false,
   error: null,
+  isPasswordVisible: false,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -37,6 +39,12 @@ export const reducer = (state = initialState, action) => {
     case CLEAR_PWD_RESET_STATE: {
       return {
         ...initialState,
+      }
+    }
+    case TOGGLE_PWD_RESET_PASSWORD_VISIBILITY: {
+      return {
+        ...state,
+        isPasswordVisible: !state.isPasswordVisible,
       }
     }
     case PWD_RESET_FORM_SUBMIT_REQUEST:

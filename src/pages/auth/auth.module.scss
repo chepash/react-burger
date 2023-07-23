@@ -27,6 +27,7 @@
   list-style: none;
 
   &__item {
+    max-width: 480px;
     // 64px + 24px у инпута может появиться ниже текст валидации
     min-height: 88px;
   }

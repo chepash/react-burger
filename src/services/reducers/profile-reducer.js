@@ -4,7 +4,7 @@ import {
   UPDATE_PROFILE_FORM_STATE,
   PROFILE_FORM_SUBMIT_SUCCESS,
   PROFILE_FORM_SUBMIT_ERROR,
-  TOGGLE_PASSWORD_VISIBILITY,
+  TOGGLE_PROFILE_PASSWORD_VISIBILITY,
   CLEAR_PROFILE_STATE,
 } from '../actions/profile-actions'
 
@@ -61,7 +61,7 @@ export const reducer = (state = initialState, action) => {
         error: true,
         isLoading: false,
       }
-    case TOGGLE_PASSWORD_VISIBILITY:
+    case TOGGLE_PROFILE_PASSWORD_VISIBILITY:
       return {
         ...state,
         isPasswordVisible: !state.isPasswordVisible,

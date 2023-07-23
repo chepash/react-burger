@@ -6,11 +6,12 @@ import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileNav from '../../components/profile-nav/profile-nav'
 import {
-  TOGGLE_PASSWORD_VISIBILITY,
+  TOGGLE_PROFILE_PASSWORD_VISIBILITY,
   UPDATE_PROFILE_FORM_STATE,
   profileFormSubmit,
 } from '../../services/actions/profile-actions'
 import styles from './profile.module.scss'
+import { passwordPattern } from '../../utils/constants'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -39,7 +40,7 @@ function Profile() {
     })
   }
   const onPasswordIconClick = () => {
-    dispatch({ type: TOGGLE_PASSWORD_VISIBILITY })
+    dispatch({ type: TOGGLE_PROFILE_PASSWORD_VISIBILITY })
   }
 
   const handleSubmit = (e) => {
@@ -58,7 +59,7 @@ function Profile() {
     )
   }
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     dispatch({
       type: UPDATE_PROFILE_FORM_STATE,
       payload: {
@@ -81,8 +82,6 @@ function Profile() {
       },
     })
   }
-
-  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
   const isPasswordValid = (password) => {
     if (password === '') {
@@ -128,11 +127,8 @@ function Profile() {
                 value={inputNameValue}
                 name={'name'}
                 error={false}
-                // ref={inputRef}
-                // onIconClick={onIconClick}
                 errorText={'Ошибка'}
                 size={'default'}
-                // extraClass="ml-1"
                 icon={'EditIcon'}
               />
             </li>
@@ -144,11 +140,8 @@ function Profile() {
                 value={inputEmailValue}
                 name={'email'}
                 error={false}
-                // ref={inputRef}
-                // onIconClick={onIconClick}
                 errorText={'Ошибка'}
                 size={'default'}
-                // extraClass="ml-1"
                 icon={'EditIcon'}
               />
             </li>
@@ -163,7 +156,6 @@ function Profile() {
                 value={inputPasswordValue}
                 name={'password'}
                 error={!isPasswordValid(inputPasswordValue)}
-                // ref={inputRef}
                 errorText={
                   'Минимум 8 символов. Хотя бы одна заглавная буква, одна строчная букву и одна цифра.'
                 }
