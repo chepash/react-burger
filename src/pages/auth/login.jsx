@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import {
   Button,
   Input,
@@ -19,6 +19,7 @@ function Login() {
   const navigate = useNavigate()
 
   const { email, password } = useSelector((store) => store.loginState.form)
+  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -35,6 +36,10 @@ function Login() {
     dispatch(loginFormSubmit(email, password, navigate))
   }
 
+  if (isLoggedIn) {
+    return <Navigate to="/" replace />
+  }
+
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -48,11 +53,8 @@ function Login() {
               value={email}
               name={'email'}
               error={false}
-              // ref={inputRef}
-              // onIconClick={onIconClick}
               errorText={'Ошибка'}
               size={'default'}
-              // extraClass="ml-1"
             />
           </li>
           <li className={cn(styles.list__item)}>
@@ -60,7 +62,6 @@ function Login() {
               onChange={onChange}
               value={password}
               name={'password'}
-              // extraClass="mb-2"
             />
           </li>
         </ul>

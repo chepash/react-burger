@@ -4,7 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 import {
   UPDATE_PWD_RESTORE_FORM_STATE,
@@ -17,6 +17,7 @@ function PasswordRestore() {
   const navigate = useNavigate()
 
   const { email } = useSelector((store) => store.passwordRestoreState.form)
+  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -32,6 +33,10 @@ function PasswordRestore() {
     e.preventDefault()
 
     dispatch(passwordRestoreFormSubmit(email, navigate))
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace />
   }
 
   return (

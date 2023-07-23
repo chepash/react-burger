@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
   UPDATE_REGISTER_FORM_STATE,
   registratioFormSubmit,
@@ -19,6 +19,7 @@ function Register() {
   const { name, email, password } = useSelector(
     (store) => store.registerState.form
   )
+  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -33,6 +34,10 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(registratioFormSubmit(name, email, password, navigate))
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace />
   }
 
   return (
@@ -50,11 +55,8 @@ function Register() {
               value={name}
               name={'name'}
               error={false}
-              // ref={inputRef}
-              // onIconClick={onIconClick}
               errorText={'Ошибка'}
               size={'default'}
-              // extraClass="ml-1"
             />
           </li>
           <li className={cn(styles.list__item)}>
@@ -65,11 +67,8 @@ function Register() {
               value={email}
               name={'email'}
               error={false}
-              // ref={inputRef}
-              // onIconClick={onIconClick}
               errorText={'Ошибка'}
               size={'default'}
-              // extraClass="ml-1"
             />
           </li>
           <li className={cn(styles.list__item)}>
@@ -77,7 +76,6 @@ function Register() {
               onChange={onChange}
               value={password}
               name={'password'}
-              // extraClass="mb-2"
             />
           </li>
         </ul>
