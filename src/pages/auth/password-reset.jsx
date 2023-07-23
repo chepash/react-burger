@@ -4,15 +4,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import styles from './auth.module.scss'
 
 import {
+  CLEAR_PWD_RESET_STATE,
   TOGGLE_PWD_RESET_PASSWORD_VISIBILITY,
   UPDATE_PWD_RESET_FORM_STATE,
   passwordResetFormSubmit,
 } from '../../services/actions/password-reset-actions'
 import { passwordPattern } from '../../utils/constants'
+import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
 
 function PasswordReset() {
   const dispatch = useDispatch()
@@ -22,9 +24,18 @@ function PasswordReset() {
     (store) => store.passwordResetState.form
   )
 
+  const isEmailSent = useSelector(
+    (store) => store.passwordRestoreState.response?.success
+  )
+
   const isPasswordVisible = useSelector(
     (store) => store.passwordResetState.isPasswordVisible
   )
+
+  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
+
+  console.log('isLoggedIn : ', isLoggedIn)
+  console.log('isEmailSent : ', isEmailSent)
 
   const onPasswordIconClick = () => {
     dispatch({ type: TOGGLE_PWD_RESET_PASSWORD_VISIBILITY })
@@ -50,7 +61,12 @@ function PasswordReset() {
     if (password === '') {
       return true
     }
+
     return passwordPattern.test(password)
+  }
+
+  if (!isEmailSent) {
+    return <Navigate to="/" replace />
   }
 
   return (
@@ -118,6 +134,10 @@ function PasswordReset() {
           </p>
           <Link
             to={'/login'}
+            onClick={() => {
+              dispatch({ type: CLEAR_PWD_RESET_STATE })
+              dispatch({ type: CLEAR_PWD_RESTORE_STATE })
+            }}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Войти

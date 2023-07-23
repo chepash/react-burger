@@ -1,5 +1,6 @@
 import * as api from '../../utils/api'
 import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
 
 export const UPDATE_PWD_RESET_FORM_STATE = 'UPDATE_PWD_RESET_FORM_STATE'
 export const TOGGLE_PWD_RESET_PASSWORD_VISIBILITY =
@@ -21,6 +22,7 @@ export const passwordResetFormSubmit =
       .then((res) => {
         if (res.success) {
           dispatch({ type: CLEAR_PWD_RESET_FORM_STATE })
+          dispatch({ type: CLEAR_PWD_RESTORE_STATE })
           navigate('/', { replace: true })
         }
         return dispatch({ type: PWD_RESET_FORM_SUBMIT_SUCCESS, payload: res })
