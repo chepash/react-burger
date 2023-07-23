@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   form: {
-    email: '',
+    password: '',
     token: '',
   },
   response: null,
