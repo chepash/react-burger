@@ -6,12 +6,10 @@ import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal-actions'
 import {
   UPDATE_PWD_RESTORE_FORM_STATE,
   passwordRestoreFormSubmit,
 } from '../../services/actions/password-restore-actions'
-import * as api from '../../utils/api'
 import styles from './auth.module.scss'
 
 function PasswordRestore() {
@@ -50,11 +48,7 @@ function PasswordRestore() {
             onChange={onChange}
             value={email}
             name={'email'}
-            // error={true}
-            // ref={inputRef}
-            // errorText={'Ошибка'}
             size={'default'}
-            // extraClass="ml-1"
           />
         </div>
 
