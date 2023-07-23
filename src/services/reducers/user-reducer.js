@@ -6,6 +6,7 @@ import {
   LOGOUT_USER_ERROR,
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
+  SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../actions/user-actions'
 
@@ -14,6 +15,7 @@ const initialState = {
     name: '',
     email: '',
   },
+  isLoggedIn: false,
   response: null,
   isLoading: false,
   error: null,
@@ -61,6 +63,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      }
+    case SET_IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.payload,
       }
     case CLEAR_USER_STATE:
       return {

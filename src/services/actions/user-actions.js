@@ -19,6 +19,7 @@ export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
 export const LOGOUT_USER_ERROR = 'LOGOUT_USER_ERROR'
 
 export const SET_USER_DATA = 'SET_USER_DATA'
+export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN'
 export const CLEAR_USER_STATE = 'CLEAR_USER_STATE'
 
 export const getUser = () => (dispatch) => {
@@ -43,9 +44,11 @@ export const getUser = () => (dispatch) => {
           value: res.user.email,
         },
       })
+      dispatch({ type: SET_IS_LOGGED_IN, payload: true })
     })
     .catch((err) => {
       console.log(`Ошибка fetchUserData: ${err}`)
+      dispatch({ type: SET_IS_LOGGED_IN, payload: false })
       return dispatch({ type: GET_USER_DATA_ERROR })
     })
 }
