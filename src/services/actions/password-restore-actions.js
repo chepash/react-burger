@@ -16,10 +16,10 @@ export const passwordRestoreFormSubmit = (email, navigate) => (dispatch) => {
     .sendPasswordRecoveryEmail(email)
     .then((res) => {
       if (res.success) {
+        dispatch({ type: PWD_RESTORE_FORM_SUBMIT_SUCCESS, payload: res })
         dispatch({ type: CLEAR_PWD_RESTORE_FORM_STATE })
-        navigate('/password-reset', { replace: true })
+        navigate('/reset-password', { replace: true })
       }
-      return dispatch({ type: PWD_RESTORE_FORM_SUBMIT_SUCCESS, payload: res })
     })
     .catch((err) => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
