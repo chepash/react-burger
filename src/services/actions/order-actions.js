@@ -6,6 +6,7 @@ export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
 export const CREATE_ORDER_ERROR = 'CREATE_ORDER_ERROR'
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL'
 export const IGNORE_ORDER_ERROR = 'IGNORE_ORDER_ERROR'
+export const CLEAR_ORDER_STATE = 'CLEAR_ORDER_STATE'
 
 export const createOrder =
   (constructorIngredients, constructorBun) => (dispatch) => {

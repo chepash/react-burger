@@ -4,6 +4,7 @@ import {
   LOGIN_FORM_SUBMIT_REQUEST,
   LOGIN_FORM_SUBMIT_SUCCESS,
   LOGIN_FORM_SUBMIT_ERROR,
+  CLEAR_LOGIN_STATE,
 } from '../actions/login-actions'
 
 const initialState = {
@@ -31,6 +32,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         form: initialState.form,
+      }
+    }
+    case CLEAR_LOGIN_STATE: {
+      return {
+        ...initialState,
       }
     }
     case LOGIN_FORM_SUBMIT_REQUEST:

@@ -1,9 +1,14 @@
-import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
 import * as api from '../../utils/api'
+import { CLEAR_LOGIN_STATE } from './login-actions'
+import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { CLEAR_ORDER_STATE } from './order-actions'
+import { CLEAR_PWD_RESET_STATE } from './password-reset-actions'
+import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
 import {
-  CLEAR_PROFILE_FORM_STATE,
+  CLEAR_PROFILE_STATE,
   UPDATE_PROFILE_FORM_STATE,
 } from './profile-actions'
+import { CLEAR_REGISTER_STATE } from './register-actions'
 
 export const GET_USER_DATA_REQUEST = 'GET_USER_DATA_REQUEST'
 export const GET_USER_DATA_SUCCESS = 'GET_USER_DATA_SUCCESS'
@@ -14,7 +19,7 @@ export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
 export const LOGOUT_USER_ERROR = 'LOGOUT_USER_ERROR'
 
 export const SET_USER_DATA = 'SET_USER_DATA'
-export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
+export const CLEAR_USER_STATE = 'CLEAR_USER_STATE'
 
 export const getUser = () => (dispatch) => {
   dispatch({ type: GET_USER_DATA_REQUEST })
@@ -51,12 +56,16 @@ export const handleLogOut = () => (dispatch) => {
   return api
     .logoutUser()
     .then((res) => {
-      // нужно будет отсчистить все данные пользователя здесь из всех стейтов
-      // редирект на /
-      // и токены удалить
       if (res.success) {
-        dispatch({ type: CLEAR_USER_DATA })
-        dispatch({ type: CLEAR_PROFILE_FORM_STATE })
+        localStorage.clear()
+
+        dispatch({ type: CLEAR_LOGIN_STATE })
+        dispatch({ type: CLEAR_ORDER_STATE })
+        dispatch({ type: CLEAR_REGISTER_STATE })
+        dispatch({ type: CLEAR_PWD_RESTORE_STATE })
+        dispatch({ type: CLEAR_PWD_RESET_STATE })
+        dispatch({ type: CLEAR_PROFILE_STATE })
+        dispatch({ type: CLEAR_USER_STATE })
       }
 
       return dispatch({ type: LOGOUT_USER_SUCCESS, payload: res })

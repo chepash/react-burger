@@ -1,9 +1,16 @@
 import cn from 'classnames'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styles from './profile-nav.module.scss'
+import { handleLogOut } from '../../services/actions/user-actions'
+import { useDispatch } from 'react-redux'
 
 function ProfileNav() {
   const location = useLocation()
+  const dispatch = useDispatch()
+
+  const handleOnLogoutClick = () => {
+    dispatch(handleLogOut())
+  }
 
   return (
     <nav className={cn(styles.nav)}>
@@ -42,7 +49,8 @@ function ProfileNav() {
         </li>
         <li className={cn(styles.list__item)}>
           <NavLink
-            to={'/sigh-out'}
+            to={'/'}
+            onClick={handleOnLogoutClick}
             className={cn(
               styles.link,
               'text',

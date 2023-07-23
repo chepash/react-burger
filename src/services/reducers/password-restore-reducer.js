@@ -4,6 +4,7 @@ import {
   PWD_RESTORE_FORM_SUBMIT_REQUEST,
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
   PWD_RESTORE_FORM_SUBMIT_ERROR,
+  CLEAR_PWD_RESTORE_STATE,
 } from '../actions/password-restore-actions'
 
 const initialState = {
@@ -30,6 +31,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         form: initialState.form,
+      }
+    }
+    case CLEAR_PWD_RESTORE_STATE: {
+      return {
+        ...initialState,
       }
     }
     case PWD_RESTORE_FORM_SUBMIT_REQUEST:

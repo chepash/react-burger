@@ -1,4 +1,5 @@
 import {
+  CLEAR_ORDER_STATE,
   CREATE_ORDER_ERROR,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
@@ -35,6 +36,10 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: false,
+      }
+    case CLEAR_ORDER_STATE:
+      return {
+        ...initialState,
       }
     default:
       return state

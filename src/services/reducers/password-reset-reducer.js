@@ -4,6 +4,7 @@ import {
   PWD_RESET_FORM_SUBMIT_REQUEST,
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   PWD_RESET_FORM_SUBMIT_ERROR,
+  CLEAR_PWD_RESET_STATE,
 } from '../actions/password-reset-actions'
 
 const initialState = {
@@ -31,6 +32,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         form: initialState.form,
+      }
+    }
+    case CLEAR_PWD_RESET_STATE: {
+      return {
+        ...initialState,
       }
     }
     case PWD_RESET_FORM_SUBMIT_REQUEST:

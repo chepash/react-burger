@@ -1,5 +1,5 @@
 import {
-  CLEAR_USER_DATA,
+  CLEAR_USER_STATE,
   GET_USER_DATA_ERROR,
   GET_USER_DATA_REQUEST,
   GET_USER_DATA_SUCCESS,
@@ -62,7 +62,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       }
-    case CLEAR_USER_DATA:
+    case CLEAR_USER_STATE:
       return {
         ...initialState,
       }

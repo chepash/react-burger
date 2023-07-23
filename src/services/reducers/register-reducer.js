@@ -4,6 +4,7 @@ import {
   REGISTER_FORM_SUBMIT_REQUEST,
   REGISTER_FORM_SUBMIT_SUCCESS,
   REGISTER_FORM_SUBMIT_ERROR,
+  CLEAR_REGISTER_STATE,
 } from '../actions/register-actions'
 
 const initialState = {
@@ -32,6 +33,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         form: initialState.form,
+      }
+    }
+    case CLEAR_REGISTER_STATE: {
+      return {
+        ...initialState,
       }
     }
     case REGISTER_FORM_SUBMIT_REQUEST:

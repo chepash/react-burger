@@ -5,6 +5,7 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   PROFILE_FORM_SUBMIT_ERROR,
   TOGGLE_PASSWORD_VISIBILITY,
+  CLEAR_PROFILE_STATE,
 } from '../actions/profile-actions'
 
 const initialState = {
@@ -35,6 +36,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         form: initialState.form,
+      }
+    }
+    case CLEAR_PROFILE_STATE: {
+      return {
+        ...initialState,
       }
     }
     case PROFILE_FORM_SUBMIT_REQUEST:
