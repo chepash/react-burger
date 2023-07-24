@@ -44,17 +44,23 @@ function Profile() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    dispatch(
-      profileFormSubmit(
-        {
-          name: inputNameValue,
-          email: inputEmailValue,
-          password: inputPasswordValue,
-        },
-        userName,
-        userEmail
-      )
-    )
+    const changedInputs = {
+      name: inputNameValue,
+      email: inputEmailValue,
+      password: inputPasswordValue,
+    }
+
+    Object.keys(changedInputs).forEach((field) => {
+      if (
+        (field === 'name' && changedInputs[field] === userName) ||
+        (field === 'email' && changedInputs[field] === userEmail) ||
+        (field === 'password' && changedInputs[field] === '')
+      ) {
+        delete changedInputs[field]
+      }
+    })
+
+    dispatch(profileFormSubmit(changedInputs))
   }
 
   const handleCancel = () => {
