@@ -6,7 +6,7 @@ import {
 } from '../actions/modal-actions'
 
 const initialState = {
-  currentIngredient: {},
+  currentIngredient: null,
   isIngredientModalOpen: false,
   isOrderModalOpen: false,
   isErrorModalOpen: false,

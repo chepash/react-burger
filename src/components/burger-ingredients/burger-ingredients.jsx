@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './burger-ingredients.module.scss'
-import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
 import IngredientsCategory from './ingredients-category/ingredients-category'
-import Modal from '../modal/modal'
-import IngredientDetails from './ingredient-details/ingredient-details'
+import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
 
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  SET_CURRENT_INGREDIENT,
-  SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../services/actions/modal-actions'
+import { useSelector } from 'react-redux'
 
 const BurgerIngredients = () => {
+  const ingredients = useSelector((store) => store.ingredientsState.ingredients)
+
   const [currentTab, setCurrentTab] = useState('bun')
 
   const rootRef = useRef(null)
@@ -56,18 +52,6 @@ const BurgerIngredients = () => {
       }
     }
   }, [currentTab])
-
-  const dispatch = useDispatch()
-
-  const { ingredients } = useSelector((store) => store.ingredientsState)
-  const { isIngredientModalOpen, currentIngredient } = useSelector(
-    (store) => store.modalState
-  )
-
-  const handleCloseModal = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: {} })
-    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
-  }
 
   const buns = useMemo(
     () => ingredients.filter((item) => item.type === 'bun'),
@@ -132,12 +116,7 @@ const BurgerIngredients = () => {
             />
           </div>
         </div>
-      </section>{' '}
-      {isIngredientModalOpen && currentIngredient && (
-        <Modal header="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
+      </section>
     </>
   )
 }
