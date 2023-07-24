@@ -27,7 +27,6 @@ export const passwordResetFormSubmit =
       })
       .catch((err) => {
         dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        console.log(`Ошибка sendPasswordRecoveryEmail: ${err}`)
         return dispatch({ type: PWD_RESET_FORM_SUBMIT_ERROR })
       })
   }

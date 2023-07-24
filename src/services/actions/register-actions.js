@@ -24,7 +24,6 @@ export const registratioFormSubmit =
       })
       .catch((err) => {
         dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        console.log(`Ошибка registerUser: ${err}`)
         return dispatch({ type: REGISTER_FORM_SUBMIT_ERROR })
       })
   }

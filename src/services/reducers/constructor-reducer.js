@@ -47,8 +47,6 @@ export const reducer = (state = initialState, action) => {
       }
     case MOVE_INGREDIENT:
       const { fromIndex, toIndex } = action.payload
-      console.log('fromIndex : ', fromIndex)
-      console.log('toIndex : ', toIndex)
       const ingredients = [...state.constructorIngredients]
 
       ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0])

@@ -46,8 +46,7 @@ export const getUser = () => (dispatch) => {
       })
       dispatch({ type: SET_IS_LOGGED_IN, payload: true })
     })
-    .catch((err) => {
-      console.log(`Ошибка fetchUserData: ${err}`)
+    .catch(() => {
       dispatch({ type: SET_IS_LOGGED_IN, payload: false })
       return dispatch({ type: GET_USER_DATA_ERROR })
     })
@@ -75,7 +74,6 @@ export const handleLogOut = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-      console.log(`Ошибка logoutUser: ${err}`)
       return dispatch({ type: LOGOUT_USER_ERROR })
     })
 }

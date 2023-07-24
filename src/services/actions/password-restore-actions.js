@@ -23,7 +23,6 @@ export const passwordRestoreFormSubmit = (email, navigate) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-      console.log(`Ошибка sendPasswordRecoveryEmail: ${err}`)
       return dispatch({ type: PWD_RESTORE_FORM_SUBMIT_ERROR })
     })
 }

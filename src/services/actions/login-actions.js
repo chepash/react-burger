@@ -29,7 +29,6 @@ export const loginFormSubmit = (email, password) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-      console.log(`Ошибка loginUser: ${err}`)
       return dispatch({ type: LOGIN_FORM_SUBMIT_ERROR })
     })
 }

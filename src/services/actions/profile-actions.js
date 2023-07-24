@@ -41,7 +41,6 @@ export const profileFormSubmit =
       })
       .catch((err) => {
         dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        console.log(`Ошибка updateUserData: ${err}`)
         return dispatch({ type: PROFILE_FORM_SUBMIT_ERROR })
       })
   }
