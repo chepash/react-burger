@@ -49,8 +49,7 @@ function ProfileNav() {
           </NavLink>
         </li>
         <li className={cn(styles.list__item)}>
-          <NavLink
-            to={'/'}
+          <button
             onClick={handleOnLogoutClick}
             className={cn(
               styles.link,
@@ -60,7 +59,7 @@ function ProfileNav() {
             )}
           >
             Выход
-          </NavLink>
+          </button>
         </li>
       </ul>
     </nav>
