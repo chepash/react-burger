@@ -1,19 +1,17 @@
-import { Navigate, useNavigate } from 'react-router-dom'
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
-import styles from './auth.module.scss'
-
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   SET_REDIRECT_PATH,
   UPDATE_LOGIN_FORM_STATE,
   loginFormSubmit,
 } from '../../services/actions/login-actions'
+import styles from './auth.module.scss'
 
 function Login() {
   const dispatch = useDispatch()

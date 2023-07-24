@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useLocation } from 'react-router-dom'
 import { SET_REDIRECT_PATH } from '../../services/actions/login-actions'
-import PropTypes from 'prop-types'
 
 const ProtectedRouteElement = ({ element, onlyUnAuth = false }) => {
   const dispatch = useDispatch()

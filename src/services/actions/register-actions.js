@@ -18,19 +18,21 @@ export const registratioFormSubmit =
       .registerUser(name, email, password)
       .then((res) => {
         if (res.success) {
-          dispatch({ type: CLEAR_REGISTER_FORM_STATE })
           const accessTokenWithoutBearer = res.accessToken.replace(
             'Bearer ',
             ''
           )
           localStorage.setItem('accessToken', accessTokenWithoutBearer)
           localStorage.setItem('refreshToken', res.refreshToken)
-          dispatch(getUser())
+
+          dispatch({ type: CLEAR_REGISTER_FORM_STATE })
+          dispatch({ type: REGISTER_FORM_SUBMIT_SUCCESS, payload: res })
           navigate('/', { replace: true })
+
+          return dispatch(getUser())
         }
-        return dispatch({ type: REGISTER_FORM_SUBMIT_SUCCESS, payload: res })
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
         return dispatch({ type: REGISTER_FORM_SUBMIT_ERROR })
       })

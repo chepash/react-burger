@@ -3,11 +3,9 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import styles from './auth.module.scss'
-
-import { useState } from 'react'
 import {
   CLEAR_PWD_RESET_STATE,
   UPDATE_PWD_RESET_FORM_STATE,
@@ -15,6 +13,7 @@ import {
 } from '../../services/actions/password-reset-actions'
 import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
 import { passwordPattern } from '../../utils/constants'
+import styles from './auth.module.scss'
 
 function PasswordReset() {
   const dispatch = useDispatch()
