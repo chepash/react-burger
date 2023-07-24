@@ -7,9 +7,10 @@ import { useDispatch } from 'react-redux'
 function ProfileNav() {
   const location = useLocation()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleOnLogoutClick = () => {
-    dispatch(handleLogOut())
+    dispatch(handleLogOut()).then(() => navigate('/login'))
   }
 
   return (

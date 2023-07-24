@@ -72,7 +72,7 @@ export const handleLogOut = () => (dispatch) => {
 
       return dispatch({ type: LOGOUT_USER_SUCCESS, payload: res })
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
       return dispatch({ type: LOGOUT_USER_ERROR })
     })
