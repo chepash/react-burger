@@ -1,5 +1,6 @@
 import * as api from '../../utils/api'
 import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { getUser } from './user-actions'
 
 export const UPDATE_REGISTER_FORM_STATE = 'UPDATE_REGISTER_FORM_STATE'
 export const CLEAR_REGISTER_FORM_STATE = 'CLEAR_REGISTER_FORM_STATE'
@@ -18,6 +19,13 @@ export const registratioFormSubmit =
       .then((res) => {
         if (res.success) {
           dispatch({ type: CLEAR_REGISTER_FORM_STATE })
+          const accessTokenWithoutBearer = res.accessToken.replace(
+            'Bearer ',
+            ''
+          )
+          localStorage.setItem('accessToken', accessTokenWithoutBearer)
+          localStorage.setItem('refreshToken', res.refreshToken)
+          dispatch(getUser())
           navigate('/', { replace: true })
         }
         return dispatch({ type: REGISTER_FORM_SUBMIT_SUCCESS, payload: res })
