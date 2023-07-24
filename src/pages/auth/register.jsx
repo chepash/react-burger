@@ -19,7 +19,6 @@ function Register() {
   const { name, email, password } = useSelector(
     (store) => store.registerState.form
   )
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -34,10 +33,6 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(registratioFormSubmit(name, email, password, navigate))
-  }
-
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />
   }
 
   return (

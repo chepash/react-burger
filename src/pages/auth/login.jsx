@@ -21,7 +21,6 @@ function Login() {
 
   const { email, password } = useSelector((store) => store.loginState.form)
   const redirectPath = useSelector((store) => store.loginState.redirectPath)
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -35,14 +34,10 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(loginFormSubmit(email, password, navigate)).then(() => {
+    dispatch(loginFormSubmit(email, password)).then(() => {
       navigate(redirectPath || '/', { replace: true })
       dispatch({ type: SET_REDIRECT_PATH, payload: '' })
     })
-  }
-
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />
   }
 
   return (

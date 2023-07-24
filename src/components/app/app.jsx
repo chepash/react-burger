@@ -20,7 +20,7 @@ import IngredientDetails from '../burger-ingredients/ingredient-details/ingredie
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
-import { ProtectedRouteElement } from '../protected-route-element/protected-route-element'
+import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
 import ProfileOrders from '../../pages/profile-orders/profile-orders'
 
@@ -80,10 +80,42 @@ function App() {
           <>
             <Routes location={background || location}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<PasswordRestore />} />
-              <Route path="/reset-password" element={<PasswordReset />} />
+              <Route
+                path="/login"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<Login />}
+                  />
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<Register />}
+                  />
+                }
+              />
+              <Route
+                path="/forgot-password"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<PasswordRestore />}
+                  />
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<PasswordReset />}
+                  />
+                }
+              />
               <Route
                 path="/profile"
                 element={<ProtectedRouteElement element={<Profile />} />}

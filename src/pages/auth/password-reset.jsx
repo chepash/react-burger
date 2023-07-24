@@ -29,8 +29,6 @@ function PasswordReset() {
     (store) => store.passwordRestoreState.response?.success
   )
 
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
-
   const onPasswordIconClick = () => {
     setIsPasswordVisible(!isPasswordVisible)
   }
@@ -59,7 +57,7 @@ function PasswordReset() {
     return passwordPattern.test(password)
   }
 
-  if (!isEmailSent || isLoggedIn) {
+  if (!isEmailSent) {
     return <Navigate to="/" replace />
   }
 

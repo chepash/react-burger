@@ -17,7 +17,6 @@ function PasswordRestore() {
   const navigate = useNavigate()
 
   const { email } = useSelector((store) => store.passwordRestoreState.form)
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
     dispatch({
@@ -33,10 +32,6 @@ function PasswordRestore() {
     e.preventDefault()
 
     dispatch(passwordRestoreFormSubmit(email, navigate))
-  }
-
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />
   }
 
   return (

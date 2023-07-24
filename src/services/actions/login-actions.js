@@ -21,13 +21,11 @@ export const loginFormSubmit = (email, password) => (dispatch) => {
       localStorage.setItem('accessToken', accessTokenWithoutBearer)
       localStorage.setItem('refreshToken', res.refreshToken)
 
-      dispatch(getUser())
-
       dispatch({ type: CLEAR_LOGIN_FORM_STATE })
-
-      return dispatch({ type: LOGIN_FORM_SUBMIT_SUCCESS, payload: res })
+      dispatch({ type: LOGIN_FORM_SUBMIT_SUCCESS, payload: res })
+      return dispatch(getUser())
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
       return dispatch({ type: LOGIN_FORM_SUBMIT_ERROR })
     })
