@@ -1,11 +1,10 @@
 import {
-  PROFILE_FORM_SUBMIT_REQUEST,
   CLEAR_PROFILE_FORM_STATE,
-  UPDATE_PROFILE_FORM_STATE,
-  PROFILE_FORM_SUBMIT_SUCCESS,
-  PROFILE_FORM_SUBMIT_ERROR,
-  TOGGLE_PROFILE_PASSWORD_VISIBILITY,
   CLEAR_PROFILE_STATE,
+  PROFILE_FORM_SUBMIT_ERROR,
+  PROFILE_FORM_SUBMIT_REQUEST,
+  PROFILE_FORM_SUBMIT_SUCCESS,
+  UPDATE_PROFILE_FORM_STATE,
 } from '../actions/profile-actions'
 
 const initialState = {
@@ -60,11 +59,6 @@ export const reducer = (state = initialState, action) => {
         response: null,
         error: true,
         isLoading: false,
-      }
-    case TOGGLE_PROFILE_PASSWORD_VISIBILITY:
-      return {
-        ...state,
-        isPasswordVisible: !state.isPasswordVisible,
       }
     default:
       return state

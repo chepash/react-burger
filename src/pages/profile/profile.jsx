@@ -3,15 +3,15 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileNav from '../../components/profile-nav/profile-nav'
 import {
-  TOGGLE_PROFILE_PASSWORD_VISIBILITY,
   UPDATE_PROFILE_FORM_STATE,
   profileFormSubmit,
 } from '../../services/actions/profile-actions'
-import styles from './profile.module.scss'
 import { passwordPattern } from '../../utils/constants'
+import styles from './profile.module.scss'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -22,9 +22,7 @@ function Profile() {
     password: inputPasswordValue,
   } = useSelector((store) => store.profileState.form)
 
-  const isPasswordVisible = useSelector(
-    (store) => store.profileState.isPasswordVisible
-  )
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { name: userName, email: userEmail } = useSelector(
     (store) => store.userState.user
@@ -40,7 +38,7 @@ function Profile() {
     })
   }
   const onPasswordIconClick = () => {
-    dispatch({ type: TOGGLE_PROFILE_PASSWORD_VISIBILITY })
+    setIsPasswordVisible(!isPasswordVisible)
   }
 
   const handleSubmit = (e) => {

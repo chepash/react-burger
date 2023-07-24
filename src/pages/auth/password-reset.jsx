@@ -7,18 +7,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import styles from './auth.module.scss'
 
+import { useState } from 'react'
 import {
   CLEAR_PWD_RESET_STATE,
-  TOGGLE_PWD_RESET_PASSWORD_VISIBILITY,
   UPDATE_PWD_RESET_FORM_STATE,
   passwordResetFormSubmit,
 } from '../../services/actions/password-reset-actions'
-import { passwordPattern } from '../../utils/constants'
 import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
+import { passwordPattern } from '../../utils/constants'
 
 function PasswordReset() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { token, password } = useSelector(
     (store) => store.passwordResetState.form
@@ -28,17 +29,13 @@ function PasswordReset() {
     (store) => store.passwordRestoreState.response?.success
   )
 
-  const isPasswordVisible = useSelector(
-    (store) => store.passwordResetState.isPasswordVisible
-  )
-
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   console.log('isLoggedIn : ', isLoggedIn)
   console.log('isEmailSent : ', isEmailSent)
 
   const onPasswordIconClick = () => {
-    dispatch({ type: TOGGLE_PWD_RESET_PASSWORD_VISIBILITY })
+    setIsPasswordVisible(!isPasswordVisible)
   }
 
   const onChange = (e) => {
