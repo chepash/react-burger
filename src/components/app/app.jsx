@@ -16,6 +16,7 @@ import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
 import styles from './app.module.scss'
 import { ProtectedRouteElement } from '../protected-route-element/protected-route-element'
+import NotFound from '../../pages/not-found/not-found'
 
 function App() {
   const dispatch = useDispatch()
@@ -72,8 +73,8 @@ function App() {
               path="/profile"
               element={<ProtectedRouteElement element={<Profile />} />}
             />
-            {/* <Route path="/ingredients/:id" element={<Modal />} />
-        <Route path="*" element={<NotFound404 />} /> */}
+            {/* <Route path="/ingredients/:id" element={<Modal />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         )}
       </div>
