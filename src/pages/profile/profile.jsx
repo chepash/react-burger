@@ -105,7 +105,8 @@ function Profile() {
             'mt-20',
             'text',
             'text_type_main-default',
-            'text_color_inactive'
+            'text_color_inactive',
+            styles.section__description
           )}
         >
           В этом разделе вы можете изменить свои персональные данные

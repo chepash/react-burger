@@ -55,10 +55,7 @@ function ProfileNav() {
               styles.link,
               'text',
               'text_type_main-medium',
-              'text_color_inactive',
-              {
-                [styles.link_active]: location.pathname === '/profile/orders',
-              }
+              'text_color_inactive'
             )}
           >
             Выход

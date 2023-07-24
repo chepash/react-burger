@@ -9,6 +9,17 @@
   height: 90vh;
 }
 
+.section {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &__description {
+    max-width: 320px;
+    padding: 0;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
