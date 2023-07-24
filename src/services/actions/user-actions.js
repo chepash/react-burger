@@ -23,33 +23,37 @@ export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN'
 export const CLEAR_USER_STATE = 'CLEAR_USER_STATE'
 
 export const getUser = () => (dispatch) => {
-  dispatch({ type: GET_USER_DATA_REQUEST })
+  const accessToken = localStorage.getItem('accessToken')
 
-  return api
-    .fetchUserData()
-    .then((res) => {
-      dispatch({ type: SET_USER_DATA, payload: res.user })
-      dispatch({ type: GET_USER_DATA_SUCCESS, payload: res })
-      dispatch({
-        type: UPDATE_PROFILE_FORM_STATE,
-        payload: {
-          field: 'name',
-          value: res.user.name,
-        },
+  if (accessToken) {
+    dispatch({ type: GET_USER_DATA_REQUEST })
+
+    return api
+      .fetchUserData()
+      .then((res) => {
+        dispatch({ type: SET_USER_DATA, payload: res.user })
+        dispatch({ type: GET_USER_DATA_SUCCESS, payload: res })
+        dispatch({
+          type: UPDATE_PROFILE_FORM_STATE,
+          payload: {
+            field: 'name',
+            value: res.user.name,
+          },
+        })
+        dispatch({
+          type: UPDATE_PROFILE_FORM_STATE,
+          payload: {
+            field: 'email',
+            value: res.user.email,
+          },
+        })
+        dispatch({ type: SET_IS_LOGGED_IN, payload: true })
       })
-      dispatch({
-        type: UPDATE_PROFILE_FORM_STATE,
-        payload: {
-          field: 'email',
-          value: res.user.email,
-        },
+      .catch(() => {
+        dispatch({ type: SET_IS_LOGGED_IN, payload: false })
+        return dispatch({ type: GET_USER_DATA_ERROR })
       })
-      dispatch({ type: SET_IS_LOGGED_IN, payload: true })
-    })
-    .catch(() => {
-      dispatch({ type: SET_IS_LOGGED_IN, payload: false })
-      return dispatch({ type: GET_USER_DATA_ERROR })
-    })
+  }
 }
 
 export const handleLogOut = () => (dispatch) => {
