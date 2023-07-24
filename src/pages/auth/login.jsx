@@ -10,6 +10,7 @@ import styles from './auth.module.scss'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  SET_REDIRECT_PATH,
   UPDATE_LOGIN_FORM_STATE,
   loginFormSubmit,
 } from '../../services/actions/login-actions'
@@ -19,6 +20,7 @@ function Login() {
   const navigate = useNavigate()
 
   const { email, password } = useSelector((store) => store.loginState.form)
+  const redirectPath = useSelector((store) => store.loginState.redirectPath)
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const onChange = (e) => {
@@ -33,7 +35,10 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(loginFormSubmit(email, password, navigate))
+    dispatch(loginFormSubmit(email, password, navigate)).then(() => {
+      navigate(redirectPath || '/', { replace: true })
+      dispatch({ type: SET_REDIRECT_PATH, payload: '' })
+    })
   }
 
   if (isLoggedIn) {

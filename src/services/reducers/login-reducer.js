@@ -5,6 +5,7 @@ import {
   LOGIN_FORM_SUBMIT_SUCCESS,
   LOGIN_FORM_SUBMIT_ERROR,
   CLEAR_LOGIN_STATE,
+  SET_REDIRECT_PATH,
 } from '../actions/login-actions'
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   response: null,
   isLoading: false,
   error: null,
+  redirectPath: '',
 }
 
 export const reducer = (state = initialState, action) => {
@@ -56,6 +58,11 @@ export const reducer = (state = initialState, action) => {
         response: null,
         error: true,
         isLoading: false,
+      }
+    case SET_REDIRECT_PATH:
+      return {
+        ...state,
+        redirectPath: action.payload,
       }
     default:
       return state
