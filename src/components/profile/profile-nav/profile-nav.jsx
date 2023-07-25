@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styles from './profile-nav.module.scss'
-import { handleLogOut } from '../../services/actions/user-actions'
+import { handleLogOut } from '../../../services/actions/user-actions'
 import { useDispatch } from 'react-redux'
 
 function ProfileNav() {

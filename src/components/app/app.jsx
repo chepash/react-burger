@@ -22,7 +22,8 @@ import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
-import ProfileOrders from '../../pages/profile-orders/profile-orders'
+import ProfileOrders from '../profile/profile-orders/profile-orders'
+import ProfileInfo from '../profile/profile-info/profile-info'
 
 function App() {
   const dispatch = useDispatch()
@@ -116,14 +117,15 @@ function App() {
                   />
                 }
               />
+
               <Route
                 path="/profile"
                 element={<ProtectedRouteElement element={<Profile />} />}
-              />
-              <Route
-                path="/profile/orders"
-                element={<ProtectedRouteElement element={<ProfileOrders />} />}
-              />
+              >
+                <Route path="" element={<ProfileInfo />} />
+                <Route path="orders" element={<ProfileOrders />} />
+              </Route>
+
               <Route
                 path="/ingredients/:id"
                 element={
