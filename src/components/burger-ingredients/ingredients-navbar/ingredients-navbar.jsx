@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredients-navbar.module.scss'
 import PropTypes from 'prop-types'

@@ -2,7 +2,7 @@ import cn from 'classnames'
 import styles from './constructor-kit.module.scss'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../../services/actions/constructor'
+import { addIngredient } from '../../../services/actions/constructor-actions'
 
 import { useDrop } from 'react-dnd'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
@@ -36,11 +36,31 @@ const ConstructorKit = () => {
         />
       </div>
 
-      <ul className={cn(styles.list)}>
-        {constructorIngredients.map((item, index) => (
-          <PrimaryIngredient ingredient={item} key={item.uuid} index={index} />
-        ))}
-      </ul>
+      {constructorIngredients.length === 0 && (
+        <div
+          className={cn(
+            styles.burger__ingridient,
+            'text',
+            'text_type_main-small',
+            'ml-8',
+            'mr-4'
+          )}
+        >
+          Добавьте ингридиенты
+        </div>
+      )}
+
+      {constructorIngredients.length > 0 && (
+        <ul className={cn(styles.list)}>
+          {constructorIngredients.map((item, index) => (
+            <PrimaryIngredient
+              ingredient={item}
+              key={item.uuid}
+              index={index}
+            />
+          ))}
+        </ul>
+      )}
 
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement

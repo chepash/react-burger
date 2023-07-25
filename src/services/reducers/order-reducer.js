@@ -1,43 +1,46 @@
 import {
-  GET_INGREDIENTS_ERROR,
-  GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCESS,
-  IGNORE_INGREDIENTS_ERROR,
-} from '../actions/ingredients'
+  CLEAR_ORDER_STATE,
+  CREATE_ORDER_ERROR,
+  CREATE_ORDER_REQUEST,
+  CREATE_ORDER_SUCCESS,
+  IGNORE_ORDER_ERROR,
+} from '../actions/order-actions'
 
 const initialState = {
-  ingredients: [],
-
+  response: null,
   isLoading: false,
   error: null,
 }
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_INGREDIENTS_REQUEST:
+    case CREATE_ORDER_REQUEST:
       return {
         ...state,
         isLoading: true,
       }
-    case GET_INGREDIENTS_SUCCESS:
+    case CREATE_ORDER_SUCCESS:
       return {
         ...state,
-        ingredients: action.payload,
+        response: action.payload,
         isLoading: false,
       }
-    case GET_INGREDIENTS_ERROR:
+    case CREATE_ORDER_ERROR:
       return {
         ...state,
-        ingredients: [],
+        response: null,
         error: true,
         isLoading: false,
       }
-    case IGNORE_INGREDIENTS_ERROR:
+    case IGNORE_ORDER_ERROR:
       return {
         ...state,
         error: false,
       }
-
+    case CLEAR_ORDER_STATE:
+      return {
+        ...initialState,
+      }
     default:
       return state
   }

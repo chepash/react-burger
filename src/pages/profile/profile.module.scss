@@ -1,0 +1,91 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 60px;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}
+
+.section {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &__description {
+    max-width: 320px;
+    padding: 0;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  &__item {
+    display: flex;
+    width: 100%;
+
+    // 64px + 24px у инпута может появиться ниже текст валидации
+    min-height: 88px;
+  }
+}
+
+.link {
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &_active {
+    color: #fff;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.buttons {
+  align-self: flex-end;
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  &_visible {
+    opacity: 1;
+  }
+}
+
+.button {
+  align-self: flex-end;
+
+  padding: 0;
+
+  color: #4c4cff;
+  white-space: nowrap;
+
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  &_clickable {
+    cursor: pointer;
+  }
+
+  &:hover {
+    opacity: 0.6;
+    transition: all 0.2s ease;
+  }
+}

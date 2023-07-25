@@ -3,14 +3,14 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
   EMPTY_CONSTRUCTOR,
-} from '../actions/constructor'
+} from '../actions/constructor-actions'
 import defaultBun from '../../images/default-bun.svg'
 
 const initialState = {
   constructorIngredients: [],
   constructorBun: {
     image_mobile: defaultBun,
-    name: 'Выберите тип булки',
+    name: 'Добавьте булку',
     price: 0,
   },
 }
@@ -43,16 +43,10 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         constructorIngredients: [],
-        constructorBun: {
-          image_mobile: defaultBun,
-          name: 'Выберите тип булки',
-          price: 0,
-        },
+        constructorBun: initialState.constructorBun,
       }
     case MOVE_INGREDIENT:
       const { fromIndex, toIndex } = action.payload
-      console.log('fromIndex : ', fromIndex)
-      console.log('toIndex : ', toIndex)
       const ingredients = [...state.constructorIngredients]
 
       ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0])

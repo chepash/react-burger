@@ -1,21 +1,35 @@
-import cn from 'classnames'
-import styles from './app.module.scss'
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import Login from '../../pages/auth/login'
+import PasswordReset from '../../pages/auth/password-reset'
+import PasswordRestore from '../../pages/auth/password-restore'
+import Register from '../../pages/auth/register'
+import HomePage from '../../pages/home-page/home-page'
+import NotFound from '../../pages/not-found/not-found'
+import Profile from '../../pages/profile/profile'
+import { getAllIngredients } from '../../services/actions/ingredients-actions'
+import {
+  SET_CURRENT_INGREDIENT,
+  SET_IS_ERROR_MODAL_OPEN,
+  SET_IS_INGREDIENT_MODAL_OPEN,
+} from '../../services/actions/modal-actions'
+import { getUser } from '../../services/actions/user-actions'
 import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-
+import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllIngredients } from '../../services/actions/ingredients'
-import { SET_IS_ERROR_MODAL_OPEN } from '../../services/actions/modal'
 import Preloader from '../preloader/preloader'
+import ProtectedRouteElement from '../protected-route-element/protected-route-element'
+import styles from './app.module.scss'
+import ProfileOrders from '../../pages/profile-orders/profile-orders'
 
 function App() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const background = location.state && location.state.backgroundLocation
 
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
@@ -23,11 +37,17 @@ function App() {
     (store) => store.ingredientsState.error
   )
 
+  const { isIngredientModalOpen } = useSelector((store) => store.modalState)
+
   const placeOrderError = useSelector((store) => store.orderState.error)
 
   const isErrorModalOpen = useSelector(
     (store) => store.modalState.isErrorModalOpen
   )
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [])
 
   useEffect(() => {
     dispatch(getAllIngredients())
@@ -43,20 +63,95 @@ function App() {
     dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: false })
   }
 
+  const handleCloseModal = () => {
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: null })
+    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
+    navigate('/')
+  }
+
   return (
     <>
       <div className={styles.page}>
         <AppHeader />
-        <DndProvider backend={HTML5Backend}>
-          {isLoading ? (
-            <Preloader />
-          ) : (
-            <main className={cn(styles.main, 'pl-5 pr-5')}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          )}
-        </DndProvider>
+
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <>
+            <Routes location={background || location}>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/login"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<Login />}
+                  />
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<Register />}
+                  />
+                }
+              />
+              <Route
+                path="/forgot-password"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<PasswordRestore />}
+                  />
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <ProtectedRouteElement
+                    onlyUnAuth={true}
+                    element={<PasswordReset />}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={<ProtectedRouteElement element={<Profile />} />}
+              />
+              <Route
+                path="/profile/orders"
+                element={<ProtectedRouteElement element={<ProfileOrders />} />}
+              />
+              <Route
+                path="/ingredients/:id"
+                element={
+                  <>
+                    <IngredientDetails />
+                  </>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+
+            {background && isIngredientModalOpen && (
+              <Routes>
+                <Route
+                  path="/ingredients/:id"
+                  element={
+                    <Modal
+                      header="Детали ингредиента"
+                      onClose={handleCloseModal}
+                    >
+                      <IngredientDetails />
+                    </Modal>
+                  }
+                />
+              </Routes>
+            )}
+          </>
+        )}
       </div>
 
       {isErrorModalOpen && (

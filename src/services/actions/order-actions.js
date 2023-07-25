@@ -1,11 +1,12 @@
 import * as api from '../../utils/api'
-import { EMPTY_CONSTRUCTOR } from './constructor'
+import { EMPTY_CONSTRUCTOR } from './constructor-actions'
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST'
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
 export const CREATE_ORDER_ERROR = 'CREATE_ORDER_ERROR'
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL'
 export const IGNORE_ORDER_ERROR = 'IGNORE_ORDER_ERROR'
+export const CLEAR_ORDER_STATE = 'CLEAR_ORDER_STATE'
 
 export const createOrder =
   (constructorIngredients, constructorBun) => (dispatch) => {

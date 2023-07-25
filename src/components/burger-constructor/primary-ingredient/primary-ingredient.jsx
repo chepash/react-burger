@@ -5,7 +5,7 @@ import styles from './primary-ingredient.module.scss'
 import {
   MOVE_INGREDIENT,
   deleteIngredient,
-} from '../../../services/actions/constructor'
+} from '../../../services/actions/constructor-actions'
 import { useDrag, useDrop } from 'react-dnd'
 import {
   ConstructorElement,

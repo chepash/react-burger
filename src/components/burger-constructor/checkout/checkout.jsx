@@ -7,16 +7,19 @@ import {
 import OrderDetails from '../order-details/order-details'
 import Modal from '../../modal/modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { createOrder } from '../../../services/actions/order'
-import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal'
+import { createOrder } from '../../../services/actions/order-actions'
+import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal-actions'
 import Preloader from '../../preloader/preloader'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { constructorIngredients, constructorBun } = useSelector(
     (store) => store.constructorState
   )
+  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   const { isLoading, response } = useSelector((store) => store.orderState)
   const { isOrderModalOpen } = useSelector((store) => store.modalState)
@@ -27,8 +30,12 @@ const Checkout = () => {
   )
 
   const handleOrder = () => {
-    dispatch(createOrder(constructorIngredients, constructorBun))
-    dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
+    if (isLoggedIn) {
+      dispatch(createOrder(constructorIngredients, constructorBun))
+      dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
+    } else {
+      navigate('/login')
+    }
   }
 
   const handleCloseModal = () => {
@@ -59,7 +66,10 @@ const Checkout = () => {
         </Button>
       </div>
       {isOrderModalOpen && (
-        <Modal onClose={handleCloseModal}>
+        <Modal
+          onClose={handleCloseModal}
+          header={isLoading ? 'Оформление заказа...' : ''}
+        >
           {isLoading && <Preloader />}
           {!isLoading && response?.success && (
             <OrderDetails orderNumber={response.order.number} />

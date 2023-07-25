@@ -1,19 +1,22 @@
-import { useDispatch, useSelector } from 'react-redux'
 import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './ingredient-card.module.scss'
 import cn from 'classnames'
-import { burgerIngredientPropType } from '../../../utils/prop-types'
 import { useDrag } from 'react-dnd'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
-} from '../../../services/actions/modal'
+} from '../../../services/actions/modal-actions'
+import { burgerIngredientPropType } from '../../../utils/prop-types'
+import styles from './ingredient-card.module.scss'
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const { constructorIngredients, constructorBun } = useSelector(
     (store) => store.constructorState
@@ -22,6 +25,9 @@ const IngredientCard = ({ ingredient }) => {
   const onClick = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient })
     dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+    navigate(`/ingredients/${ingredient._id}`, {
+      state: { backgroundLocation: location },
+    })
   }
 
   const [, dragRef] = useDrag({
