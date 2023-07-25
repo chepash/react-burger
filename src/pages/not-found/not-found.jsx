@@ -13,7 +13,7 @@ function NotFound() {
       <br />
       <br />
       <p className={'text text_type_main-default'}>
-        Проверьте адерс или перейдите на{' '}
+        Проверьте адрес или перейдите на{' '}
         <Link to="/" className={styles.link}>
           главную страницу
         </Link>
