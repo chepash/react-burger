@@ -7,7 +7,6 @@ import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
-  SET_REDIRECT_PATH,
   UPDATE_LOGIN_FORM_STATE,
   loginFormSubmit,
 } from '../../services/actions/login-actions'
@@ -15,10 +14,8 @@ import styles from './auth.module.scss'
 
 function Login() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const { email, password } = useSelector((store) => store.loginState.form)
-  const redirectPath = useSelector((store) => store.loginState.redirectPath)
 
   const onChange = (e) => {
     dispatch({
@@ -32,10 +29,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(loginFormSubmit(email, password)).then(() => {
-      navigate(redirectPath || '/', { replace: true })
-      dispatch({ type: SET_REDIRECT_PATH, payload: '' })
-    })
+    dispatch(loginFormSubmit(email, password))
   }
 
   return (

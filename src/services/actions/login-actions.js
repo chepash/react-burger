@@ -2,7 +2,6 @@ import * as api from '../../utils/api'
 import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
 import { getUser } from './user-actions'
 
-export const SET_REDIRECT_PATH = 'SET_REDIRECT_PATH'
 export const UPDATE_LOGIN_FORM_STATE = 'UPDATE_LOGIN_FORM_STATE'
 export const CLEAR_LOGIN_FORM_STATE = 'CLEAR_LOGIN_FORM_STATE'
 export const CLEAR_LOGIN_STATE = 'CLEAR_LOGIN_STATE'

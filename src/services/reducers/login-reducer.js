@@ -1,11 +1,10 @@
 import {
   CLEAR_LOGIN_FORM_STATE,
-  UPDATE_LOGIN_FORM_STATE,
+  CLEAR_LOGIN_STATE,
+  LOGIN_FORM_SUBMIT_ERROR,
   LOGIN_FORM_SUBMIT_REQUEST,
   LOGIN_FORM_SUBMIT_SUCCESS,
-  LOGIN_FORM_SUBMIT_ERROR,
-  CLEAR_LOGIN_STATE,
-  SET_REDIRECT_PATH,
+  UPDATE_LOGIN_FORM_STATE,
 } from '../actions/login-actions'
 
 const initialState = {
@@ -58,11 +57,6 @@ export const reducer = (state = initialState, action) => {
         response: null,
         error: true,
         isLoading: false,
-      }
-    case SET_REDIRECT_PATH:
-      return {
-        ...state,
-        redirectPath: action.payload,
       }
     default:
       return state
