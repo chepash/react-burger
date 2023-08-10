@@ -1,12 +1,24 @@
-import { API_BASE_URL } from './constants'
+import { API_BASE_URL, JWT_EXPIRE_ERROR_TEXT } from './constants'
+import {
+  TAuthResponse,
+  TCustomRequestInit,
+  TErrorResponse,
+  TIngredient,
+  TLogOutResponse,
+  TPasswordResetResponse,
+  TPlaceOrderResponse,
+  TSendRecoveryEmailResponse,
+  TTokenResponse,
+  TUserDataResponse,
+} from './types'
 
-const getResponse = (res) => {
+const getResponse = async <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json()
   }
 
   return res.json().then((data) => {
-    const error = {
+    const error: TErrorResponse = {
       status: res.status.toString(),
       message: data.message || `Ошибка: ${res.status}`,
     }
@@ -14,15 +26,29 @@ const getResponse = (res) => {
   })
 }
 
-const request = (endpoint, options) => {
+const request = async <T>(
+  endpoint: string,
+  options: RequestInit
+): Promise<T> => {
   const url = `${API_BASE_URL}/${endpoint}`
-  return fetch(url, options).then(getResponse)
+  const res = await fetch(url, options)
+  return getResponse<T>(res)
 }
 
-const fetchNewRefreshToken = () => {
+export const fetchIngredients = async (): Promise<
+  ReadonlyArray<TIngredient>
+> => {
+  const endpoint = 'ingredients'
+  const options = {
+    method: 'GET',
+  }
+  return request(endpoint, options)
+}
+
+const fetchNewRefreshToken = async (): Promise<TTokenResponse> => {
   const refreshToken = localStorage.getItem('refreshToken')
   const endpoint = 'auth/token'
-  const options = {
+  const options: RequestInit = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -33,13 +59,16 @@ const fetchNewRefreshToken = () => {
   return request(endpoint, options)
 }
 
-const requestWithRefresh = async (endpoint, options) => {
+const requestWithRefresh = async <T>(
+  endpoint: string,
+  options: TCustomRequestInit
+): Promise<T> => {
   const url = `${API_BASE_URL}/${endpoint}`
   try {
-    const res = await fetch(url, options) //делаем запрос
+    const res = await fetch(url, options)
     return await getResponse(res)
   } catch (err) {
-    if (err.message === 'jwt expired') {
+    if ((err as Error).message === JWT_EXPIRE_ERROR_TEXT) {
       const refreshData = await fetchNewRefreshToken()
       localStorage.setItem('refreshToken', refreshData.refreshToken)
       localStorage.setItem(
@@ -47,7 +76,7 @@ const requestWithRefresh = async (endpoint, options) => {
         refreshData.accessToken.replace('Bearer ', '')
       )
       options.headers.authorization = refreshData.accessToken
-      const res = await fetch(url, options) //вызываем перезапрос данных
+      const res = await fetch(url, options)
       return await getResponse(res)
     } else {
       return Promise.reject(err)
@@ -55,15 +84,9 @@ const requestWithRefresh = async (endpoint, options) => {
   }
 }
 
-export const fetchIngredients = () => {
-  const endpoint = 'ingredients'
-  const options = {
-    method: 'GET',
-  }
-  return request(endpoint, options)
-}
-
-export const placeOrder = (ingredientsIds) => {
+export const placeOrder = (
+  ingredientsIds: Array<string>
+): Promise<TPlaceOrderResponse> => {
   const accessToken = localStorage.getItem('accessToken')
   const endpoint = 'orders'
   const options = {
@@ -78,7 +101,11 @@ export const placeOrder = (ingredientsIds) => {
   return requestWithRefresh(endpoint, options)
 }
 
-export const registerUser = (name, email, password) => {
+export const registerUser = (
+  name: string,
+  email: string,
+  password: string
+): Promise<TAuthResponse> => {
   const endpoint = 'auth/register'
   const options = {
     method: 'POST',
@@ -91,7 +118,10 @@ export const registerUser = (name, email, password) => {
   return request(endpoint, options)
 }
 
-export const loginUser = (email, password) => {
+export const loginUser = (
+  email: string,
+  password: string
+): Promise<TAuthResponse> => {
   const endpoint = 'auth/login'
   const options = {
     method: 'POST',
@@ -104,7 +134,7 @@ export const loginUser = (email, password) => {
   return request(endpoint, options)
 }
 
-export const logoutUser = () => {
+export const logoutUser = (): Promise<TLogOutResponse> => {
   const refreshToken = localStorage.getItem('refreshToken')
 
   const endpoint = 'auth/logout'
@@ -119,7 +149,7 @@ export const logoutUser = () => {
   return request(endpoint, options)
 }
 
-export const fetchUserData = () => {
+export const fetchUserData = (): Promise<TUserDataResponse> => {
   const accessToken = localStorage.getItem('accessToken')
 
   const endpoint = 'auth/user'
@@ -132,7 +162,11 @@ export const fetchUserData = () => {
   return requestWithRefresh(endpoint, options)
 }
 
-export const updateUserData = (updatedFields) => {
+export const updateUserData = (updatedFields: {
+  name?: string
+  email?: string
+  password?: string
+}): Promise<TUserDataResponse> => {
   const accessToken = localStorage.getItem('accessToken')
   const endpoint = 'auth/user'
   const options = {
@@ -147,7 +181,9 @@ export const updateUserData = (updatedFields) => {
   return requestWithRefresh(endpoint, options)
 }
 
-export const sendPasswordRecoveryEmail = (email) => {
+export const sendPasswordRecoveryEmail = (
+  email: string
+): Promise<TSendRecoveryEmailResponse> => {
   const endpoint = 'password-reset'
   const options = {
     method: 'POST',
@@ -160,7 +196,13 @@ export const sendPasswordRecoveryEmail = (email) => {
   return request(endpoint, options)
 }
 
-export const sendPasswordResetRequest = ({ token, password }) => {
+export const sendPasswordResetRequest = ({
+  token,
+  password,
+}: {
+  token: string
+  password: string
+}): Promise<TPasswordResetResponse> => {
   const endpoint = 'password-reset/reset'
   const options = {
     method: 'POST',
