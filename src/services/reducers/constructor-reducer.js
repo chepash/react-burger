@@ -18,10 +18,10 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_INGREDIENT:
-      if (action.payload.type === 'bun') {
+      if (action.payload.ingredient.type === 'bun') {
         return {
           ...state,
-          constructorBun: action.payload,
+          constructorBun: action.payload.ingredient,
         }
       }
 

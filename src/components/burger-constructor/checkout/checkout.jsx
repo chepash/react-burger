@@ -25,7 +25,7 @@ const Checkout = () => {
   const { isOrderModalOpen } = useSelector((store) => store.modalState)
 
   const orderSum = constructorIngredients.reduce(
-    (acc, item) => acc + item.price,
+    (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
     constructorBun.price * 2
   )
 

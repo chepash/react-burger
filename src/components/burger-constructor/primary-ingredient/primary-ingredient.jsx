@@ -1,19 +1,17 @@
-import { PropTypes } from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { burgerIngredientPropType } from '../../../utils/prop-types'
-import styles from './primary-ingredient.module.scss'
-import {
-  MOVE_INGREDIENT,
-  deleteIngredient,
-} from '../../../services/actions/constructor-actions'
-import { useDrag, useDrop } from 'react-dnd'
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useRef } from 'react'
+import { useDrag, useDrop } from 'react-dnd'
+import { useDispatch } from 'react-redux'
+import {
+  MOVE_INGREDIENT,
+  deleteIngredient,
+} from '../../../services/actions/constructor-actions'
+import styles from './primary-ingredient.module.scss'
 
-const PrimaryIngredient = ({ ingredient, index }) => {
+const PrimaryIngredient = ({ ingredientWithUUID, index }) => {
   const dispatch = useDispatch()
   const ref = useRef(null)
 
@@ -85,25 +83,20 @@ const PrimaryIngredient = ({ ingredient, index }) => {
   const opacity = isDragging ? 0 : 1
   return (
     <li
-      key={ingredient.uuid}
+      key={ingredientWithUUID.uuid}
       className={styles.ingredient}
       style={{ opacity }}
       ref={ref}
     >
       <DragIcon type="primary" />
       <ConstructorElement
-        text={ingredient.name}
-        price={ingredient.price}
-        thumbnail={ingredient.image_mobile}
-        handleClose={() => dispatch(deleteIngredient(ingredient.uuid))}
+        text={ingredientWithUUID.ingredient.name}
+        price={ingredientWithUUID.ingredient.price}
+        thumbnail={ingredientWithUUID.ingredient.image_mobile}
+        handleClose={() => dispatch(deleteIngredient(ingredientWithUUID.uuid))}
       />
     </li>
   )
-}
-
-PrimaryIngredient.propTypes = {
-  ingredient: burgerIngredientPropType.isRequired,
-  index: PropTypes.number.isRequired,
 }
 
 export default PrimaryIngredient

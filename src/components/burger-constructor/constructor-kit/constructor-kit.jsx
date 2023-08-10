@@ -54,7 +54,7 @@ const ConstructorKit = () => {
         <ul className={cn(styles.list)}>
           {constructorIngredients.map((item, index) => (
             <PrimaryIngredient
-              ingredient={item}
+              ingredientWithUUID={item}
               key={item.uuid}
               index={index}
             />
