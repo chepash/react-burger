@@ -1,15 +1,22 @@
 import cn from 'classnames'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { SET_CURRENT_INGREDIENT } from '../../../services/actions/modal-actions'
 import styles from './ingredient-details.module.scss'
+import { TIngredient } from '../../../utils/types'
 
-function IngredientDetails() {
-  const { currentIngredient } = useSelector((store) => store.modalState)
+const IngredientDetails: FC = () => {
+  const currentIngredient: TIngredient = useSelector(
+    // @ts-ignore
+    (store) => store.modalState.currentIngredient
+  )
   const { id } = useParams()
   const dispatch = useDispatch()
-  const ingredients = useSelector((store) => store.ingredientsState.ingredients)
+  const ingredients: TIngredient[] = useSelector(
+    // @ts-ignore
+    (store) => store.ingredientsState.ingredients
+  )
 
   useEffect(() => {
     if (id) {

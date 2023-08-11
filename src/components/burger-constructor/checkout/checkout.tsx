@@ -11,26 +11,33 @@ import { createOrder } from '../../../services/actions/order-actions'
 import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal-actions'
 import Preloader from '../../preloader/preloader'
 import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import { TIngredientWithUUID } from '../../../utils/types'
 
-const Checkout = () => {
+const Checkout: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const { constructorIngredients, constructorBun } = useSelector(
+    // @ts-ignore
     (store) => store.constructorState
   )
+  // @ts-ignore
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
-
+  // @ts-ignore
   const { isLoading, response } = useSelector((store) => store.orderState)
+  // @ts-ignore
   const { isOrderModalOpen } = useSelector((store) => store.modalState)
 
-  const orderSum = constructorIngredients.reduce(
-    (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
+  const orderSum: number = constructorIngredients.reduce(
+    (acc: number, ingredientWithUUID: TIngredientWithUUID) =>
+      acc + ingredientWithUUID.ingredient.price,
     constructorBun.price * 2
   )
 
-  const handleOrder = () => {
+  const handleOrder: () => void = () => {
     if (isLoggedIn) {
+      // @ts-ignore
       dispatch(createOrder(constructorIngredients, constructorBun))
       dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
     } else {
@@ -38,7 +45,7 @@ const Checkout = () => {
     }
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal: () => void = () => {
     dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: false })
   }
 

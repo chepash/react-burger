@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Login from '../../pages/auth/login'
@@ -25,32 +25,36 @@ import styles from './app.module.scss'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProfileInfo from '../profile/profile-info/profile-info'
 
-function App() {
+const App: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
   const background = location.state && location.state.backgroundLocation
-
+  //@ts-ignore
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
   const fetchIngredientsError = useSelector(
+    //@ts-ignore
     (store) => store.ingredientsState.error
   )
-
+  //@ts-ignore
   const { isIngredientModalOpen } = useSelector((store) => store.modalState)
-
+  //@ts-ignore
   const placeOrderError = useSelector((store) => store.orderState.error)
 
   const isErrorModalOpen = useSelector(
+    //@ts-ignore
     (store) => store.modalState.isErrorModalOpen
   )
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getUser())
   }, [])
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getAllIngredients())
   }, [dispatch])
 

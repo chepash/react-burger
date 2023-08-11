@@ -1,8 +1,9 @@
 import cn from 'classnames'
 import sadFace from '../../../images/sad-face.svg'
 import { DEFAULT_ERROR_TEXT } from '../../../utils/constants'
+import { FC } from 'react'
 
-function ModalError() {
+const ModalError: FC = () => {
   return (
     <>
       <img className={cn('mt-20')} alt={DEFAULT_ERROR_TEXT} src={sadFace} />

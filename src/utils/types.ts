@@ -4,10 +4,12 @@ import {
   SUCCESSFUL_RECOVERY_MAIL_SEND_MESSAGE,
 } from './constants'
 
+export type TIngredientsCategory = 'bun' | 'sauce' | 'main'
+
 export type TIngredient = {
   readonly _id: string
   readonly name: string
-  readonly type: string
+  readonly type: TIngredientsCategory
   readonly proteins: number
   readonly fat: number
   readonly carbohydrates: number
@@ -17,6 +19,11 @@ export type TIngredient = {
   readonly image_mobile: string
   readonly image_large: string
   readonly __v: number
+}
+
+export type TIngredientWithUUID = {
+  ingredient: TIngredient
+  uuid: string
 }
 
 export type TOwner = {
@@ -58,7 +65,7 @@ type TBaseApiResponse = {
 //   "accessToken": "Bearer ...",
 //   "refreshToken": ""
 // }
-export type TTokenResponse = TBaseApiResponse & {
+export type TRefreshTokenResponse = TBaseApiResponse & {
   readonly accessToken: string
   readonly refreshToken: string
 }
@@ -73,7 +80,7 @@ export type TTokenResponse = TBaseApiResponse & {
 //     "name": ""
 //   }
 // }
-export type TAuthResponse = TTokenResponse & {
+export type TAuthResponse = TRefreshTokenResponse & {
   readonly user: TUser
 }
 

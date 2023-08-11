@@ -7,8 +7,8 @@ import {
   TLogOutResponse,
   TPasswordResetResponse,
   TPlaceOrderResponse,
+  TRefreshTokenResponse,
   TSendRecoveryEmailResponse,
-  TTokenResponse,
   TUserDataResponse,
 } from './types'
 
@@ -35,17 +35,7 @@ const request = async <T>(
   return getResponse<T>(res)
 }
 
-export const fetchIngredients = async (): Promise<
-  ReadonlyArray<TIngredient>
-> => {
-  const endpoint = 'ingredients'
-  const options = {
-    method: 'GET',
-  }
-  return request(endpoint, options)
-}
-
-const fetchNewRefreshToken = async (): Promise<TTokenResponse> => {
+const fetchNewRefreshToken = async (): Promise<TRefreshTokenResponse> => {
   const refreshToken = localStorage.getItem('refreshToken')
   const endpoint = 'auth/token'
   const options: RequestInit = {
@@ -77,11 +67,21 @@ const requestWithRefresh = async <T>(
       )
       options.headers.authorization = refreshData.accessToken
       const res = await fetch(url, options)
-      return await getResponse(res)
+      return await getResponse<T>(res)
     } else {
       return Promise.reject(err)
     }
   }
+}
+
+export const fetchIngredients = async (): Promise<
+  ReadonlyArray<TIngredient>
+> => {
+  const endpoint = 'ingredients'
+  const options = {
+    method: 'GET',
+  }
+  return request(endpoint, options)
 }
 
 export const placeOrder = (

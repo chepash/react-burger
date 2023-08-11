@@ -3,7 +3,7 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useState } from 'react'
+import { FC, SyntheticEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './profile-info.module.scss'
@@ -13,22 +13,24 @@ import {
 } from '../../../services/actions/profile-actions'
 import { passwordPattern } from '../../../utils/constants'
 
-function ProfileInfo() {
+const ProfileInfo: FC = () => {
   const dispatch = useDispatch()
 
   const {
     name: inputNameValue,
     email: inputEmailValue,
     password: inputPasswordValue,
+    // @ts-ignore
   } = useSelector((store) => store.profileState.form)
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { name: userName, email: userEmail } = useSelector(
+    // @ts-ignore
     (store) => store.userState.user
   )
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: UPDATE_PROFILE_FORM_STATE,
       payload: {
@@ -37,11 +39,12 @@ function ProfileInfo() {
       },
     })
   }
+
   const onPasswordIconClick = () => {
     setIsPasswordVisible(!isPasswordVisible)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
 
     const changedInputs = {
@@ -60,6 +63,7 @@ function ProfileInfo() {
       }
     })
 
+    // @ts-ignore
     dispatch(profileFormSubmit(changedInputs))
   }
 
@@ -87,7 +91,7 @@ function ProfileInfo() {
     })
   }
 
-  const isPasswordValid = (password) => {
+  const isPasswordValid: (password: string) => boolean = (password) => {
     if (password === '') {
       return true
     }

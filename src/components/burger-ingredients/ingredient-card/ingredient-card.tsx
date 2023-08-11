@@ -3,6 +3,7 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { FC } from 'react'
 import { useDrag } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -10,15 +11,20 @@ import {
   SET_CURRENT_INGREDIENT,
   SET_IS_INGREDIENT_MODAL_OPEN,
 } from '../../../services/actions/modal-actions'
-import { burgerIngredientPropType } from '../../../utils/prop-types'
+import { TIngredient, TIngredientWithUUID } from '../../../utils/types'
 import styles from './ingredient-card.module.scss'
 
-const IngredientCard = ({ ingredient }) => {
+type TIngredientCardProps = {
+  ingredient: TIngredient
+}
+
+const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
   const { constructorIngredients, constructorBun } = useSelector(
+    // @ts-ignore
     (store) => store.constructorState
   )
 
@@ -30,7 +36,7 @@ const IngredientCard = ({ ingredient }) => {
     })
   }
 
-  const [, dragRef] = useDrag({
+  const [, dragTargetRef] = useDrag({
     type: 'ingredient',
     item: ingredient,
   })
@@ -40,13 +46,14 @@ const IngredientCard = ({ ingredient }) => {
   if (ingredient.type === 'bun') {
     amount = ingredient._id === constructorBun._id ? 2 : 0
   } else {
-    amount = constructorIngredients.filter(
-      (item) => item._id === ingredient._id
+    // Убрать после типизации хранилища
+    amount = (constructorIngredients as TIngredientWithUUID[]).filter(
+      (item) => item.ingredient._id === ingredient._id
     ).length
   }
 
   return (
-    <li className={styles.card} onClick={onClick} ref={dragRef}>
+    <li className={styles.card} onClick={onClick} ref={dragTargetRef}>
       {amount > 0 && <Counter count={amount} size="default" extraClass="m-1" />}
       <img
         className={cn(styles.card__img, 'mr-4 ml-4')}
@@ -69,10 +76,6 @@ const IngredientCard = ({ ingredient }) => {
       </div>
     </li>
   )
-}
-
-IngredientCard.propTypes = {
-  ingredient: burgerIngredientPropType.isRequired,
 }
 
 export default IngredientCard

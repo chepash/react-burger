@@ -1,10 +1,19 @@
-import PropTypes from 'prop-types'
+import { FC, ReactNode } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, useLocation } from 'react-router-dom'
 
-const ProtectedRouteElement = ({ element, onlyUnAuth = false }) => {
+type TProtectedRouteElementProps = {
+  element: ReactNode
+  onlyUnAuth?: boolean
+}
+
+const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
+  element,
+  onlyUnAuth = false,
+}) => {
   const location = useLocation()
 
+  // @ts-ignore
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   if (onlyUnAuth && isLoggedIn) {
@@ -13,19 +22,14 @@ const ProtectedRouteElement = ({ element, onlyUnAuth = false }) => {
   }
 
   if (onlyUnAuth && !isLoggedIn) {
-    return element
+    return <>{element}</>
   }
 
   if (!onlyUnAuth && !isLoggedIn) {
     return <Navigate to="/login" state={{ from: location }} />
   }
 
-  return element
-}
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.node.isRequired,
-  onlyUnAuth: PropTypes.bool,
+  return <>{element}</>
 }
 
 export default ProtectedRouteElement

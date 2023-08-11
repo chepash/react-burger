@@ -4,22 +4,27 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { FC, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
-  UPDATE_LOGIN_FORM_STATE,
-  loginFormSubmit,
-} from '../../services/actions/login-actions'
+  UPDATE_REGISTER_FORM_STATE,
+  registratioFormSubmit,
+} from '../../services/actions/register-actions'
 import styles from './auth.module.scss'
 
-function Login() {
+const Register: FC = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { email, password } = useSelector((store) => store.loginState.form)
+  const { name, email, password } = useSelector(
+    //@ts-ignore
+    (store) => store.registerState.form
+  )
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
-      type: UPDATE_LOGIN_FORM_STATE,
+      type: UPDATE_REGISTER_FORM_STATE,
       payload: {
         field: e.target.name,
         value: e.target.value,
@@ -27,16 +32,31 @@ function Login() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    dispatch(loginFormSubmit(email, password))
+    //@ts-ignore
+    dispatch(registratioFormSubmit(name, email, password, navigate))
   }
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5')}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className={cn('text text_type_main-medium', 'mb-6')}>Вход</h1>
+        <h1 className={cn('text text_type_main-medium', 'mb-6')}>
+          Регистрация
+        </h1>
         <ul className={styles.list}>
+          <li className={cn(styles.list__item)}>
+            <Input
+              type={'text'}
+              placeholder={'Имя'}
+              onChange={onChange}
+              value={name}
+              name={'name'}
+              error={false}
+              errorText={'Ошибка'}
+              size={'default'}
+            />
+          </li>
           <li className={cn(styles.list__item)}>
             <Input
               type={'email'}
@@ -59,12 +79,12 @@ function Login() {
         </ul>
 
         <Button
+          disabled={!name && !email && !password}
           htmlType="submit"
           type="primary"
           size="medium"
-          disabled={!email && !password}
         >
-          Войти
+          Зарегистрироваться
         </Button>
 
         <div className={cn(styles.link__wrapper, 'mt-20')}>
@@ -75,29 +95,13 @@ function Login() {
               'text text_type_main-default text_color_inactive'
             )}
           >
-            Вы — новый пользователь?
+            Уже зарегистрированы?
           </p>
           <Link
-            to={'/register'}
+            to={'/login'}
             className={cn(styles.link, 'text text_type_main-default')}
           >
-            Зарегистрироваться
-          </Link>
-        </div>
-        <div className={cn(styles.link__wrapper, 'mt-4')}>
-          <p
-            className={cn(
-              styles.text,
-              'text text_type_main-default text_color_inactive'
-            )}
-          >
-            Забыли пароль?
-          </p>
-          <Link
-            to={'/forgot-password'}
-            className={cn(styles.link, 'text text_type_main-default')}
-          >
-            Восстановить пароль
+            Войти
           </Link>
         </div>
       </form>
@@ -105,4 +109,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Register

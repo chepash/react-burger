@@ -1,7 +1,8 @@
 import cn from 'classnames'
 import styles from './profile-orders.module.scss'
+import { FC } from 'react'
 
-function ProfileOrders() {
+const ProfileOrders: FC = () => {
   return (
     <section
       aria-label="История заказов"
