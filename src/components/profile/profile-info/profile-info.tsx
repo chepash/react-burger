@@ -23,7 +23,7 @@ const ProfileInfo: FC = () => {
     // @ts-ignore
   } = useSelector((store) => store.profileState.form)
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
   const { name: userName, email: userEmail } = useSelector(
     // @ts-ignore
