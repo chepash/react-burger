@@ -74,7 +74,7 @@ const BurgerIngredients: FC = () => {
     [ingredients]
   )
 
-  const scrollTo: (categoryId: TIngredientsCategory) => void = (categoryId) => {
+  const scrollTo = (categoryId: TIngredientsCategory) => {
     const section = document.getElementById(categoryId)
 
     if (section !== null) {
@@ -85,9 +85,7 @@ const BurgerIngredients: FC = () => {
     }
   }
 
-  const handleCategoryClick: (categoryId: TIngredientsCategory) => void = (
-    categoryId
-  ) => {
+  const handleCategoryClick = (categoryId: TIngredientsCategory) => {
     setCurrentTab(categoryId)
     scrollTo(categoryId)
   }

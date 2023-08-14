@@ -7,18 +7,18 @@ import {
 export type TIngredientsCategory = 'bun' | 'sauce' | 'main'
 
 export type TIngredient = {
-  readonly _id: string
-  readonly name: string
-  readonly type: TIngredientsCategory
-  readonly proteins: number
-  readonly fat: number
-  readonly carbohydrates: number
-  readonly calories: number
-  readonly price: number
-  readonly image: string
-  readonly image_mobile: string
-  readonly image_large: string
-  readonly __v: number
+  _id: string
+  name: string
+  type: TIngredientsCategory
+  proteins: number
+  fat: number
+  carbohydrates: number
+  calories: number
+  price: number
+  image: string
+  image_mobile: string
+  image_large: string
+  __v: number
 }
 
 export type TIngredientWithUUID = {
@@ -46,17 +46,17 @@ export type TOrder = {
 }
 
 type TUser = {
-  readonly email: string
-  readonly name: string
+  email: string
+  name: string
 }
 
 export type TErrorResponse = {
-  readonly status: string
-  readonly message: string
+  status: string
+  message: string
 }
 
 type TBaseApiResponse = {
-  readonly success: boolean
+  success: boolean
 }
 
 // Тело ответа сервера при успешном обновлении токена:
@@ -66,8 +66,8 @@ type TBaseApiResponse = {
 //   "refreshToken": ""
 // }
 export type TRefreshTokenResponse = TBaseApiResponse & {
-  readonly accessToken: string
-  readonly refreshToken: string
+  accessToken: string
+  refreshToken: string
 }
 
 // Тело ответа сервера при успешной авторизации:
@@ -81,7 +81,7 @@ export type TRefreshTokenResponse = TBaseApiResponse & {
 //   }
 // }
 export type TAuthResponse = TRefreshTokenResponse & {
-  readonly user: TUser
+  user: TUser
 }
 
 // Получение/Обновление данных пользователя Сервер вернёт такой ответ:
@@ -93,11 +93,11 @@ export type TAuthResponse = TRefreshTokenResponse & {
 //   }
 // }
 export type TUserDataResponse = TBaseApiResponse & {
-  readonly user: TUser
+  user: TUser
 }
 
 type TMessageResponse<T extends string> = TBaseApiResponse & {
-  readonly message: T
+  message: T
 }
 // Тело ответа сервера при выходе из системы:
 // {

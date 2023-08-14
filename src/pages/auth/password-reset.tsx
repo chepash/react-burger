@@ -18,7 +18,7 @@ import styles from './auth.module.scss'
 const PasswordReset: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { token, password } = useSelector(
     // @ts-ignore

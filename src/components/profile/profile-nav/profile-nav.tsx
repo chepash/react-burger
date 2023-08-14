@@ -10,7 +10,7 @@ const ProfileNav: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleOnLogoutClick: () => void = () => {
+  const handleOnLogoutClick = () => {
     // @ts-ignore
     dispatch(handleLogOut()).then(() => navigate('/login'))
   }

@@ -85,7 +85,7 @@ export const fetchIngredients = async (): Promise<
 }
 
 export const placeOrder = (
-  ingredientsIds: Array<string>
+  ingredientsIds: string[]
 ): Promise<TPlaceOrderResponse> => {
   const accessToken = localStorage.getItem('accessToken')
   const endpoint = 'orders'

@@ -29,13 +29,13 @@ const Checkout: FC = () => {
   // @ts-ignore
   const { isOrderModalOpen } = useSelector((store) => store.modalState)
 
-  const orderSum: number = constructorIngredients.reduce(
-    (acc: number, ingredientWithUUID: TIngredientWithUUID) =>
-      acc + ingredientWithUUID.ingredient.price,
+  const orderSum = constructorIngredients.reduce(
+    // @ts-ignore
+    (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
     constructorBun.price * 2
   )
 
-  const handleOrder: () => void = () => {
+  const handleOrder = () => {
     if (isLoggedIn) {
       // @ts-ignore
       dispatch(createOrder(constructorIngredients, constructorBun))
@@ -45,7 +45,7 @@ const Checkout: FC = () => {
     }
   }
 
-  const handleCloseModal: () => void = () => {
+  const handleCloseModal = () => {
     dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: false })
   }
 
