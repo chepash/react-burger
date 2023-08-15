@@ -1,15 +1,17 @@
 import cn from 'classnames'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import styles from './profile-nav.module.scss'
-import { handleLogOut } from '../../../services/actions/user-actions'
+import { FC } from 'react'
 import { useDispatch } from 'react-redux'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { handleLogOut } from '../../../services/actions/user-actions'
+import styles from './profile-nav.module.scss'
 
-function ProfileNav() {
+const ProfileNav: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleOnLogoutClick = () => {
+    // @ts-ignore
     dispatch(handleLogOut()).then(() => navigate('/login'))
   }
 

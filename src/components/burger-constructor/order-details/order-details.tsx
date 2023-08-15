@@ -1,8 +1,12 @@
 import cn from 'classnames'
-import PropTypes from 'prop-types'
+import { FC } from 'react'
 import okLogo from '../../../images/done.svg'
 
-function OrderDetails({ orderNumber }) {
+type TOrderDetailsProps = {
+  orderNumber: number
+}
+
+const OrderDetails: FC<TOrderDetailsProps> = ({ orderNumber }) => {
   return (
     <>
       <h2 className={cn('text', 'text_type_digits-large', 'mt-30', 'mb-8')}>
@@ -27,10 +31,6 @@ function OrderDetails({ orderNumber }) {
       </p>
     </>
   )
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails

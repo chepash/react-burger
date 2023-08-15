@@ -15,7 +15,7 @@ export const createOrder =
     const bunId = constructorBun._id
 
     const constructorIngredientsIds = constructorIngredients.map(
-      (ingredient) => ingredient._id
+      (ingredientWithUUID) => ingredientWithUUID.ingredient._id
     )
 
     const ingredientsIds = [bunId, ...constructorIngredientsIds, bunId]

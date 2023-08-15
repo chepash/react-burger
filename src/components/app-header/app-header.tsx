@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import cn from 'classnames'
-import styles from './app-header.module.scss'
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import cn from 'classnames'
+import { NavLink, useLocation } from 'react-router-dom'
+import styles from './app-header.module.scss'
+import { FC } from 'react'
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const location = useLocation()
 
   const commonLinkClassNames = cn(

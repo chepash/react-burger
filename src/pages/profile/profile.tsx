@@ -1,16 +1,25 @@
 import cn from 'classnames'
+import { FC } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import ProfileNav from '../../components/profile/profile-nav/profile-nav'
 import styles from './profile.module.scss'
 
-function Profile() {
+const Profile: FC = () => {
   const location = useLocation()
 
-  const sectionDescriptions = {
+  type SectionDescriptions = {
+    '/profile': string
+    '/profile/orders': string
+  }
+
+  const sectionDescriptions: SectionDescriptions = {
     '/profile': 'В этом разделе вы можете изменить свои персональные данные',
     '/profile/orders':
       'В этом разделе вы можете просмотреть свою историю заказов',
   }
+
+  const currentSectionDescription =
+    sectionDescriptions[location.pathname as keyof SectionDescriptions] || ''
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
@@ -28,7 +37,7 @@ function Profile() {
             styles.section__description
           )}
         >
-          {sectionDescriptions[location.pathname] || ''}
+          {currentSectionDescription}
         </p>
       </section>
       <Outlet />

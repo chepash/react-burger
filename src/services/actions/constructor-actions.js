@@ -6,7 +6,9 @@ export const EMPTY_CONSTRUCTOR = 'EMPTY_CONSTRUCTOR'
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT'
 
 export const addIngredient = (ingredient) => {
-  const ingredientWithUUID = { ...ingredient, uuid: uuidv4() }
+  // лучше сделать обёртку с uuid чем спред ...ingredient так более оптимальна работа с памятью
+  // когда объект просто ссылается на другой объект
+  const ingredientWithUUID = { ingredient, uuid: uuidv4() }
   return {
     type: ADD_INGREDIENT,
     payload: ingredientWithUUID,

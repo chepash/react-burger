@@ -3,7 +3,7 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useState } from 'react'
+import { FC, SyntheticEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
@@ -15,16 +15,18 @@ import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore
 import { passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 
-function PasswordReset() {
+const PasswordReset: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { token, password } = useSelector(
+    // @ts-ignore
     (store) => store.passwordResetState.form
   )
 
   const isEmailSent = useSelector(
+    // @ts-ignore
     (store) => store.passwordRestoreState.response?.success
   )
 
@@ -32,7 +34,7 @@ function PasswordReset() {
     setIsPasswordVisible(!isPasswordVisible)
   }
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: UPDATE_PWD_RESET_FORM_STATE,
       payload: {
@@ -42,13 +44,13 @@ function PasswordReset() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-
+    // @ts-ignore
     dispatch(passwordResetFormSubmit({ token, password }, navigate))
   }
 
-  const isPasswordValid = (password) => {
+  const isPasswordValid = (password: string) => {
     if (password === '') {
       return true
     }

@@ -1,38 +1,42 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { FC } from 'react'
 import styles from './ingredients-navbar.module.scss'
-import PropTypes from 'prop-types'
+import { TIngredientsCategory } from '../../../utils/types'
 
-const IngredientsNavbar = ({ currentTab, handleCategoryClick }) => {
+type TIngredientsNavbarProps = {
+  currentTab: TIngredientsCategory
+  handleCategoryClick: (categoryId: TIngredientsCategory) => void
+}
+
+const IngredientsNavbar: FC<TIngredientsNavbarProps> = ({
+  currentTab,
+  handleCategoryClick,
+}) => {
   return (
     <div className={styles.navbar}>
       <Tab
         value="bun"
         active={currentTab === 'bun'}
-        onClick={handleCategoryClick}
+        onClick={() => handleCategoryClick}
       >
         Булки
       </Tab>
       <Tab
         value="sauce"
         active={currentTab === 'sauce'}
-        onClick={handleCategoryClick}
+        onClick={() => handleCategoryClick}
       >
         Соусы
       </Tab>
       <Tab
         value="main"
         active={currentTab === 'main'}
-        onClick={handleCategoryClick}
+        onClick={() => handleCategoryClick}
       >
         Начинки
       </Tab>
     </div>
   )
-}
-
-IngredientsNavbar.propTypes = {
-  currentTab: PropTypes.string.isRequired,
-  handleCategoryClick: PropTypes.func.isRequired,
 }
 
 export default IngredientsNavbar

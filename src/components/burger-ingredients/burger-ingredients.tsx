@@ -1,21 +1,24 @@
 import cn from 'classnames'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './burger-ingredients.module.scss'
 import IngredientsCategory from './ingredients-category/ingredients-category'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
 
 import { useSelector } from 'react-redux'
+import { TIngredient, TIngredientsCategory } from '../../utils/types'
 
-const BurgerIngredients = () => {
-  const ingredients = useSelector((store) => store.ingredientsState.ingredients)
+const BurgerIngredients: FC = () => {
+  const ingredients: TIngredient[] = useSelector(
+    //@ts-ignore
+    (store) => store.ingredientsState.ingredients
+  )
 
-  const [currentTab, setCurrentTab] = useState('bun')
+  const [currentTab, setCurrentTab] = useState<TIngredientsCategory>('bun')
 
-  const rootRef = useRef(null)
-
-  const bunRef = useRef(null)
-  const sauceRef = useRef(null)
-  const mainRef = useRef(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
+  const bunRef = useRef<HTMLHeadingElement | null>(null)
+  const sauceRef = useRef<HTMLHeadingElement | null>(null)
+  const mainRef = useRef<HTMLHeadingElement | null>(null)
 
   const updateCurrentTab = () => {
     const rootRect = rootRef?.current?.getBoundingClientRect()
@@ -23,16 +26,21 @@ const BurgerIngredients = () => {
     const sauceRect = sauceRef?.current?.getBoundingClientRect()
     const mainRect = mainRef?.current?.getBoundingClientRect()
 
-    const bunDistance = Math.abs(rootRect.top - bunRect.top)
-    const sauceDistance = Math.abs(rootRect.top - sauceRect.top)
-    const mainDistance = Math.abs(rootRect.top - mainRect.top)
+    if (rootRect && bunRect && sauceRect && mainRect) {
+      const bunDistance = Math.abs(rootRect.top - bunRect.top)
+      const sauceDistance = Math.abs(rootRect.top - sauceRect.top)
+      const mainDistance = Math.abs(rootRect.top - mainRect.top)
 
-    if (bunDistance <= sauceDistance && bunDistance <= mainDistance) {
-      setCurrentTab('bun')
-    } else if (sauceDistance <= bunDistance && sauceDistance <= mainDistance) {
-      setCurrentTab('sauce')
-    } else {
-      setCurrentTab('main')
+      if (bunDistance <= sauceDistance && bunDistance <= mainDistance) {
+        setCurrentTab('bun')
+      } else if (
+        sauceDistance <= bunDistance &&
+        sauceDistance <= mainDistance
+      ) {
+        setCurrentTab('sauce')
+      } else {
+        setCurrentTab('main')
+      }
     }
   }
 
@@ -57,18 +65,16 @@ const BurgerIngredients = () => {
     () => ingredients.filter((item) => item.type === 'bun'),
     [ingredients]
   )
-
   const main = useMemo(
     () => ingredients.filter((item) => item.type === 'main'),
     [ingredients]
   )
-
   const sauce = useMemo(
     () => ingredients.filter((item) => item.type === 'sauce'),
     [ingredients]
   )
 
-  const scrollTo = (categoryId) => {
+  const scrollTo = (categoryId: TIngredientsCategory) => {
     const section = document.getElementById(categoryId)
 
     if (section !== null) {
@@ -79,7 +85,7 @@ const BurgerIngredients = () => {
     }
   }
 
-  const handleCategoryClick = (categoryId) => {
+  const handleCategoryClick = (categoryId: TIngredientsCategory) => {
     setCurrentTab(categoryId)
     scrollTo(categoryId)
   }

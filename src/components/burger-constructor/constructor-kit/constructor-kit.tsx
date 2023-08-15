@@ -6,14 +6,17 @@ import { addIngredient } from '../../../services/actions/constructor-actions'
 
 import { useDrop } from 'react-dnd'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
+import { FC } from 'react'
+import { TIngredientWithUUID } from '../../../utils/types'
 
-const ConstructorKit = () => {
+const ConstructorKit: FC = () => {
   const { constructorIngredients, constructorBun } = useSelector(
+    // @ts-ignore
     (store) => store.constructorState
   )
   const dispatch = useDispatch()
 
-  const [, dropTarget] = useDrop({
+  const [, dropTargetRef] = useDrop({
     accept: 'ingredient',
     drop(ingredient) {
       dispatch(addIngredient(ingredient))
@@ -25,7 +28,7 @@ const ConstructorKit = () => {
   })
 
   return (
-    <div ref={dropTarget} className={cn(styles.burger, 'pl-4')}>
+    <div ref={dropTargetRef} className={cn(styles.burger, 'pl-4')}>
       <div className={cn('ml-8', 'mr-4')}>
         <ConstructorElement
           type="top"
@@ -52,13 +55,16 @@ const ConstructorKit = () => {
 
       {constructorIngredients.length > 0 && (
         <ul className={cn(styles.list)}>
-          {constructorIngredients.map((item, index) => (
-            <PrimaryIngredient
-              ingredient={item}
-              key={item.uuid}
-              index={index}
-            />
-          ))}
+          {/* Убрать as после типизации хранилища */}
+          {(constructorIngredients as TIngredientWithUUID[]).map(
+            (item, index) => (
+              <PrimaryIngredient
+                ingredientWithUUID={item}
+                key={item.uuid}
+                index={index}
+              />
+            )
+          )}
         </ul>
       )}
 

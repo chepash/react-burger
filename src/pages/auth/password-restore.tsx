@@ -3,6 +3,7 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { FC, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -11,13 +12,13 @@ import {
 } from '../../services/actions/password-restore-actions'
 import styles from './auth.module.scss'
 
-function PasswordRestore() {
+const PasswordRestore: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  //@ts-ignore
   const { email } = useSelector((store) => store.passwordRestoreState.form)
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: UPDATE_PWD_RESTORE_FORM_STATE,
       payload: {
@@ -27,9 +28,9 @@ function PasswordRestore() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-
+    //@ts-ignore
     dispatch(passwordRestoreFormSubmit(email, navigate))
   }
 

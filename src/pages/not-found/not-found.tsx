@@ -1,8 +1,9 @@
 import cn from 'classnames'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './not-found.module.scss'
 
-function NotFound() {
+const NotFound: FC = () => {
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
       <h1 className={'text text_type_main-large'}>Упс! Ошибка 404</h1>
