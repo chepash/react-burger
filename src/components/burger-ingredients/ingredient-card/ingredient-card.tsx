@@ -8,8 +8,8 @@ import { useDrag } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
-  SET_CURRENT_INGREDIENT,
-  SET_IS_INGREDIENT_MODAL_OPEN,
+  setCurrentIngredientAction,
+  setIsIngredientModalOpenAction,
 } from '../../../services/actions/modal-actions'
 import { TIngredient, TIngredientWithUUID } from '../../../utils/types'
 import styles from './ingredient-card.module.scss'
@@ -29,8 +29,8 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   )
 
   const onClick = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient })
-    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: true })
+    dispatch(setCurrentIngredientAction(ingredient))
+    dispatch(setIsIngredientModalOpenAction(true))
     navigate(`/ingredients/${ingredient._id}`, {
       state: { backgroundLocation: location },
     })
@@ -46,6 +46,7 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   if (ingredient.type === 'bun') {
     amount = ingredient._id === constructorBun._id ? 2 : 0
   } else {
+    // @ts-ignore
     // Убрать после типизации хранилища
     amount = (constructorIngredients as TIngredientWithUUID[]).filter(
       (item) => item.ingredient._id === ingredient._id

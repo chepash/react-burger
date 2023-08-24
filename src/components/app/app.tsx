@@ -10,9 +10,9 @@ import NotFound from '../../pages/not-found/not-found'
 import Profile from '../../pages/profile/profile'
 import { getAllIngredientsThunk } from '../../services/actions/ingredients-actions'
 import {
-  SET_CURRENT_INGREDIENT,
-  SET_IS_ERROR_MODAL_OPEN,
-  SET_IS_INGREDIENT_MODAL_OPEN,
+  setCurrentIngredientAction,
+  setIsErrorModalOpenAction,
+  setIsIngredientModalOpenAction,
 } from '../../services/actions/modal-actions'
 import { getUser } from '../../services/actions/user-actions'
 import AppHeader from '../app-header/app-header'
@@ -60,17 +60,17 @@ const App: FC = () => {
 
   useEffect(() => {
     if (fetchIngredientsError || placeOrderError) {
-      dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+      dispatch(setIsErrorModalOpenAction(true))
     }
   }, [dispatch, fetchIngredientsError, placeOrderError])
 
   const handleCloseErrorModal = () => {
-    dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: false })
+    dispatch(setIsErrorModalOpenAction(false))
   }
 
   const handleCloseModal = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: null })
-    dispatch({ type: SET_IS_INGREDIENT_MODAL_OPEN, payload: false })
+    dispatch(setCurrentIngredientAction(null))
+    dispatch(setIsIngredientModalOpenAction(false))
     navigate('/')
   }
 

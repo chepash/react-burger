@@ -1,6 +1,6 @@
 import * as api from '../../utils/api'
 import { clearLoginStateAction } from './login-actions'
-import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { setIsErrorModalOpenAction } from './modal-actions'
 import { CLEAR_ORDER_STATE } from './order-actions'
 import { CLEAR_PWD_RESET_STATE } from './password-reset-actions'
 import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
@@ -77,7 +77,7 @@ export const handleLogOut = () => (dispatch) => {
       return dispatch({ type: LOGOUT_USER_SUCCESS, payload: res })
     })
     .catch(() => {
-      dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+      dispatch(setIsErrorModalOpenAction(true))
       return dispatch({ type: LOGOUT_USER_ERROR })
     })
 }

@@ -5,10 +5,10 @@ import {
   LOGIN_FORM_SUBMIT_FAILED,
   LOGIN_FORM_SUBMIT_REQUEST,
   LOGIN_FORM_SUBMIT_SUCCESS,
+  SET_IS_ERROR_MODAL_OPEN,
   UPDATE_LOGIN_FORM_STATE,
 } from '../../utils/constants'
 import { TAuthResponse } from '../../utils/types'
-import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
 import { getUser } from './user-actions'
 
 export interface IUpdateLoginFormStateAction {

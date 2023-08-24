@@ -1,9 +1,18 @@
 import {
+  SET_CURRENT_INGREDIENT,
   SET_IS_ERROR_MODAL_OPEN,
   SET_IS_INGREDIENT_MODAL_OPEN,
   SET_IS_ORDER_MODAL_OPEN,
-  SET_CURRENT_INGREDIENT,
-} from '../actions/modal-actions'
+} from '../../utils/constants'
+import { TIngredient } from '../../utils/types'
+import { TModalActions } from '../actions/modal-actions'
+
+type TModalState = {
+  currentIngredient: null | TIngredient
+  isIngredientModalOpen: boolean
+  isOrderModalOpen: boolean
+  isErrorModalOpen: boolean
+}
 
 const initialState = {
   currentIngredient: null,
@@ -12,7 +21,10 @@ const initialState = {
   isErrorModalOpen: false,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TModalState = initialState,
+  action: TModalActions
+) => {
   switch (action.type) {
     case SET_IS_INGREDIENT_MODAL_OPEN:
       return {

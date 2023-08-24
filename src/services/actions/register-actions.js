@@ -1,5 +1,5 @@
 import * as api from '../../utils/api'
-import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { setIsErrorModalOpenAction } from './modal-actions'
 import { getUser } from './user-actions'
 
 export const UPDATE_REGISTER_FORM_STATE = 'UPDATE_REGISTER_FORM_STATE'
@@ -33,7 +33,7 @@ export const registratioFormSubmit =
         }
       })
       .catch(() => {
-        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+        dispatch(setIsErrorModalOpenAction(true))
         return dispatch({ type: REGISTER_FORM_SUBMIT_ERROR })
       })
   }

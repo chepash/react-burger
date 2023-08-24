@@ -2,9 +2,9 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { SET_CURRENT_INGREDIENT } from '../../../services/actions/modal-actions'
-import styles from './ingredient-details.module.scss'
+import { setCurrentIngredientAction } from '../../../services/actions/modal-actions'
 import { TIngredient } from '../../../utils/types'
+import styles from './ingredient-details.module.scss'
 
 const IngredientDetails: FC = () => {
   const currentIngredient: TIngredient = useSelector(
@@ -21,7 +21,9 @@ const IngredientDetails: FC = () => {
   useEffect(() => {
     if (id) {
       const currentIngredient = ingredients.find((item) => item._id === id)
-      dispatch({ type: SET_CURRENT_INGREDIENT, payload: currentIngredient })
+      if (currentIngredient) {
+        dispatch(setCurrentIngredientAction(currentIngredient))
+      }
     }
   }, [dispatch, id, ingredients])
 

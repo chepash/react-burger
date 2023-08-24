@@ -1,18 +1,17 @@
-import cn from 'classnames'
-import styles from './checkout.module.scss'
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetails from '../order-details/order-details'
-import Modal from '../../modal/modal'
-import { useDispatch, useSelector } from 'react-redux'
-import { createOrder } from '../../../services/actions/order-actions'
-import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal-actions'
-import Preloader from '../../preloader/preloader'
-import { useNavigate } from 'react-router-dom'
+import cn from 'classnames'
 import { FC } from 'react'
-import { TIngredientWithUUID } from '../../../utils/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setIsOrderModalOpenAction } from '../../../services/actions/modal-actions'
+import { createOrder } from '../../../services/actions/order-actions'
+import Modal from '../../modal/modal'
+import Preloader from '../../preloader/preloader'
+import OrderDetails from '../order-details/order-details'
+import styles from './checkout.module.scss'
 
 const Checkout: FC = () => {
   const dispatch = useDispatch()
@@ -39,14 +38,14 @@ const Checkout: FC = () => {
     if (isLoggedIn) {
       // @ts-ignore
       dispatch(createOrder(constructorIngredients, constructorBun))
-      dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
+      dispatch(setIsOrderModalOpenAction(true))
     } else {
       navigate('/login')
     }
   }
 
   const handleCloseModal = () => {
-    dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: false })
+    dispatch(setIsOrderModalOpenAction(false))
   }
 
   return (

@@ -1,5 +1,5 @@
 import * as api from '../../utils/api'
-import { SET_IS_ERROR_MODAL_OPEN } from './modal-actions'
+import { setIsErrorModalOpenAction } from './modal-actions'
 
 export const UPDATE_PWD_RESTORE_FORM_STATE = 'UPDATE_PWD_RESTORE_FORM_STATE'
 export const CLEAR_PWD_RESTORE_FORM_STATE = 'CLEAR_PWD_RESTORE_FORM_STATE'
@@ -22,7 +22,7 @@ export const passwordRestoreFormSubmit = (email, navigate) => (dispatch) => {
       }
     })
     .catch((err) => {
-      dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+      dispatch(setIsErrorModalOpenAction(true))
       return dispatch({ type: PWD_RESTORE_FORM_SUBMIT_ERROR })
     })
 }
