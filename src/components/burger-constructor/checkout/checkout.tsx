@@ -7,7 +7,7 @@ import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setIsOrderModalOpenAction } from '../../../services/actions/modal-actions'
-import { createOrder } from '../../../services/actions/order-actions'
+import { createOrderThunk } from '../../../services/actions/order-actions'
 import Modal from '../../modal/modal'
 import Preloader from '../../preloader/preloader'
 import OrderDetails from '../order-details/order-details'
@@ -37,7 +37,7 @@ const Checkout: FC = () => {
   const handleOrder = () => {
     if (isLoggedIn) {
       // @ts-ignore
-      dispatch(createOrder(constructorIngredients, constructorBun))
+      dispatch(createOrderThunk(constructorIngredients, constructorBun))
       dispatch(setIsOrderModalOpenAction(true))
     } else {
       navigate('/login')

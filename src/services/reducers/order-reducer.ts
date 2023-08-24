@@ -1,18 +1,28 @@
 import {
   CLEAR_ORDER_STATE,
-  CREATE_ORDER_ERROR,
+  CREATE_ORDER_FAILED,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
-  IGNORE_ORDER_ERROR,
-} from '../actions/order-actions'
+} from '../../utils/constants'
+import { TPlaceOrderResponse } from '../../utils/types'
+import { TOrderActions } from '../actions/order-actions'
+
+type TOrderState = {
+  response: null | TPlaceOrderResponse
+  isLoading: boolean
+  isError: null | boolean
+}
 
 const initialState = {
   response: null,
   isLoading: false,
-  error: null,
+  isError: null,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TOrderState = initialState,
+  action: TOrderActions
+) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST:
       return {
@@ -25,17 +35,12 @@ export const reducer = (state = initialState, action) => {
         response: action.payload,
         isLoading: false,
       }
-    case CREATE_ORDER_ERROR:
+    case CREATE_ORDER_FAILED:
       return {
         ...state,
         response: null,
-        error: true,
+        isError: true,
         isLoading: false,
-      }
-    case IGNORE_ORDER_ERROR:
-      return {
-        ...state,
-        error: false,
       }
     case CLEAR_ORDER_STATE:
       return {

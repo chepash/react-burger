@@ -1,7 +1,7 @@
 import * as api from '../../utils/api'
 import { clearLoginStateAction } from './login-actions'
 import { setIsErrorModalOpenAction } from './modal-actions'
-import { CLEAR_ORDER_STATE } from './order-actions'
+import { clearOrderStateAction } from './order-actions'
 import { CLEAR_PWD_RESET_STATE } from './password-reset-actions'
 import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
 import {
@@ -66,7 +66,7 @@ export const handleLogOut = () => (dispatch) => {
         localStorage.clear()
 
         dispatch(clearLoginStateAction())
-        dispatch({ type: CLEAR_ORDER_STATE })
+        dispatch(clearOrderStateAction())
         dispatch({ type: CLEAR_REGISTER_STATE })
         dispatch({ type: CLEAR_PWD_RESTORE_STATE })
         dispatch({ type: CLEAR_PWD_RESET_STATE })
