@@ -3,7 +3,7 @@ import {
   TAuthResponse,
   TCustomRequestInit,
   TErrorResponse,
-  TIngredient,
+  TFetchIngredientsResponse,
   TLogOutResponse,
   TPasswordResetResponse,
   TPlaceOrderResponse,
@@ -74,15 +74,14 @@ const requestWithRefresh = async <T>(
   }
 }
 
-export const fetchIngredients = async (): Promise<
-  ReadonlyArray<TIngredient>
-> => {
-  const endpoint = 'ingredients'
-  const options = {
-    method: 'GET',
+export const fetchIngredients =
+  async (): Promise<TFetchIngredientsResponse> => {
+    const endpoint = 'ingredients'
+    const options = {
+      method: 'GET',
+    }
+    return request(endpoint, options)
   }
-  return request(endpoint, options)
-}
 
 export const placeOrder = (
   ingredientsIds: string[]

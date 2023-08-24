@@ -59,6 +59,11 @@ type TBaseApiResponse = {
   success: boolean
 }
 
+export type TFetchIngredientsResponse = TBaseApiResponse & {
+  accessToken: string
+  data: ReadonlyArray<TIngredient>
+}
+
 // Тело ответа сервера при успешном обновлении токена:
 // {
 //   "success": true,

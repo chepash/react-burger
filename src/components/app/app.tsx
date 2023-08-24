@@ -8,7 +8,7 @@ import Register from '../../pages/auth/register'
 import HomePage from '../../pages/home-page/home-page'
 import NotFound from '../../pages/not-found/not-found'
 import Profile from '../../pages/profile/profile'
-import { getAllIngredients } from '../../services/actions/ingredients-actions'
+import { getAllIngredientsThunk } from '../../services/actions/ingredients-actions'
 import {
   SET_CURRENT_INGREDIENT,
   SET_IS_ERROR_MODAL_OPEN,
@@ -20,10 +20,10 @@ import IngredientDetails from '../burger-ingredients/ingredient-details/ingredie
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
 import Preloader from '../preloader/preloader'
+import ProfileInfo from '../profile/profile-info/profile-info'
+import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
-import ProfileOrders from '../profile/profile-orders/profile-orders'
-import ProfileInfo from '../profile/profile-info/profile-info'
 
 const App: FC = () => {
   const dispatch = useDispatch()
@@ -55,7 +55,7 @@ const App: FC = () => {
 
   useEffect(() => {
     //@ts-ignore
-    dispatch(getAllIngredients())
+    dispatch(getAllIngredientsThunk())
   }, [dispatch])
 
   useEffect(() => {

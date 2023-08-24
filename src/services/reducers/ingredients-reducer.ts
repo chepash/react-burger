@@ -1,18 +1,29 @@
 import {
-  GET_INGREDIENTS_ERROR,
+  GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  IGNORE_INGREDIENTS_ERROR,
-} from '../actions/ingredients-actions'
+} from '../../utils/constants'
+import { TIngredient } from '../../utils/types'
+import { TIngredientsActions } from '../actions/ingredients-actions'
+
+export type TIngredientsState = {
+  ingredients: TIngredient[]
+
+  isLoading: boolean
+  isError: boolean | null
+}
 
 const initialState = {
   ingredients: [],
 
   isLoading: false,
-  error: null,
+  isError: null,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TIngredientsState = initialState,
+  action: TIngredientsActions
+) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST:
       return {
@@ -25,17 +36,12 @@ export const reducer = (state = initialState, action) => {
         ingredients: action.payload,
         isLoading: false,
       }
-    case GET_INGREDIENTS_ERROR:
+    case GET_INGREDIENTS_FAILED:
       return {
         ...state,
         ingredients: [],
-        error: true,
+        isError: true,
         isLoading: false,
-      }
-    case IGNORE_INGREDIENTS_ERROR:
-      return {
-        ...state,
-        error: false,
       }
 
     default:
