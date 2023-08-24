@@ -2,7 +2,7 @@ import * as api from '../../utils/api'
 import { clearLoginStateAction } from './login-actions'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { clearOrderStateAction } from './order-actions'
-import { CLEAR_PWD_RESET_STATE } from './password-reset-actions'
+import { clearPwdResetStateAction } from './password-reset-actions'
 import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
 import {
   CLEAR_PROFILE_STATE,
@@ -69,7 +69,7 @@ export const handleLogOut = () => (dispatch) => {
         dispatch(clearOrderStateAction())
         dispatch({ type: CLEAR_REGISTER_STATE })
         dispatch({ type: CLEAR_PWD_RESTORE_STATE })
-        dispatch({ type: CLEAR_PWD_RESET_STATE })
+        dispatch(clearPwdResetStateAction())
         dispatch({ type: CLEAR_PROFILE_STATE })
         dispatch({ type: CLEAR_USER_STATE })
       }

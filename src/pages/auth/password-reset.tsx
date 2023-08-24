@@ -7,9 +7,9 @@ import { FC, SyntheticEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
-  CLEAR_PWD_RESET_STATE,
-  UPDATE_PWD_RESET_FORM_STATE,
-  passwordResetFormSubmit,
+  clearPwdResetStateAction,
+  passwordResetFormSubmitThunk,
+  updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
 import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
 import { passwordPattern } from '../../utils/constants'
@@ -35,19 +35,13 @@ const PasswordReset: FC = () => {
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PWD_RESET_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updatePwdResetFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     // @ts-ignore
-    dispatch(passwordResetFormSubmit({ token, password }, navigate))
+    dispatch(passwordResetFormSubmitThunk({ token, password }, navigate))
   }
 
   const isPasswordValid = (password: string) => {
@@ -128,7 +122,7 @@ const PasswordReset: FC = () => {
           <Link
             to={'/login'}
             onClick={() => {
-              dispatch({ type: CLEAR_PWD_RESET_STATE })
+              dispatch(clearPwdResetStateAction())
               dispatch({ type: CLEAR_PWD_RESTORE_STATE })
             }}
             className={cn(styles.link, 'text text_type_main-default')}

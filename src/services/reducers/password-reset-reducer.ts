@@ -1,11 +1,24 @@
 import {
   CLEAR_PWD_RESET_FORM_STATE,
   CLEAR_PWD_RESET_STATE,
-  PWD_RESET_FORM_SUBMIT_ERROR,
+  PWD_RESET_FORM_SUBMIT_FAILED,
   PWD_RESET_FORM_SUBMIT_REQUEST,
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESET_FORM_STATE,
-} from '../actions/password-reset-actions'
+} from '../../utils/constants'
+import { TPasswordResetResponse } from '../../utils/types'
+import { TPwdResetActions } from '../actions/password-reset-actions'
+
+type TPasswordResetState = {
+  form: {
+    password: string
+    token: string
+  }
+  response: TPasswordResetResponse | null
+  isLoading: boolean
+  isError: boolean | null
+  isPasswordVisible: boolean
+}
 
 const initialState = {
   form: {
@@ -14,11 +27,14 @@ const initialState = {
   },
   response: null,
   isLoading: false,
-  error: null,
+  isError: null,
   isPasswordVisible: false,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TPasswordResetState = initialState,
+  action: TPwdResetActions
+) => {
   switch (action.type) {
     case UPDATE_PWD_RESET_FORM_STATE: {
       return {
@@ -51,11 +67,11 @@ export const reducer = (state = initialState, action) => {
         response: action.payload,
         isLoading: false,
       }
-    case PWD_RESET_FORM_SUBMIT_ERROR:
+    case PWD_RESET_FORM_SUBMIT_FAILED:
       return {
         ...state,
         response: null,
-        error: true,
+        isError: true,
         isLoading: false,
       }
     default:

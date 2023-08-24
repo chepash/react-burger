@@ -31,7 +31,6 @@ export type TOrderActions =
   | ICreateOrderFailedAction
   | IClearOrderStateAction
 
-// Define action creators
 export const createOrderRequestAction = (): ICreateOrderRequestAction => {
   return {
     type: CREATE_ORDER_REQUEST,
