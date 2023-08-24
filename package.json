@@ -1,7 +1,7 @@
 {
   "homepage": "./",
   "name": "react-burger",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -30,6 +30,7 @@
     "web-vitals": "2.1.4"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.2",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
