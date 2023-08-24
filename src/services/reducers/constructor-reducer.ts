@@ -1,10 +1,21 @@
+import { TConstructorActions } from '../actions/constructor-actions'
+import defaultBun from '../../images/default-bun.svg'
+import { TIngredientWithUUID } from '../../utils/types'
 import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
-  MOVE_INGREDIENT,
   EMPTY_CONSTRUCTOR,
-} from '../actions/constructor-actions'
-import defaultBun from '../../images/default-bun.svg'
+  MOVE_INGREDIENT,
+} from '../../utils/constants'
+
+export type TConstructorState = {
+  constructorIngredients: TIngredientWithUUID[]
+  constructorBun: {
+    image_mobile: string
+    name: string
+    price: number
+  }
+}
 
 const initialState = {
   constructorIngredients: [],
@@ -15,7 +26,10 @@ const initialState = {
   },
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TConstructorState = initialState,
+  action: TConstructorActions
+): TConstructorState => {
   switch (action.type) {
     case ADD_INGREDIENT:
       if (action.payload.ingredient.type === 'bun') {

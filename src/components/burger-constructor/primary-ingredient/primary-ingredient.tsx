@@ -6,11 +6,11 @@ import { FC, useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import {
-  MOVE_INGREDIENT,
-  deleteIngredient,
+  deleteIngredientAction,
+  moveIngredientAction,
 } from '../../../services/actions/constructor-actions'
-import styles from './primary-ingredient.module.scss'
 import { TIngredientWithUUID } from '../../../utils/types'
+import styles from './primary-ingredient.module.scss'
 
 type TPrimaryIngredientProps = {
   ingredientWithUUID: TIngredientWithUUID
@@ -68,10 +68,7 @@ const PrimaryIngredient: FC<TPrimaryIngredientProps> = ({
 
       // Time to actually perform the action
       // moveCard(dragIndex, hoverIndex)
-      dispatch({
-        type: MOVE_INGREDIENT,
-        payload: { fromIndex: dragIndex, toIndex: hoverIndex },
-      })
+      dispatch(moveIngredientAction(dragIndex, hoverIndex))
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
@@ -106,7 +103,9 @@ const PrimaryIngredient: FC<TPrimaryIngredientProps> = ({
         text={ingredientWithUUID.ingredient.name}
         price={ingredientWithUUID.ingredient.price}
         thumbnail={ingredientWithUUID.ingredient.image_mobile}
-        handleClose={() => dispatch(deleteIngredient(ingredientWithUUID.uuid))}
+        handleClose={() =>
+          dispatch(deleteIngredientAction(ingredientWithUUID.uuid))
+        }
       />
     </li>
   )

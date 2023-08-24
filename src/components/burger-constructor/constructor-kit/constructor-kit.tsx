@@ -1,13 +1,13 @@
-import cn from 'classnames'
-import styles from './constructor-kit.module.scss'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../../services/actions/constructor-actions'
+import { addIngredientAction } from '../../../services/actions/constructor-actions'
+import styles from './constructor-kit.module.scss'
 
-import { useDrop } from 'react-dnd'
-import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 import { FC } from 'react'
-import { TIngredientWithUUID } from '../../../utils/types'
+import { useDrop } from 'react-dnd'
+import { TIngredient, TIngredientWithUUID } from '../../../utils/types'
+import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 
 const ConstructorKit: FC = () => {
   const { constructorIngredients, constructorBun } = useSelector(
@@ -18,8 +18,8 @@ const ConstructorKit: FC = () => {
 
   const [, dropTargetRef] = useDrop({
     accept: 'ingredient',
-    drop(ingredient) {
-      dispatch(addIngredient(ingredient))
+    drop(ingredient: TIngredient) {
+      dispatch(addIngredientAction(ingredient))
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
