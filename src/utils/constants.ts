@@ -10,8 +10,7 @@ export const JWT_EXPIRE_ERROR_TEXT = 'jwt expired'
 
 export const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
-// redux actions
-
+// redux actions:
 // constructor-actions
 export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT'
@@ -21,3 +20,10 @@ export const MOVE_INGREDIENT = 'MOVE_INGREDIENT'
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST'
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS'
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED'
+// login-actions
+export const UPDATE_LOGIN_FORM_STATE = 'UPDATE_LOGIN_FORM_STATE'
+export const CLEAR_LOGIN_FORM_STATE = 'CLEAR_LOGIN_FORM_STATE'
+export const CLEAR_LOGIN_STATE = 'CLEAR_LOGIN_STATE'
+export const LOGIN_FORM_SUBMIT_REQUEST = 'LOGIN_FORM_SUBMIT_REQUEST'
+export const LOGIN_FORM_SUBMIT_SUCCESS = 'LOGIN_FORM_SUBMIT_SUCCESS'
+export const LOGIN_FORM_SUBMIT_FAILED = 'LOGIN_FORM_SUBMIT_FAILED'

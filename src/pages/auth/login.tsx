@@ -4,14 +4,14 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
+import { FC, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
-  UPDATE_LOGIN_FORM_STATE,
-  loginFormSubmit,
+  loginFormSubmitThunk,
+  updateLoginFormStateAction,
 } from '../../services/actions/login-actions'
 import styles from './auth.module.scss'
-import { FC, SyntheticEvent } from 'react'
 
 const Login: FC = () => {
   const dispatch = useDispatch()
@@ -20,19 +20,13 @@ const Login: FC = () => {
   const { email, password } = useSelector((store) => store.loginState.form)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_LOGIN_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateLoginFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     //@ts-ignore
-    dispatch(loginFormSubmit(email, password))
+    dispatch(loginFormSubmitThunk(email, password))
   }
 
   return (
