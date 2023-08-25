@@ -12,17 +12,17 @@ import {
 } from '../../utils/types'
 import { emptyConstructorAction } from './constructor-actions'
 
-export interface ICreateOrderRequestAction {
+interface ICreateOrderRequestAction {
   readonly type: typeof CREATE_ORDER_REQUEST
 }
-export interface ICreateOrderSuccessAction {
+interface ICreateOrderSuccessAction {
   readonly type: typeof CREATE_ORDER_SUCCESS
   readonly payload: TPlaceOrderResponse
 }
-export interface ICreateOrderFailedAction {
+interface ICreateOrderFailedAction {
   readonly type: typeof CREATE_ORDER_FAILED
 }
-export interface IClearOrderStateAction {
+interface IClearOrderStateAction {
   readonly type: typeof CLEAR_ORDER_STATE
 }
 export type TOrderActions =

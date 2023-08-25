@@ -6,19 +6,19 @@ import {
 } from '../../utils/constants'
 import { TIngredient } from '../../utils/types'
 
-export interface ISetCurrentIngredientAction {
+interface ISetCurrentIngredientAction {
   readonly type: typeof SET_CURRENT_INGREDIENT
   readonly payload: TIngredient | null
 }
-export interface ISetIsIngredientModalOpenAction {
+interface ISetIsIngredientModalOpenAction {
   readonly type: typeof SET_IS_INGREDIENT_MODAL_OPEN
   readonly payload: boolean
 }
-export interface ISetIsOrderModalOpenAction {
+interface ISetIsOrderModalOpenAction {
   readonly type: typeof SET_IS_ORDER_MODAL_OPEN
   readonly payload: boolean
 }
-export interface ISetIsErrorModalOpenAction {
+interface ISetIsErrorModalOpenAction {
   readonly type: typeof SET_IS_ERROR_MODAL_OPEN
   readonly payload: boolean
 }

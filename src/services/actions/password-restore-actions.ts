@@ -10,32 +10,27 @@ import {
 import { TSendRecoveryEmailResponse } from '../../utils/types'
 import { setIsErrorModalOpenAction } from './modal-actions'
 
-export interface IUpdatePwdRestoreFormStateAction {
+interface IUpdatePwdRestoreFormStateAction {
   readonly type: typeof UPDATE_PWD_RESTORE_FORM_STATE
   readonly payload: {
     field: string
     value: string
   }
 }
-
-export interface IClearPwdRestoreFormStateAction {
+interface IClearPwdRestoreFormStateAction {
   readonly type: typeof CLEAR_PWD_RESTORE_FORM_STATE
 }
-
-export interface IClearPwdRestoreStateAction {
+interface IClearPwdRestoreStateAction {
   readonly type: typeof CLEAR_PWD_RESTORE_STATE
 }
-
-export interface IPwdRestoreFormSubmitRequestAction {
+interface IPwdRestoreFormSubmitRequestAction {
   readonly type: typeof PWD_RESTORE_FORM_SUBMIT_REQUEST
 }
-
-export interface IPwdRestoreFormSubmitSuccessAction {
+interface IPwdRestoreFormSubmitSuccessAction {
   readonly type: typeof PWD_RESTORE_FORM_SUBMIT_SUCCESS
   readonly payload: TSendRecoveryEmailResponse
 }
-
-export interface IPwdRestoreFormSubmitFailedAction {
+interface IPwdRestoreFormSubmitFailedAction {
   readonly type: typeof PWD_RESTORE_FORM_SUBMIT_FAILED
 }
 

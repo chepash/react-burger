@@ -11,28 +11,27 @@ import { TPasswordResetResponse } from '../../utils/types'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { clearPwdRestoreStateAction } from './password-restore-actions'
 
-export interface IUpdatePwdResetFormStateAction {
+interface IUpdatePwdResetFormStateAction {
   readonly type: typeof UPDATE_PWD_RESET_FORM_STATE
   readonly payload: {
     field: string
     value: string
   }
 }
-
-export interface IClearPwdResetFormStateAction {
+interface IClearPwdResetFormStateAction {
   readonly type: typeof CLEAR_PWD_RESET_FORM_STATE
 }
-export interface IClearPwdResetStateAction {
+interface IClearPwdResetStateAction {
   readonly type: typeof CLEAR_PWD_RESET_STATE
 }
-export interface IPwdResetFormSubmitRequestAction {
+interface IPwdResetFormSubmitRequestAction {
   readonly type: typeof PWD_RESET_FORM_SUBMIT_REQUEST
 }
-export interface IPwdResetFormSubmitSuccessAction {
+interface IPwdResetFormSubmitSuccessAction {
   readonly type: typeof PWD_RESET_FORM_SUBMIT_SUCCESS
   readonly payload: TPasswordResetResponse
 }
-export interface IPwdResetFormSubmitFailedAction {
+interface IPwdResetFormSubmitFailedAction {
   readonly type: typeof PWD_RESET_FORM_SUBMIT_FAILED
 }
 export type TPwdResetActions =

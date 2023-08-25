@@ -7,21 +7,21 @@ import {
 } from '../../utils/constants'
 import { TIngredient, TIngredientWithUUID } from '../../utils/types'
 
-export interface IAddIngredientAction {
+interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT
   readonly payload: TIngredientWithUUID
 }
 
-export interface IDeleteIngredientAction {
+interface IDeleteIngredientAction {
   readonly type: typeof DELETE_INGREDIENT
   readonly payload: string
 }
 
-export interface IEmptyConstructorAction {
+interface IEmptyConstructorAction {
   readonly type: typeof EMPTY_CONSTRUCTOR
 }
 
-export interface IMoveIngredientAction {
+interface IMoveIngredientAction {
   readonly type: typeof MOVE_INGREDIENT
   readonly payload: { fromIndex: number; toIndex: number }
 }

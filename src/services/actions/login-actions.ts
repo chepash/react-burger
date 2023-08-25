@@ -11,27 +11,27 @@ import {
 import { TAuthResponse } from '../../utils/types'
 import { getUserThunk } from './user-actions'
 
-export interface IUpdateLoginFormStateAction {
+interface IUpdateLoginFormStateAction {
   readonly type: typeof UPDATE_LOGIN_FORM_STATE
   readonly payload: {
     field: string
     value: string
   }
 }
-export interface IClearLoginFormStateAction {
+interface IClearLoginFormStateAction {
   readonly type: typeof CLEAR_LOGIN_FORM_STATE
 }
-export interface IClearLoginStateAction {
+interface IClearLoginStateAction {
   readonly type: typeof CLEAR_LOGIN_STATE
 }
-export interface ILoginFormSubmitRequestAction {
+interface ILoginFormSubmitRequestAction {
   readonly type: typeof LOGIN_FORM_SUBMIT_REQUEST
 }
-export interface ILoginFormSubmitSuccessAction {
+interface ILoginFormSubmitSuccessAction {
   readonly type: typeof LOGIN_FORM_SUBMIT_SUCCESS
   readonly payload: TAuthResponse
 }
-export interface ILoginFormSubmitFailedAction {
+interface ILoginFormSubmitFailedAction {
   readonly type: typeof LOGIN_FORM_SUBMIT_FAILED
 }
 export type TLoginActions =

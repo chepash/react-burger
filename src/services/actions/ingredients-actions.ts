@@ -6,16 +6,14 @@ import {
 } from '../../utils/constants'
 import { TIngredient } from '../../utils/types'
 
-export interface IGetIngredientsAction {
+interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST
 }
-
-export interface IGetIngredientsSuccessAction {
+interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS
   readonly payload: ReadonlyArray<TIngredient>
 }
-
-export interface IGetIngredientsFailedAction {
+interface IGetIngredientsFailedAction {
   readonly type: typeof GET_INGREDIENTS_FAILED
 }
 
