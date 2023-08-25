@@ -4,7 +4,7 @@ import {
   TCustomRequestInit,
   TErrorResponse,
   TFetchIngredientsResponse,
-  TLogOutResponse,
+  TLogoutResponse,
   TPasswordResetResponse,
   TPlaceOrderResponse,
   TRefreshTokenResponse,
@@ -133,7 +133,7 @@ export const loginUser = (
   return request(endpoint, options)
 }
 
-export const logoutUser = (): Promise<TLogOutResponse> => {
+export const logoutUser = (): Promise<TLogoutResponse> => {
   const refreshToken = localStorage.getItem('refreshToken')
 
   const endpoint = 'auth/logout'

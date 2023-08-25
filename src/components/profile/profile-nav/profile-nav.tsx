@@ -2,7 +2,7 @@ import cn from 'classnames'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { handleLogOut } from '../../../services/actions/user-actions'
+import { handleLogoutThunk } from '../../../services/actions/user-actions'
 import styles from './profile-nav.module.scss'
 
 const ProfileNav: FC = () => {
@@ -12,7 +12,7 @@ const ProfileNav: FC = () => {
 
   const handleOnLogoutClick = () => {
     // @ts-ignore
-    dispatch(handleLogOut()).then(() => navigate('/login'))
+    dispatch(handleLogoutThunk()).then(() => navigate('/login'))
   }
 
   return (

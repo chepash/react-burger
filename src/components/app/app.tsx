@@ -14,7 +14,7 @@ import {
   setIsErrorModalOpenAction,
   setIsIngredientModalOpenAction,
 } from '../../services/actions/modal-actions'
-import { getUser } from '../../services/actions/user-actions'
+import { getUserThunk } from '../../services/actions/user-actions'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -50,7 +50,7 @@ const App: FC = () => {
 
   useEffect(() => {
     //@ts-ignore
-    dispatch(getUser())
+    dispatch(getUserThunk())
   }, [])
 
   useEffect(() => {

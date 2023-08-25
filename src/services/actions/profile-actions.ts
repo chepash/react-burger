@@ -9,7 +9,7 @@ import {
 } from '../../utils/constants'
 import { TUserDataResponse } from '../../utils/types'
 import { setIsErrorModalOpenAction } from './modal-actions'
-import { getUser } from './user-actions'
+import { getUserThunk } from './user-actions'
 
 interface IUpdateProfileFormStateAction {
   readonly type: typeof UPDATE_PROFILE_FORM_STATE
@@ -99,7 +99,7 @@ export const profileFormSubmitThunk = (changedInputs) => (dispatch) => {
     .then((res) => {
       dispatch(profileFormSubmitSuccessAction(res))
       dispatch(updateProfileFormStateAction('password', ''))
-      dispatch(getUser())
+      dispatch(getUserThunk())
     })
     .catch((err) => {
       dispatch(setIsErrorModalOpenAction(true))

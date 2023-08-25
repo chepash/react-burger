@@ -1,14 +1,29 @@
 import {
   CLEAR_USER_STATE,
-  GET_USER_DATA_ERROR,
+  GET_USER_DATA_FAILED,
   GET_USER_DATA_REQUEST,
   GET_USER_DATA_SUCCESS,
-  LOGOUT_USER_ERROR,
+  LOGOUT_USER_FAILED,
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
-} from '../actions/user-actions'
+} from '../../utils/constants'
+import { TLogoutResponse, TUser, TUserDataResponse } from '../../utils/types'
+import { TUserActions } from '../actions/user-actions'
+
+type TUserState = {
+  user: TUser
+  isLoggedIn: boolean
+
+  getUserResponse: TUserDataResponse | null
+  isGetUserDataError: boolean | null
+
+  logoutResponse: TLogoutResponse | null
+  isLogoutError: boolean | null
+
+  isLoading: boolean
+}
 
 const initialState = {
   user: {
@@ -16,12 +31,20 @@ const initialState = {
     email: '',
   },
   isLoggedIn: false,
-  response: null,
+
+  getUserResponse: null,
+  isGetUserDataError: null,
+
+  logoutResponse: null,
+  isLogoutError: null,
+
   isLoading: false,
-  error: null,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TUserState = initialState,
+  action: TUserActions
+) => {
   switch (action.type) {
     case GET_USER_DATA_REQUEST:
       return {
@@ -31,14 +54,14 @@ export const reducer = (state = initialState, action) => {
     case GET_USER_DATA_SUCCESS:
       return {
         ...state,
-        response: action.payload,
+        getUserResponse: action.payload,
         isLoading: false,
       }
-    case GET_USER_DATA_ERROR:
+    case GET_USER_DATA_FAILED:
       return {
         ...state,
-        response: null,
-        error: true,
+        getUserResponse: null,
+        isGetUserDataError: true,
         isLoading: false,
       }
     case LOGOUT_USER_REQUEST:
@@ -49,14 +72,14 @@ export const reducer = (state = initialState, action) => {
     case LOGOUT_USER_SUCCESS:
       return {
         ...state,
-        response: action.payload,
+        logoutResponse: action.payload,
         isLoading: false,
       }
-    case LOGOUT_USER_ERROR:
+    case LOGOUT_USER_FAILED:
       return {
         ...state,
         response: null,
-        error: true,
+        isLogoutError: true,
         isLoading: false,
       }
     case SET_USER_DATA:

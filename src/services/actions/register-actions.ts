@@ -9,7 +9,7 @@ import {
 } from '../../utils/constants'
 import { TAuthResponse } from '../../utils/types'
 import { setIsErrorModalOpenAction } from './modal-actions'
-import { getUser } from './user-actions'
+import { getUserThunk } from './user-actions'
 
 export interface IUpdateRegisterFormStateAction {
   readonly type: typeof UPDATE_REGISTER_FORM_STATE
@@ -111,7 +111,7 @@ export const registratioFormSubmitThunk =
           dispatch(registerFormSubmitSuccessAction(res))
           navigate('/', { replace: true })
 
-          return dispatch(getUser())
+          return dispatch(getUserThunk())
         }
       })
       .catch(() => {

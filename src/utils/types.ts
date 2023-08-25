@@ -45,7 +45,7 @@ export type TOrder = {
   price: number
 }
 
-type TUser = {
+export type TUser = {
   email: string
   name: string
 }
@@ -109,7 +109,7 @@ type TMessageResponse<T extends string> = TBaseApiResponse & {
 //   "success": true,
 //   "message": "Successful logout"
 // }
-export type TLogOutResponse = TMessageResponse<typeof SUCCESSFUL_LOGOUT_MESSAGE>
+export type TLogoutResponse = TMessageResponse<typeof SUCCESSFUL_LOGOUT_MESSAGE>
 
 // sendPasswordRecoveryEmail
 // Тело успешного ответа:

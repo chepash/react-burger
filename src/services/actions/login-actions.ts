@@ -9,7 +9,7 @@ import {
   UPDATE_LOGIN_FORM_STATE,
 } from '../../utils/constants'
 import { TAuthResponse } from '../../utils/types'
-import { getUser } from './user-actions'
+import { getUserThunk } from './user-actions'
 
 export interface IUpdateLoginFormStateAction {
   readonly type: typeof UPDATE_LOGIN_FORM_STATE
@@ -97,7 +97,7 @@ export const loginFormSubmitThunk = (email, password) => (dispatch) => {
 
       dispatch(clearLoginFormStateAction())
       dispatch(loginFormSubmitSuccessAction(res))
-      return dispatch(getUser())
+      return dispatch(getUserThunk())
     })
     .catch(() => {
       dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
