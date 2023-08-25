@@ -8,8 +8,8 @@ import { FC, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
-  UPDATE_REGISTER_FORM_STATE,
-  registratioFormSubmit,
+  registratioFormSubmitThunk,
+  updateRegisterFormStateAction,
 } from '../../services/actions/register-actions'
 import styles from './auth.module.scss'
 
@@ -23,19 +23,13 @@ const Register: FC = () => {
   )
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_REGISTER_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateRegisterFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     //@ts-ignore
-    dispatch(registratioFormSubmit(name, email, password, navigate))
+    dispatch(registratioFormSubmitThunk(name, email, password, navigate))
   }
 
   return (

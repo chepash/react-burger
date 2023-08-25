@@ -8,7 +8,7 @@ import {
   clearProfileStateAction,
   updateProfileFormStateAction,
 } from './profile-actions'
-import { CLEAR_REGISTER_STATE } from './register-actions'
+import { clearRegisterStateAction } from './register-actions'
 
 export const GET_USER_DATA_REQUEST = 'GET_USER_DATA_REQUEST'
 export const GET_USER_DATA_SUCCESS = 'GET_USER_DATA_SUCCESS'
@@ -55,7 +55,7 @@ export const handleLogOut = () => (dispatch) => {
 
         dispatch(clearLoginStateAction())
         dispatch(clearOrderStateAction())
-        dispatch({ type: CLEAR_REGISTER_STATE })
+        dispatch(clearRegisterStateAction())
         dispatch(clearPwdRestoreStateAction())
         dispatch(clearPwdResetStateAction())
         dispatch(clearProfileStateAction())

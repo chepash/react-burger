@@ -1,11 +1,24 @@
 import {
   CLEAR_REGISTER_FORM_STATE,
-  UPDATE_REGISTER_FORM_STATE,
+  CLEAR_REGISTER_STATE,
+  REGISTER_FORM_SUBMIT_FAILED,
   REGISTER_FORM_SUBMIT_REQUEST,
   REGISTER_FORM_SUBMIT_SUCCESS,
-  REGISTER_FORM_SUBMIT_ERROR,
-  CLEAR_REGISTER_STATE,
-} from '../actions/register-actions'
+  UPDATE_REGISTER_FORM_STATE,
+} from '../../utils/constants'
+import { TAuthResponse } from '../../utils/types'
+import { TRegisterActions } from '../actions/register-actions'
+
+type TRegisterState = {
+  form: {
+    name: string
+    email: string
+    password: string
+  }
+  response: TAuthResponse | null
+  isLoading: boolean
+  isError: boolean | null
+}
 
 const initialState = {
   form: {
@@ -15,10 +28,13 @@ const initialState = {
   },
   response: null,
   isLoading: false,
-  error: null,
+  isError: null,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TRegisterState = initialState,
+  action: TRegisterActions
+) => {
   switch (action.type) {
     case UPDATE_REGISTER_FORM_STATE: {
       return {
@@ -51,11 +67,11 @@ export const reducer = (state = initialState, action) => {
         response: action.payload,
         isLoading: false,
       }
-    case REGISTER_FORM_SUBMIT_ERROR:
+    case REGISTER_FORM_SUBMIT_FAILED:
       return {
         ...state,
         response: null,
-        error: true,
+        isError: true,
         isLoading: false,
       }
     default:
