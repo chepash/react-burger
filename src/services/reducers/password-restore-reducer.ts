@@ -70,7 +70,7 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
-    default:
-      return state
   }
+
+  const _exhaustiveCheck: never = action
 }

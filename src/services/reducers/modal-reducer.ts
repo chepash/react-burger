@@ -46,7 +46,7 @@ export const reducer = (
         ...state,
         isErrorModalOpen: action.payload,
       }
-    default:
-      return state
   }
+
+  const _exhaustiveCheck: never = action
 }

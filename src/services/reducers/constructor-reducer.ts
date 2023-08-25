@@ -68,8 +68,7 @@ export const reducer = (
         ...state,
         constructorIngredients: ingredients,
       }
-
-    default:
-      return state
   }
+
+  const _exhaustiveCheck: never = action
 }

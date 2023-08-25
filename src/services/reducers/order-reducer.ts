@@ -46,7 +46,7 @@ export const reducer = (
       return {
         ...initialState,
       }
-    default:
-      return state
   }
+
+  const _exhaustiveCheck: never = action
 }
