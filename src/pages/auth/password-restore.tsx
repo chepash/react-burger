@@ -7,8 +7,8 @@ import { FC, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
-  UPDATE_PWD_RESTORE_FORM_STATE,
-  passwordRestoreFormSubmit,
+  passwordRestoreFormSubmitThunk,
+  updatePwdRestoreFormStateAction,
 } from '../../services/actions/password-restore-actions'
 import styles from './auth.module.scss'
 
@@ -19,19 +19,13 @@ const PasswordRestore: FC = () => {
   const { email } = useSelector((store) => store.passwordRestoreState.form)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PWD_RESTORE_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updatePwdRestoreFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     //@ts-ignore
-    dispatch(passwordRestoreFormSubmit(email, navigate))
+    dispatch(passwordRestoreFormSubmitThunk(email, navigate))
   }
 
   return (

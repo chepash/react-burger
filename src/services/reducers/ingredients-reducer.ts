@@ -8,14 +8,12 @@ import { TIngredientsActions } from '../actions/ingredients-actions'
 
 export type TIngredientsState = {
   ingredients: TIngredient[]
-
   isLoading: boolean
   isError: boolean | null
 }
 
 const initialState = {
   ingredients: [],
-
   isLoading: false,
   isError: null,
 }

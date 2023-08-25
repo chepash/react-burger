@@ -9,7 +9,7 @@ import {
 } from '../../utils/constants'
 import { TPasswordResetResponse } from '../../utils/types'
 import { setIsErrorModalOpenAction } from './modal-actions'
-import { CLEAR_PWD_RESTORE_STATE } from './password-restore-actions'
+import { clearPwdRestoreStateAction } from './password-restore-actions'
 
 export interface IUpdatePwdResetFormStateAction {
   readonly type: typeof UPDATE_PWD_RESET_FORM_STATE
@@ -106,7 +106,7 @@ export const passwordResetFormSubmitThunk =
         .then((res) => {
           if (res.success) {
             dispatch(clearPwdResetFormStateAction())
-            dispatch({ type: CLEAR_PWD_RESTORE_STATE })
+            dispatch(clearPwdRestoreStateAction())
             navigate('/', { replace: true })
           }
           return dispatch(pwdResetFormSubmitSuccessAction(res))

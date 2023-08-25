@@ -11,7 +11,7 @@ import {
   passwordResetFormSubmitThunk,
   updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
-import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
+import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
 import { passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 
@@ -123,7 +123,7 @@ const PasswordReset: FC = () => {
             to={'/login'}
             onClick={() => {
               dispatch(clearPwdResetStateAction())
-              dispatch({ type: CLEAR_PWD_RESTORE_STATE })
+              dispatch(clearPwdRestoreStateAction())
             }}
             className={cn(styles.link, 'text text_type_main-default')}
           >
