@@ -1,11 +1,24 @@
 import {
   CLEAR_PROFILE_FORM_STATE,
   CLEAR_PROFILE_STATE,
-  PROFILE_FORM_SUBMIT_ERROR,
+  PROFILE_FORM_SUBMIT_FAILED,
   PROFILE_FORM_SUBMIT_REQUEST,
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
-} from '../actions/profile-actions'
+} from '../../utils/constants'
+import { TUserDataResponse } from '../../utils/types'
+import { TProfileActions } from '../actions/profile-actions'
+
+type TProfileState = {
+  form: {
+    name: string
+    email: string
+    password: string
+  }
+  response: TUserDataResponse | null
+  isLoading: boolean
+  isError: boolean | null
+}
 
 const initialState = {
   form: {
@@ -13,14 +26,15 @@ const initialState = {
     email: '',
     password: '',
   },
-  changedInputs: {},
   response: null,
   isLoading: false,
-  error: null,
-  isPasswordVisible: false,
+  isError: null,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: TProfileState = initialState,
+  action: TProfileActions
+) => {
   switch (action.type) {
     case UPDATE_PROFILE_FORM_STATE: {
       return {
@@ -53,7 +67,7 @@ export const reducer = (state = initialState, action) => {
         response: action.payload,
         isLoading: false,
       }
-    case PROFILE_FORM_SUBMIT_ERROR:
+    case PROFILE_FORM_SUBMIT_FAILED:
       return {
         ...state,
         response: null,

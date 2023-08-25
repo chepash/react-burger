@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './profile-info.module.scss'
 import {
-  UPDATE_PROFILE_FORM_STATE,
-  profileFormSubmit,
+  profileFormSubmitThunk,
+  updateProfileFormStateAction,
 } from '../../../services/actions/profile-actions'
 import { passwordPattern } from '../../../utils/constants'
 
@@ -31,13 +31,7 @@ const ProfileInfo: FC = () => {
   )
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateProfileFormStateAction(e.target.name, e.target.value))
   }
 
   const onPasswordIconClick = () => {
@@ -64,31 +58,13 @@ const ProfileInfo: FC = () => {
     })
 
     // @ts-ignore
-    dispatch(profileFormSubmit(changedInputs))
+    dispatch(profileFormSubmitThunk(changedInputs))
   }
 
   const handleCancel = () => {
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'name',
-        value: userName,
-      },
-    })
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'email',
-        value: userEmail,
-      },
-    })
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'password',
-        value: '',
-      },
-    })
+    dispatch(updateProfileFormStateAction('name', userName))
+    dispatch(updateProfileFormStateAction('email', userEmail))
+    dispatch(updateProfileFormStateAction('password', ''))
   }
 
   const isPasswordValid = (password: string): boolean => {

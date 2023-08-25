@@ -4,10 +4,9 @@ import { setIsErrorModalOpenAction } from './modal-actions'
 import { clearOrderStateAction } from './order-actions'
 import { clearPwdResetStateAction } from './password-reset-actions'
 import { clearPwdRestoreStateAction } from './password-restore-actions'
-
 import {
-  CLEAR_PROFILE_STATE,
-  UPDATE_PROFILE_FORM_STATE,
+  clearProfileStateAction,
+  updateProfileFormStateAction,
 } from './profile-actions'
 import { CLEAR_REGISTER_STATE } from './register-actions'
 
@@ -34,20 +33,8 @@ export const getUser = () => (dispatch) => {
       .then((res) => {
         dispatch({ type: SET_USER_DATA, payload: res.user })
         dispatch({ type: GET_USER_DATA_SUCCESS, payload: res })
-        dispatch({
-          type: UPDATE_PROFILE_FORM_STATE,
-          payload: {
-            field: 'name',
-            value: res.user.name,
-          },
-        })
-        dispatch({
-          type: UPDATE_PROFILE_FORM_STATE,
-          payload: {
-            field: 'email',
-            value: res.user.email,
-          },
-        })
+        dispatch(updateProfileFormStateAction('name', res.user.name))
+        dispatch(updateProfileFormStateAction('email', res.user.email))
         dispatch({ type: SET_IS_LOGGED_IN, payload: true })
       })
       .catch(() => {
@@ -71,7 +58,7 @@ export const handleLogOut = () => (dispatch) => {
         dispatch({ type: CLEAR_REGISTER_STATE })
         dispatch(clearPwdRestoreStateAction())
         dispatch(clearPwdResetStateAction())
-        dispatch({ type: CLEAR_PROFILE_STATE })
+        dispatch(clearProfileStateAction())
         dispatch({ type: CLEAR_USER_STATE })
       }
 
