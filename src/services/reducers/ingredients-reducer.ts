@@ -3,7 +3,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from '../../utils/constants'
-import { TIngredient } from '../../utils/types'
+import { TIngredient } from '../types/data'
 import { TIngredientsActions } from '../actions/ingredients-actions'
 
 export type TIngredientsState = {
@@ -12,14 +12,14 @@ export type TIngredientsState = {
   isError: boolean | null
 }
 
-const initialState = {
+const initialState: TIngredientsState = {
   ingredients: [],
   isLoading: false,
   isError: null,
 }
 
-export const reducer = (
-  state: TIngredientsState = initialState,
+export const ingredientsReducer = (
+  state = initialState,
   action: TIngredientsActions
 ) => {
   switch (action.type) {
@@ -41,7 +41,8 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

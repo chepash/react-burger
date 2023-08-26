@@ -4,7 +4,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
   clearPwdResetStateAction,
@@ -12,6 +11,7 @@ import {
   updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
 import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 import { passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 
@@ -21,12 +21,10 @@ const PasswordReset: FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { token, password } = useSelector(
-    // @ts-ignore
     (store) => store.passwordResetState.form
   )
 
   const isEmailSent = useSelector(
-    // @ts-ignore
     (store) => store.passwordRestoreState.response?.success
   )
 
@@ -40,7 +38,6 @@ const PasswordReset: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    // @ts-ignore
     dispatch(passwordResetFormSubmitThunk({ token, password }, navigate))
   }
 

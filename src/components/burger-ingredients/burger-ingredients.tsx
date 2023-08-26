@@ -1,17 +1,13 @@
 import cn from 'classnames'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { TIngredientsCategory } from '../../services/types/data'
+import { useSelector } from '../../services/types/hooks'
 import styles from './burger-ingredients.module.scss'
 import IngredientsCategory from './ingredients-category/ingredients-category'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
 
-import { useSelector } from 'react-redux'
-import { TIngredient, TIngredientsCategory } from '../../utils/types'
-
 const BurgerIngredients: FC = () => {
-  const ingredients: TIngredient[] = useSelector(
-    //@ts-ignore
-    (store) => store.ingredientsState.ingredients
-  )
+  const ingredients = useSelector((store) => store.ingredientsState.ingredients)
 
   const [currentTab, setCurrentTab] = useState<TIngredientsCategory>('bun')
 

@@ -9,7 +9,7 @@ import {
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../../utils/constants'
-import { TLogoutResponse, TUser, TUserDataResponse } from '../../utils/types'
+import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
 import { TUserActions } from '../actions/user-actions'
 
 type TUserState = {
@@ -25,7 +25,7 @@ type TUserState = {
   isLoading: boolean
 }
 
-const initialState = {
+const initialState: TUserState = {
   user: {
     name: '',
     email: '',
@@ -41,10 +41,7 @@ const initialState = {
   isLoading: false,
 }
 
-export const reducer = (
-  state: TUserState = initialState,
-  action: TUserActions
-) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case GET_USER_DATA_REQUEST:
       return {
@@ -96,7 +93,8 @@ export const reducer = (
       return {
         ...initialState,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

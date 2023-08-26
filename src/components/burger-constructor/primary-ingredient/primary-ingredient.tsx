@@ -9,7 +9,7 @@ import {
   deleteIngredientAction,
   moveIngredientAction,
 } from '../../../services/actions/constructor-actions'
-import { TIngredientWithUUID } from '../../../utils/types'
+import { TIngredientWithUUID } from '../../../services/types/data'
 import styles from './primary-ingredient.module.scss'
 
 type TPrimaryIngredientProps = {

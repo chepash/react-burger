@@ -4,10 +4,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setIsOrderModalOpenAction } from '../../../services/actions/modal-actions'
 import { createOrderThunk } from '../../../services/actions/order-actions'
+import { useDispatch, useSelector } from '../../../services/types/hooks'
 import Modal from '../../modal/modal'
 import Preloader from '../../preloader/preloader'
 import OrderDetails from '../order-details/order-details'
@@ -18,25 +18,19 @@ const Checkout: FC = () => {
   const navigate = useNavigate()
 
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
-  // @ts-ignore
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
-  // @ts-ignore
   const { isLoading, response } = useSelector((store) => store.orderState)
-  // @ts-ignore
   const { isOrderModalOpen } = useSelector((store) => store.modalState)
 
   const orderSum = constructorIngredients.reduce(
-    // @ts-ignore
     (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
     constructorBun.price * 2
   )
 
   const handleOrder = () => {
     if (isLoggedIn) {
-      // @ts-ignore
       dispatch(createOrderThunk(constructorIngredients, constructorBun))
       dispatch(setIsOrderModalOpenAction(true))
     } else {

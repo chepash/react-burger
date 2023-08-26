@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Login from '../../pages/auth/login'
 import PasswordReset from '../../pages/auth/password-reset'
@@ -15,6 +14,7 @@ import {
   setIsIngredientModalOpenAction,
 } from '../../services/actions/modal-actions'
 import { getUserThunk } from '../../services/actions/user-actions'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -31,30 +31,26 @@ const App: FC = () => {
   const location = useLocation()
 
   const background = location.state && location.state.backgroundLocation
-  //@ts-ignore
+
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
   const fetchIngredientsError = useSelector(
-    //@ts-ignore
-    (store) => store.ingredientsState.error
+    (store) => store.ingredientsState.isError
   )
-  //@ts-ignore
+
   const { isIngredientModalOpen } = useSelector((store) => store.modalState)
-  //@ts-ignore
-  const placeOrderError = useSelector((store) => store.orderState.error)
+
+  const placeOrderError = useSelector((store) => store.orderState.isError)
 
   const isErrorModalOpen = useSelector(
-    //@ts-ignore
     (store) => store.modalState.isErrorModalOpen
   )
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getUserThunk())
   }, [])
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getAllIngredientsThunk())
   }, [dispatch])
 

@@ -10,7 +10,7 @@ import {
   TRefreshTokenResponse,
   TSendRecoveryEmailResponse,
   TUserDataResponse,
-} from './types'
+} from '../services/types/data'
 
 const getResponse = async <T>(res: Response): Promise<T> => {
   if (res.ok) {

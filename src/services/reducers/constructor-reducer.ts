@@ -1,6 +1,6 @@
 import { TConstructorActions } from '../actions/constructor-actions'
 import defaultBun from '../../images/default-bun.svg'
-import { TIngredientWithUUID } from '../../utils/types'
+import { TIngredient, TIngredientWithUUID } from '../types/data'
 import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
@@ -10,24 +10,29 @@ import {
 
 export type TConstructorState = {
   constructorIngredients: TIngredientWithUUID[]
-  constructorBun: {
-    image_mobile: string
-    name: string
-    price: number
-  }
+  constructorBun: TIngredient
 }
 
-const initialState = {
+const initialState: TConstructorState = {
   constructorIngredients: [],
   constructorBun: {
-    image_mobile: defaultBun,
+    _id: '',
     name: 'Добавьте булку',
+    type: 'bun',
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
     price: 0,
+    image: defaultBun,
+    image_mobile: defaultBun,
+    image_large: defaultBun,
+    __v: 0,
   },
 }
 
-export const reducer = (
-  state: TConstructorState = initialState,
+export const constructorReducer = (
+  state = initialState,
   action: TConstructorActions
 ): TConstructorState => {
   switch (action.type) {
@@ -68,7 +73,8 @@ export const reducer = (
         ...state,
         constructorIngredients: ingredients,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

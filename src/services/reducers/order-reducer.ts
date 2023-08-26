@@ -4,7 +4,7 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
 } from '../../utils/constants'
-import { TPlaceOrderResponse } from '../../utils/types'
+import { TPlaceOrderResponse } from '../types/data'
 import { TOrderActions } from '../actions/order-actions'
 
 type TOrderState = {
@@ -13,16 +13,13 @@ type TOrderState = {
   isError: null | boolean
 }
 
-const initialState = {
+const initialState: TOrderState = {
   response: null,
   isLoading: false,
   isError: null,
 }
 
-export const reducer = (
-  state: TOrderState = initialState,
-  action: TOrderActions
-) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST:
       return {
@@ -46,7 +43,8 @@ export const reducer = (
       return {
         ...initialState,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

@@ -5,11 +5,12 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
 } from '../../utils/constants'
+import { AppDispatch, AppThunk } from '../types'
 import {
   TIngredient,
   TIngredientWithUUID,
   TPlaceOrderResponse,
-} from '../../utils/types'
+} from '../types/data'
 import { emptyConstructorAction } from './constructor-actions'
 
 interface ICreateOrderRequestAction {
@@ -62,10 +63,9 @@ export const createOrderThunk =
   (
     constructorIngredients: TIngredientWithUUID[],
     constructorBun: TIngredient
-  ) =>
-  //@ts-ignore
-  (dispatch) => {
-    dispatch({ type: CREATE_ORDER_REQUEST })
+  ): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(createOrderRequestAction())
 
     const bunId = constructorBun._id
 

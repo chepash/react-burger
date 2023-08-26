@@ -5,18 +5,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
   loginFormSubmitThunk,
   updateLoginFormStateAction,
 } from '../../services/actions/login-actions'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 import styles from './auth.module.scss'
 
 const Login: FC = () => {
   const dispatch = useDispatch()
 
-  // @ts-ignore
   const { email, password } = useSelector((store) => store.loginState.form)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +24,6 @@ const Login: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
     dispatch(loginFormSubmitThunk(email, password))
   }
 

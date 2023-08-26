@@ -6,7 +6,7 @@ import {
   LOGIN_FORM_SUBMIT_SUCCESS,
   UPDATE_LOGIN_FORM_STATE,
 } from '../../utils/constants'
-import { TAuthResponse } from '../../utils/types'
+import { TAuthResponse } from '../types/data'
 import { TLoginActions } from '../actions/login-actions'
 
 type TLoginState = {
@@ -20,7 +20,7 @@ type TLoginState = {
   redirectPath: string
 }
 
-const initialState = {
+const initialState: TLoginState = {
   form: {
     email: '',
     password: '',
@@ -31,10 +31,7 @@ const initialState = {
   redirectPath: '',
 }
 
-export const reducer = (
-  state: TLoginState = initialState,
-  action: TLoginActions
-) => {
+export const loginReducer = (state = initialState, action: TLoginActions) => {
   switch (action.type) {
     case UPDATE_LOGIN_FORM_STATE: {
       return {
@@ -74,7 +71,8 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom'
 import * as api from '../../utils/api'
 import {
   CLEAR_REGISTER_FORM_STATE,
@@ -7,7 +8,8 @@ import {
   REGISTER_FORM_SUBMIT_SUCCESS,
   UPDATE_REGISTER_FORM_STATE,
 } from '../../utils/constants'
-import { TAuthResponse } from '../../utils/types'
+import { AppDispatch, AppThunk } from '../types'
+import { TAuthResponse } from '../types/data'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { getUserThunk } from './user-actions'
 
@@ -92,8 +94,13 @@ export const registerFormSubmitFailedAction =
   }
 
 export const registratioFormSubmitThunk =
-  //@ts-ignore
-  (name, email, password, navigate) => (dispatch) => {
+  (
+    name: string,
+    email: string,
+    password: string,
+    navigate: NavigateFunction
+  ): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(registerFormSubmitRequestAction())
 
     return api

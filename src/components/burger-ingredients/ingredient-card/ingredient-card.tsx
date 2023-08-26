@@ -5,13 +5,13 @@ import {
 import cn from 'classnames'
 import { FC } from 'react'
 import { useDrag } from 'react-dnd'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   setCurrentIngredientAction,
   setIsIngredientModalOpenAction,
 } from '../../../services/actions/modal-actions'
-import { TIngredient, TIngredientWithUUID } from '../../../utils/types'
+import { TIngredient } from '../../../services/types/data'
+import { useDispatch, useSelector } from '../../../services/types/hooks'
 import styles from './ingredient-card.module.scss'
 
 type TIngredientCardProps = {
@@ -24,7 +24,6 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const location = useLocation()
 
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
 
@@ -46,9 +45,7 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   if (ingredient.type === 'bun') {
     amount = ingredient._id === constructorBun._id ? 2 : 0
   } else {
-    // @ts-ignore
-    // Убрать после типизации хранилища
-    amount = (constructorIngredients as TIngredientWithUUID[]).filter(
+    amount = constructorIngredients.filter(
       (item) => item.ingredient._id === ingredient._id
     ).length
   }

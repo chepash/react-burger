@@ -6,7 +6,7 @@ import {
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESTORE_FORM_STATE,
 } from '../../utils/constants'
-import { TSendRecoveryEmailResponse } from '../../utils/types'
+import { TSendRecoveryEmailResponse } from '../types/data'
 import { TPwdRestoreActions } from '../actions/password-restore-actions'
 
 type TPasswordRestoreState = {
@@ -18,7 +18,7 @@ type TPasswordRestoreState = {
   isError: boolean | null
 }
 
-const initialState = {
+const initialState: TPasswordRestoreState = {
   form: {
     email: '',
   },
@@ -27,8 +27,8 @@ const initialState = {
   isError: null,
 }
 
-export const reducer = (
-  state: TPasswordRestoreState = initialState,
+export const passwordRestoreReducer = (
+  state = initialState,
   action: TPwdRestoreActions
 ) => {
   switch (action.type) {
@@ -70,7 +70,8 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

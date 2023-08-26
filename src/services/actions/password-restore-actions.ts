@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom'
 import * as api from '../../utils/api'
 import {
   CLEAR_PWD_RESTORE_FORM_STATE,
@@ -7,7 +8,8 @@ import {
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESTORE_FORM_STATE,
 } from '../../utils/constants'
-import { TSendRecoveryEmailResponse } from '../../utils/types'
+import { AppDispatch, AppThunk } from '../types'
+import { TSendRecoveryEmailResponse } from '../types/data'
 import { setIsErrorModalOpenAction } from './modal-actions'
 
 interface IUpdatePwdRestoreFormStateAction {
@@ -93,8 +95,8 @@ export const pwdRestoreFormSubmitFailedAction =
   }
 
 export const passwordRestoreFormSubmitThunk =
-  //@ts-ignore
-  (email, navigate) => (dispatch) => {
+  (email: string, navigate: NavigateFunction): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(pwdRestoreFormSubmitRequestAction())
 
     return api

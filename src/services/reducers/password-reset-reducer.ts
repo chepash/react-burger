@@ -6,7 +6,7 @@ import {
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESET_FORM_STATE,
 } from '../../utils/constants'
-import { TPasswordResetResponse } from '../../utils/types'
+import { TPasswordResetResponse } from '../types/data'
 import { TPwdResetActions } from '../actions/password-reset-actions'
 
 type TPasswordResetState = {
@@ -20,7 +20,7 @@ type TPasswordResetState = {
   isPasswordVisible: boolean
 }
 
-const initialState = {
+const initialState: TPasswordResetState = {
   form: {
     password: '',
     token: '',
@@ -31,8 +31,8 @@ const initialState = {
   isPasswordVisible: false,
 }
 
-export const reducer = (
-  state: TPasswordResetState = initialState,
+export const passwordResetReducer = (
+  state = initialState,
   action: TPwdResetActions
 ) => {
   switch (action.type) {
@@ -74,7 +74,8 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

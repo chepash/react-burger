@@ -10,7 +10,8 @@ import {
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../../utils/constants'
-import { TLogoutResponse, TUser, TUserDataResponse } from '../../utils/types'
+import { AppDispatch, AppThunk } from '../types'
+import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
 import { clearLoginStateAction } from './login-actions'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { clearOrderStateAction } from './order-actions'
@@ -128,8 +129,7 @@ export const clearUserStateAction = (): IClearUserStateAction => {
   }
 }
 
-// @ts-ignore
-export const getUserThunk = () => (dispatch) => {
+export const getUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
   const accessToken = localStorage.getItem('accessToken')
 
   if (accessToken) {
@@ -151,8 +151,7 @@ export const getUserThunk = () => (dispatch) => {
   }
 }
 
-// @ts-ignore
-export const handleLogoutThunk = () => (dispatch) => {
+export const handleLogoutThunk = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(logoutUserRequestAction())
 
   return api
@@ -160,7 +159,6 @@ export const handleLogoutThunk = () => (dispatch) => {
     .then((res) => {
       if (res.success) {
         localStorage.clear()
-
         dispatch(clearLoginStateAction())
         dispatch(clearOrderStateAction())
         dispatch(clearRegisterStateAction())

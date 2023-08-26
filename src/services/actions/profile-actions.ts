@@ -7,7 +7,8 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
 } from '../../utils/constants'
-import { TUserDataResponse } from '../../utils/types'
+import { AppDispatch, AppThunk } from '../types'
+import { TUserDataResponse } from '../types/data'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { getUserThunk } from './user-actions'
 
@@ -90,19 +91,20 @@ export const profileFormSubmitFailedAction =
     }
   }
 
-// @ts-ignore
-export const profileFormSubmitThunk = (changedInputs) => (dispatch) => {
-  dispatch(profileFormSubmitRequestAction())
+export const profileFormSubmitThunk =
+  (changedInputs: Record<string, string>): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(profileFormSubmitRequestAction())
 
-  return api
-    .updateUserData(changedInputs)
-    .then((res) => {
-      dispatch(profileFormSubmitSuccessAction(res))
-      dispatch(updateProfileFormStateAction('password', ''))
-      dispatch(getUserThunk())
-    })
-    .catch((err) => {
-      dispatch(setIsErrorModalOpenAction(true))
-      return dispatch(profileFormSubmitFailedAction())
-    })
-}
+    return api
+      .updateUserData(changedInputs)
+      .then((res) => {
+        dispatch(profileFormSubmitSuccessAction(res))
+        dispatch(updateProfileFormStateAction('password', ''))
+        dispatch(getUserThunk())
+      })
+      .catch((err) => {
+        dispatch(setIsErrorModalOpenAction(true))
+        return dispatch(profileFormSubmitFailedAction())
+      })
+  }

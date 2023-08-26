@@ -6,7 +6,7 @@ import {
   REGISTER_FORM_SUBMIT_SUCCESS,
   UPDATE_REGISTER_FORM_STATE,
 } from '../../utils/constants'
-import { TAuthResponse } from '../../utils/types'
+import { TAuthResponse } from '../types/data'
 import { TRegisterActions } from '../actions/register-actions'
 
 type TRegisterState = {
@@ -20,7 +20,7 @@ type TRegisterState = {
   isError: boolean | null
 }
 
-const initialState = {
+const initialState: TRegisterState = {
   form: {
     name: '',
     email: '',
@@ -31,8 +31,8 @@ const initialState = {
   isError: null,
 }
 
-export const reducer = (
-  state: TRegisterState = initialState,
+export const registerReducer = (
+  state = initialState,
   action: TRegisterActions
 ) => {
   switch (action.type) {
@@ -74,7 +74,8 @@ export const reducer = (
         isError: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

@@ -5,12 +5,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   registratioFormSubmitThunk,
   updateRegisterFormStateAction,
 } from '../../services/actions/register-actions'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 import styles from './auth.module.scss'
 
 const Register: FC = () => {
@@ -18,7 +18,6 @@ const Register: FC = () => {
   const navigate = useNavigate()
 
   const { name, email, password } = useSelector(
-    //@ts-ignore
     (store) => store.registerState.form
   )
 
@@ -28,7 +27,6 @@ const Register: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
     dispatch(registratioFormSubmitThunk(name, email, password, navigate))
   }
 

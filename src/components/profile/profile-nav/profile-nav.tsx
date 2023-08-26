@@ -1,18 +1,18 @@
 import cn from 'classnames'
 import { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { handleLogoutThunk } from '../../../services/actions/user-actions'
 import styles from './profile-nav.module.scss'
+import { useDispatch } from '../../../services/types/hooks'
 
 const ProfileNav: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleOnLogoutClick = () => {
-    // @ts-ignore
-    dispatch(handleLogoutThunk()).then(() => navigate('/login'))
+  const handleOnLogoutClick = async () => {
+    await dispatch(handleLogoutThunk())
+    navigate('/login')
   }
 
   return (

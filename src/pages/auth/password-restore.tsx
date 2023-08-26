@@ -4,18 +4,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   passwordRestoreFormSubmitThunk,
   updatePwdRestoreFormStateAction,
 } from '../../services/actions/password-restore-actions'
 import styles from './auth.module.scss'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 
 const PasswordRestore: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  //@ts-ignore
   const { email } = useSelector((store) => store.passwordRestoreState.form)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,6 @@ const PasswordRestore: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
     dispatch(passwordRestoreFormSubmitThunk(email, navigate))
   }
 

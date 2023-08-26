@@ -1,7 +1,7 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC } from 'react'
 import styles from './ingredients-navbar.module.scss'
-import { TIngredientsCategory } from '../../../utils/types'
+import { TIngredientsCategory } from '../../../services/types/data'
 
 type TIngredientsNavbarProps = {
   currentTab: TIngredientsCategory

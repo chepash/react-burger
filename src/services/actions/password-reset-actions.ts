@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom'
 import * as api from '../../utils/api'
 import {
   CLEAR_PWD_RESET_FORM_STATE,
@@ -7,7 +8,8 @@ import {
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESET_FORM_STATE,
 } from '../../utils/constants'
-import { TPasswordResetResponse } from '../../utils/types'
+import { AppDispatch, AppThunk } from '../types'
+import { TPasswordResetResponse } from '../types/data'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { clearPwdRestoreStateAction } from './password-restore-actions'
 
@@ -92,26 +94,25 @@ export const pwdResetFormSubmitFailedAction =
   }
 
 export const passwordResetFormSubmitThunk =
-  //@ts-ignore
+  (
+    { token, password }: Record<string, string>,
+    navigate: NavigateFunction
+  ): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(pwdResetFormSubmitRequestAction())
 
-
-    ({ token, password }, navigate: NavigateFunction) =>
-    //@ts-ignore
-    (dispatch) => {
-      dispatch(pwdResetFormSubmitRequestAction())
-
-      return api
-        .sendPasswordResetRequest({ token, password })
-        .then((res) => {
-          if (res.success) {
-            dispatch(clearPwdResetFormStateAction())
-            dispatch(clearPwdRestoreStateAction())
-            navigate('/', { replace: true })
-          }
-          return dispatch(pwdResetFormSubmitSuccessAction(res))
-        })
-        .catch((err) => {
-          dispatch(setIsErrorModalOpenAction(true))
-          return dispatch(pwdResetFormSubmitFailedAction())
-        })
-    }
+    return api
+      .sendPasswordResetRequest({ token, password })
+      .then((res) => {
+        if (res.success) {
+          dispatch(clearPwdResetFormStateAction())
+          dispatch(clearPwdRestoreStateAction())
+          navigate('/', { replace: true })
+        }
+        return dispatch(pwdResetFormSubmitSuccessAction(res))
+      })
+      .catch((err) => {
+        dispatch(setIsErrorModalOpenAction(true))
+        return dispatch(pwdResetFormSubmitFailedAction())
+      })
+  }

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
-import { useSelector } from 'react-redux'
 import { Navigate, useLocation } from 'react-router-dom'
+import { useSelector } from '../../services/types/hooks'
 
 type TProtectedRouteElementProps = {
   element: ReactNode
@@ -12,8 +12,6 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   onlyUnAuth = false,
 }) => {
   const location = useLocation()
-
-  // @ts-ignore
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
 
   if (onlyUnAuth && isLoggedIn) {

@@ -1,17 +1,15 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useDispatch, useSelector } from 'react-redux'
-import { addIngredientAction } from '../../../services/actions/constructor-actions'
-import styles from './constructor-kit.module.scss'
-
 import { FC } from 'react'
 import { useDrop } from 'react-dnd'
-import { TIngredient, TIngredientWithUUID } from '../../../utils/types'
+import { addIngredientAction } from '../../../services/actions/constructor-actions'
+import { TIngredient } from '../../../services/types/data'
+import { useDispatch, useSelector } from '../../../services/types/hooks'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
+import styles from './constructor-kit.module.scss'
 
 const ConstructorKit: FC = () => {
   const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
     (store) => store.constructorState
   )
   const dispatch = useDispatch()
@@ -55,16 +53,13 @@ const ConstructorKit: FC = () => {
 
       {constructorIngredients.length > 0 && (
         <ul className={cn(styles.list)}>
-          {/* Убрать as после типизации хранилища */}
-          {(constructorIngredients as TIngredientWithUUID[]).map(
-            (item, index) => (
-              <PrimaryIngredient
-                ingredientWithUUID={item}
-                key={item.uuid}
-                index={index}
-              />
-            )
-          )}
+          {constructorIngredients.map((item, index) => (
+            <PrimaryIngredient
+              ingredientWithUUID={item}
+              key={item.uuid}
+              index={index}
+            />
+          ))}
         </ul>
       )}
 

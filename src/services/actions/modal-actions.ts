@@ -4,7 +4,7 @@ import {
   SET_IS_INGREDIENT_MODAL_OPEN,
   SET_IS_ORDER_MODAL_OPEN,
 } from '../../utils/constants'
-import { TIngredient } from '../../utils/types'
+import { TIngredient } from '../types/data'
 
 interface ISetCurrentIngredientAction {
   readonly type: typeof SET_CURRENT_INGREDIENT

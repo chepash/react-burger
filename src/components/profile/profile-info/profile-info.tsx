@@ -4,14 +4,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import styles from './profile-info.module.scss'
 import {
   profileFormSubmitThunk,
   updateProfileFormStateAction,
 } from '../../../services/actions/profile-actions'
+import { useDispatch, useSelector } from '../../../services/types/hooks'
 import { passwordPattern } from '../../../utils/constants'
+import styles from './profile-info.module.scss'
 
 const ProfileInfo: FC = () => {
   const dispatch = useDispatch()
@@ -20,13 +19,11 @@ const ProfileInfo: FC = () => {
     name: inputNameValue,
     email: inputEmailValue,
     password: inputPasswordValue,
-    // @ts-ignore
   } = useSelector((store) => store.profileState.form)
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const { name: userName, email: userEmail } = useSelector(
-    // @ts-ignore
     (store) => store.userState.user
   )
 
@@ -57,7 +54,6 @@ const ProfileInfo: FC = () => {
       }
     })
 
-    // @ts-ignore
     dispatch(profileFormSubmitThunk(changedInputs))
   }
 

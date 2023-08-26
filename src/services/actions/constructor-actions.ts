@@ -5,7 +5,7 @@ import {
   EMPTY_CONSTRUCTOR,
   MOVE_INGREDIENT,
 } from '../../utils/constants'
-import { TIngredient, TIngredientWithUUID } from '../../utils/types'
+import { TIngredient, TIngredientWithUUID } from '../types/data'
 
 interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT

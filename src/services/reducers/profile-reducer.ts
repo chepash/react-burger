@@ -6,7 +6,7 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
 } from '../../utils/constants'
-import { TUserDataResponse } from '../../utils/types'
+import { TUserDataResponse } from '../types/data'
 import { TProfileActions } from '../actions/profile-actions'
 
 type TProfileState = {
@@ -20,7 +20,7 @@ type TProfileState = {
   isError: boolean | null
 }
 
-const initialState = {
+const initialState: TProfileState = {
   form: {
     name: '',
     email: '',
@@ -31,8 +31,8 @@ const initialState = {
   isError: null,
 }
 
-export const reducer = (
-  state: TProfileState = initialState,
+export const profileReducer = (
+  state = initialState,
   action: TProfileActions
 ) => {
   switch (action.type) {
@@ -74,7 +74,8 @@ export const reducer = (
         error: true,
         isLoading: false,
       }
+    default:
+      const exhaustiveCheck: never = action
+      return state
   }
-
-  const _exhaustiveCheck: never = action
 }

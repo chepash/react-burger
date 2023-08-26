@@ -2,7 +2,7 @@ import {
   SUCCESSFUL_LOGOUT_MESSAGE,
   SUCCESSFUL_PASSWORD_RESET_MESSAGE,
   SUCCESSFUL_RECOVERY_MAIL_SEND_MESSAGE,
-} from './constants'
+} from '../../utils/constants'
 
 export type TIngredientsCategory = 'bun' | 'sauce' | 'main'
 
@@ -59,9 +59,27 @@ type TBaseApiResponse = {
   success: boolean
 }
 
+// Тело ответа сервера при успешном запросе инжедиентов:
+// {
+//   "success": true,
+//   "data": [
+//       {
+//           "_id": "643d69a5c3f7b9001cfa093c",
+//           "name": "Краторная булка N-200i",
+//           "type": "bun",
+//           "proteins": 80,
+//           "fat": 24,
+//           "carbohydrates": 53,
+//           "calories": 420,
+//           "price": 1255,
+//           "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+//           "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+//           "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+//           "__v": 0
+//       },
+//       {...
 export type TFetchIngredientsResponse = TBaseApiResponse & {
-  accessToken: string
-  data: ReadonlyArray<TIngredient>
+  data: TIngredient[]
 }
 
 // Тело ответа сервера при успешном обновлении токена:
