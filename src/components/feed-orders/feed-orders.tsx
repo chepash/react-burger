@@ -5,7 +5,7 @@ import OrderCard from '../order-card/order-card'
 
 const FeedOrders: FC = () => {
   return (
-    <section>
+    <section aria-label="Перечень последних выполненых заказов">
       <div className={cn(styles.section__content)}>
         <div className={cn(styles.section__content_scrollable)}>
           <ul className={cn(styles.list)}>
