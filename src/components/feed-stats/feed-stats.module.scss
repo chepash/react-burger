@@ -1,0 +1,27 @@
+.orders {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  &__board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.list {
+  display: flex;
+  flex-flow: column wrap;
+  row-gap: 8px;
+
+  width: 100%;
+  max-height: 155px;
+  margin: 0 auto 0 0;
+  padding: 0;
+
+  list-style: none;
+
+  &_green {
+    color: #0cc;
+  }
+}
