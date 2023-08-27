@@ -6,7 +6,7 @@ type TOrderDetailsProps = {
   orderNumber: number
 }
 
-const OrderDetails: FC<TOrderDetailsProps> = ({ orderNumber }) => {
+const OrderStatusResponse: FC<TOrderDetailsProps> = ({ orderNumber }) => {
   return (
     <>
       <h2 className={cn('text', 'text_type_digits-large', 'mt-30', 'mb-8')}>
@@ -33,4 +33,4 @@ const OrderDetails: FC<TOrderDetailsProps> = ({ orderNumber }) => {
   )
 }
 
-export default OrderDetails
+export default OrderStatusResponse

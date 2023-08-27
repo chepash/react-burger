@@ -10,7 +10,7 @@ import { createOrderThunk } from '../../../services/actions/order-actions'
 import { useDispatch, useSelector } from '../../../services/types/hooks'
 import Modal from '../../modal/modal'
 import Preloader from '../../preloader/preloader'
-import OrderDetails from '../order-details/order-details'
+import OrderStatusResponse from '../order-status-response/order-status-response'
 import styles from './checkout.module.scss'
 
 const Checkout: FC = () => {
@@ -72,7 +72,7 @@ const Checkout: FC = () => {
         >
           {isLoading && <Preloader />}
           {!isLoading && response?.success && (
-            <OrderDetails orderNumber={response.order.number} />
+            <OrderStatusResponse orderNumber={response.order.number} />
           )}
         </Modal>
       )}
