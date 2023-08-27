@@ -24,6 +24,7 @@ import ProfileInfo from '../profile/profile-info/profile-info'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
+import Feed from '../../pages/feed/feed'
 
 const App: FC = () => {
   const dispatch = useDispatch()
@@ -81,6 +82,7 @@ const App: FC = () => {
           <>
             <Routes location={background || location}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/feed" element={<Feed />} />
               <Route
                 path="/login"
                 element={
