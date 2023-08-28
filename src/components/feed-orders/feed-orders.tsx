@@ -1,9 +1,8 @@
 import cn from 'classnames'
 import { FC } from 'react'
-import styles from './feed-orders.module.scss'
-import OrderCard from '../order-card/order-card'
 import { useSelector } from '../../services/types/store'
-import IngredientCard from '../burger-ingredients/ingredient-card/ingredient-card'
+import OrderCard from '../order-card/order-card'
+import styles from './feed-orders.module.scss'
 
 const FeedOrders: FC = () => {
   const feedOrders = useSelector((store) => store.feedState.response.orders)
