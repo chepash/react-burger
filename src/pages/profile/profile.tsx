@@ -7,19 +7,19 @@ import styles from './profile.module.scss'
 const Profile: FC = () => {
   const location = useLocation()
 
-  type SectionDescriptions = {
+  type TSectionDescriptions = {
     '/profile': string
     '/profile/orders': string
   }
 
-  const sectionDescriptions: SectionDescriptions = {
+  const sectionDescriptions: TSectionDescriptions = {
     '/profile': 'В этом разделе вы можете изменить свои персональные данные',
     '/profile/orders':
       'В этом разделе вы можете просмотреть свою историю заказов',
   }
 
   const currentSectionDescription =
-    sectionDescriptions[location.pathname as keyof SectionDescriptions] || ''
+    sectionDescriptions[location.pathname as keyof TSectionDescriptions] || ''
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>
