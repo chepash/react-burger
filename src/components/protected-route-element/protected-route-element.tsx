@@ -1,11 +1,10 @@
-import { FC, ReactNode } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { FC } from 'react'
+import { Navigate, RouteProps, useLocation } from 'react-router-dom'
 import { useSelector } from '../../services/types/store'
 
 type TProtectedRouteElementProps = {
-  element: ReactNode
   onlyUnAuth?: boolean
-}
+} & RouteProps
 
 const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   element,
