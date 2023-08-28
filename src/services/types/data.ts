@@ -26,6 +26,11 @@ export type TIngredientWithUUID = {
   uuid: string
 }
 
+export type TOrderIngredient = {
+  ingredient: TIngredient
+  amount: number
+}
+
 export type TOwner = {
   name: string
   email: string
@@ -33,7 +38,7 @@ export type TOwner = {
   updatedAt: string
 }
 
-export type TOrder = {
+export type TPlacedCurrentOrder = {
   _id: string
   ingredients: TIngredient[]
   owner: TOwner
@@ -122,6 +127,7 @@ export type TUserDataResponse = TBaseApiResponse & {
 type TMessageResponse<T extends string> = TBaseApiResponse & {
   message: T
 }
+
 // Тело ответа сервера при выходе из системы:
 // {
 //   "success": true,
@@ -159,5 +165,5 @@ export type TCustomRequestInit = RequestInit & {
 
 export type TPlaceOrderResponse = TBaseApiResponse & {
   name: string
-  order: TOrder
+  order: TPlacedCurrentOrder
 }
