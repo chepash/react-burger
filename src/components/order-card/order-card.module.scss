@@ -54,3 +54,17 @@
     background: linear-gradient(to right, transparent, #1c1c21);
   }
 }
+
+.status {
+  &_created {
+    color: #a200ff;
+  }
+
+  &_pending {
+    color: #fff;
+  }
+
+  &_done {
+    color: #0cc;
+  }
+}
