@@ -19,25 +19,6 @@ const FeedOrders: FC = () => {
                   <OrderCard key={order._id} order={order} />
                 )
             )}
-
-            {/* // {ingredients.map((item) => (
-          //   <IngredientCard key={item._id} ingredient={item} />
-          // ))}
-            // <li>
-            //   <OrderCard />
-            // </li>
-            // <li>
-            //   <OrderCard />
-            // </li>
-            // <li>
-            //   <OrderCard />
-            // </li>
-            // <li>
-            //   <OrderCard />
-            // </li>
-            // <li>
-            //   <OrderCard />
-            // </li> */}
           </ul>
         </div>
       </div>
