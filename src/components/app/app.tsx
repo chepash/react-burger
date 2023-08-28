@@ -4,6 +4,7 @@ import Login from '../../pages/auth/login'
 import PasswordReset from '../../pages/auth/password-reset'
 import PasswordRestore from '../../pages/auth/password-restore'
 import Register from '../../pages/auth/register'
+import Feed from '../../pages/feed/feed'
 import HomePage from '../../pages/home-page/home-page'
 import NotFound from '../../pages/not-found/not-found'
 import Profile from '../../pages/profile/profile'
@@ -24,7 +25,6 @@ import ProfileInfo from '../profile/profile-info/profile-info'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
-import Feed from '../../pages/feed/feed'
 
 const App: FC = () => {
   const dispatch = useDispatch()

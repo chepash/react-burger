@@ -152,7 +152,7 @@ const OrderDetails: FC = () => {
             <p className={cn(styles.price, 'text', 'text_type_digits-default')}>
               3 x 20 <CurrencyIcon type="primary" />
             </p>
-          </li>{' '}
+          </li>
           <li className={cn(styles.list__item)}>
             <div className={cn(styles.img__wrapper)}>
               <div className={cn(styles.img__cropper)}>
