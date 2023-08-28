@@ -1,8 +1,42 @@
 import cn from 'classnames'
 import { FC } from 'react'
+import { useSelector } from '../../services/types/store'
 import styles from './feed-stats.module.scss'
 
 const FeedStats: FC = () => {
+  const { orders, total, totalToday } = useSelector(
+    (store) => store.feedState.response
+  )
+
+  const pendingOrderNumbers: number[] = []
+  for (const order of orders) {
+    if (order.status === 'pending') {
+      pendingOrderNumbers.push(order.number)
+    }
+    if (pendingOrderNumbers.length >= 10) {
+      break
+    }
+  }
+
+  const recentDoneOrderNumbers: number[] = []
+
+  for (const order of orders) {
+    if (order.status === 'done') {
+      const now = new Date()
+      const updatedAtDate = new Date(order.updatedAt)
+      const timeDiff = now.getTime() - updatedAtDate.getTime()
+
+      // 900000 ms = 15 minutes
+      if (timeDiff <= 900000) {
+        recentDoneOrderNumbers.push(order.number)
+      }
+    }
+
+    if (recentDoneOrderNumbers.length >= 10) {
+      break
+    }
+  }
+
   return (
     <section aria-label="Статусы и общая статистика всех заказов">
       <div className={cn(styles.orders)}>
@@ -16,13 +50,9 @@ const FeedStats: FC = () => {
                 'text text_type_digits-default'
               )}
             >
-              <li>034533</li>
-              <li>034533</li>
-              <li>034533</li>
-              <li>034533</li>
-              <li>034533</li>
-              <li>034533</li>
-              <li>034533</li>
+              {recentDoneOrderNumbers.map((number) => (
+                <li key={number}>{number}</li>
+              ))}
             </ul>
           </div>
           <div className={cn(styles.orders__ongoing)}>
@@ -30,12 +60,9 @@ const FeedStats: FC = () => {
               В работе:
             </p>
             <ul className={cn(styles.list, 'text text_type_digits-default')}>
-              <li>034888</li>
-              <li>034888</li>
-              <li>034888</li>
-              <li>034888</li>
-              <li>034888</li>
-              <li>034888</li>
+              {pendingOrderNumbers.map((number) => (
+                <li key={number}>{number}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -43,11 +70,11 @@ const FeedStats: FC = () => {
         <p className={cn('text text_type_main-medium', 'mt-15')}>
           Выполнено за все время:
         </p>
-        <p className={cn('text text_type_digits-large')}>28 752</p>
+        <p className={cn('text text_type_digits-large')}>{total}</p>
         <p className={cn('text text_type_main-medium', 'mt-15')}>
           Выполнено за сегодня:
         </p>
-        <p className={cn('text text_type_digits-large')}>138</p>
+        <p className={cn('text text_type_digits-large')}>{totalToday}</p>
       </div>
     </section>
   )
