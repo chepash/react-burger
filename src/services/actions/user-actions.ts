@@ -10,7 +10,7 @@ import {
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types'
+import { AppDispatch, AppThunk } from '../types/store'
 import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
 import { clearLoginStateAction } from './login-actions'
 import { setIsErrorModalOpenAction } from './modal-actions'

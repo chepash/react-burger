@@ -11,7 +11,7 @@ import {
   updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
 import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
-import { useDispatch, useSelector } from '../../services/types/hooks'
+import { useDispatch, useSelector } from '../../services/types/store'
 import { passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 

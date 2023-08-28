@@ -15,7 +15,7 @@ import {
   setIsIngredientModalOpenAction,
 } from '../../services/actions/modal-actions'
 import { getUserThunk } from '../../services/actions/user-actions'
-import { useDispatch, useSelector } from '../../services/types/hooks'
+import { useDispatch, useSelector } from '../../services/types/store'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'

@@ -7,7 +7,7 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types'
+import { AppDispatch, AppThunk } from '../types/store'
 import { TUserDataResponse } from '../types/data'
 import { setIsErrorModalOpenAction } from './modal-actions'
 import { getUserThunk } from './user-actions'

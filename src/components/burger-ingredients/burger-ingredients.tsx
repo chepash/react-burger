@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { TIngredientsCategory } from '../../services/types/data'
-import { useSelector } from '../../services/types/hooks'
+import { useSelector } from '../../services/types/store'
 import styles from './burger-ingredients.module.scss'
 import IngredientsCategory from './ingredients-category/ingredients-category'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'

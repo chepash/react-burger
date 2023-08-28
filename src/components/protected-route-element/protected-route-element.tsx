@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useSelector } from '../../services/types/hooks'
+import { useSelector } from '../../services/types/store'
 
 type TProtectedRouteElementProps = {
   element: ReactNode

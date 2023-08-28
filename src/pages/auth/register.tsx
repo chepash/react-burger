@@ -10,7 +10,7 @@ import {
   registratioFormSubmitThunk,
   updateRegisterFormStateAction,
 } from '../../services/actions/register-actions'
-import { useDispatch, useSelector } from '../../services/types/hooks'
+import { useDispatch, useSelector } from '../../services/types/store'
 import styles from './auth.module.scss'
 
 const Register: FC = () => {

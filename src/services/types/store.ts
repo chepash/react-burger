@@ -10,6 +10,11 @@ import { TPwdRestoreActions } from '../actions/password-restore-actions'
 import { TProfileActions } from '../actions/profile-actions'
 import { TRegisterActions } from '../actions/register-actions'
 import { TUserActions } from '../actions/user-actions'
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from 'react-redux'
 
 type TApplicationActions =
   | TConstructorActions
@@ -33,3 +38,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   TApplicationActions
 >
+
+export const useDispatch = () => dispatchHook<AppDispatch>()
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook

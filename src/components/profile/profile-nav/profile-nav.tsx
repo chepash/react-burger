@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { handleLogoutThunk } from '../../../services/actions/user-actions'
 import styles from './profile-nav.module.scss'
-import { useDispatch } from '../../../services/types/hooks'
+import { useDispatch } from '../../../services/types/store'
 
 const ProfileNav: FC = () => {
   const location = useLocation()

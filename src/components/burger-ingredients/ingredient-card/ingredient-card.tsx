@@ -11,7 +11,7 @@ import {
   setIsIngredientModalOpenAction,
 } from '../../../services/actions/modal-actions'
 import { TIngredient } from '../../../services/types/data'
-import { useDispatch, useSelector } from '../../../services/types/hooks'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-card.module.scss'
 
 type TIngredientCardProps = {

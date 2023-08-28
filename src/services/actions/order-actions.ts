@@ -5,7 +5,7 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types'
+import { AppDispatch, AppThunk } from '../types/store'
 import {
   TIngredient,
   TIngredientWithUUID,

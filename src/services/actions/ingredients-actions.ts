@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types'
+import { AppDispatch, AppThunk } from '../types/store'
 import { TIngredient } from '../types/data'
 
 interface IGetIngredientsAction {

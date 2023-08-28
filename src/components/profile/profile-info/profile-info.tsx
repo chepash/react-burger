@@ -8,7 +8,7 @@ import {
   profileFormSubmitThunk,
   updateProfileFormStateAction,
 } from '../../../services/actions/profile-actions'
-import { useDispatch, useSelector } from '../../../services/types/hooks'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import { passwordPattern } from '../../../utils/constants'
 import styles from './profile-info.module.scss'
 

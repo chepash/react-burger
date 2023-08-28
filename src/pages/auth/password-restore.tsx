@@ -10,7 +10,7 @@ import {
   updatePwdRestoreFormStateAction,
 } from '../../services/actions/password-restore-actions'
 import styles from './auth.module.scss'
-import { useDispatch, useSelector } from '../../services/types/hooks'
+import { useDispatch, useSelector } from '../../services/types/store'
 
 const PasswordRestore: FC = () => {
   const dispatch = useDispatch()

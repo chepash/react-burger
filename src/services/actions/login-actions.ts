@@ -8,7 +8,7 @@ import {
   SET_IS_ERROR_MODAL_OPEN,
   UPDATE_LOGIN_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types'
+import { AppDispatch, AppThunk } from '../types/store'
 import { TAuthResponse } from '../types/data'
 import { getUserThunk } from './user-actions'
 

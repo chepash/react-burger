@@ -2,7 +2,7 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { setCurrentIngredientAction } from '../../../services/actions/modal-actions'
-import { useDispatch, useSelector } from '../../../services/types/hooks'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-details.module.scss'
 
 const IngredientDetails: FC = () => {

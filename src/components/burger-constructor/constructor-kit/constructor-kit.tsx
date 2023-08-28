@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useDrop } from 'react-dnd'
 import { addIngredientAction } from '../../../services/actions/constructor-actions'
 import { TIngredient } from '../../../services/types/data'
-import { useDispatch, useSelector } from '../../../services/types/hooks'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 import styles from './constructor-kit.module.scss'
 
