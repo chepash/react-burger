@@ -12,12 +12,9 @@ const FeedOrders: FC = () => {
       <div className={cn(styles.section__content)}>
         <div className={cn(styles.section__content_scrollable)}>
           <ul className={cn(styles.list)}>
-            {feedOrders.map(
-              (order) =>
-                order.status === 'done' && (
-                  <OrderCard key={order._id} order={order} />
-                )
-            )}
+            {feedOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
+            ))}
           </ul>
         </div>
       </div>
