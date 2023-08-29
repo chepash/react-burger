@@ -1,9 +1,13 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC } from 'react'
-import { useLocation } from 'react-router-dom'
-import { TOrder } from '../../services/reducers/feed-reducer'
-import { useSelector } from '../../services/types/store'
+import { useLocation, useNavigate } from 'react-router-dom'
+import {
+  setCurrentOrderDetailsAction,
+  setIsOrderDetailsModalOpenAction,
+} from '../../services/actions/modal-actions'
+import { OrderStatus, TOrder } from '../../services/types/data'
+import { useDispatch, useSelector } from '../../services/types/store'
 import {
   formatUpdatedAtTime,
   transformOrderIngredientsList,
@@ -17,6 +21,9 @@ type TOrderCardProps = {
 
 const OrderCard: FC<TOrderCardProps> = ({ order }) => {
   const location = useLocation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const detailedIngredientsData = useSelector(
     (store) => store.ingredientsState.ingredients
   )
@@ -31,23 +38,30 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
     0
   )
 
-  type TStatusText = {
-    created: string
-    pending: string
-    done: string
-  }
+  const currentOrderStatusText = OrderStatus[order.status] || ''
 
-  const statusText: TStatusText = {
-    created: 'Принят',
-    pending: 'Готовится',
-    done: 'Выполнен',
-  }
+  const onClick = () => {
+    dispatch(
+      setCurrentOrderDetailsAction({
+        originalOrderInfo: order,
+        orderIngredients,
+        orderSum,
+      })
+    )
+    dispatch(setIsOrderDetailsModalOpenAction(true))
 
-  const currentOrderStatusText =
-    statusText[order.status as keyof TStatusText] || ''
+    const currentPath = location.pathname
+    const newPath = currentPath.includes('/feed')
+      ? `/feed/${order.number}`
+      : `/profile/orders/${order.number}`
+
+    navigate(newPath, {
+      state: { backgroundLocation: location },
+    })
+  }
 
   return (
-    <li className={cn(styles.card, 'p-6')}>
+    <li className={cn(styles.card, 'p-6')} onClick={onClick}>
       <div className={cn(styles.card__header)}>
         <p className={cn('text text_type_digits-default')}>#{order.number}</p>
         <p className={cn('text text_type_main-default text_color_inactive')}>
@@ -60,7 +74,7 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
 
       {location.pathname === '/profile/orders' && (
         <p
-          className={cn(styles.status, 'mt-2', 'text text_type_main-small', {
+          className={cn('mt-2', 'text text_type_main-small', {
             [styles.status_created]: order.status === 'created',
             [styles.status_pending]: order.status === 'pending',
             [styles.status_done]: order.status === 'done',
@@ -71,12 +85,14 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
       )}
       <div className={cn(styles.card__footer, 'mt-6')}>
         <ul className={cn(styles.list)}>
-          {orderIngredients.reverse().map((item) => (
-            <OrderCardIgredient
-              key={item.ingredient._id}
-              orderIngredient={item}
-            />
-          ))}
+          {orderIngredients
+            .map((item) => (
+              <OrderCardIgredient
+                key={item.ingredient._id}
+                orderIngredient={item}
+              />
+            ))
+            .reverse()}
         </ul>
         <div className={cn(styles.price, 'text text_type_digits-default')}>
           {orderSum} <CurrencyIcon type="primary" />
