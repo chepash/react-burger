@@ -26,16 +26,18 @@ export const formatUpdatedAtTime = (updatedAt: string): string => {
     }
   }
 
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const updatedAtDay = new Date(
+    updatedAtDate.getFullYear(),
+    updatedAtDate.getMonth(),
+    updatedAtDate.getDate()
+  )
+
   if (days === 0) {
-    if (hours === 0) {
-      if (minutes === 0) {
-        return 'Только что'
-      }
-      return `Сегодня, ${updatedAtDate.toLocaleTimeString([], options)}`
-    } else if (hours === 1) {
+    if (today.getTime() === updatedAtDay.getTime()) {
       return `Сегодня, ${updatedAtDate.toLocaleTimeString([], options)}`
     } else {
-      return `Сегодня, ${updatedAtDate.toLocaleTimeString([], options)}`
+      return `Вчера, ${updatedAtDate.toLocaleTimeString([], options)}`
     }
   } else if (days === 1) {
     return `Вчера, ${updatedAtDate.toLocaleTimeString([], options)}`
