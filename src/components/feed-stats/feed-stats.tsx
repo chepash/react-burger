@@ -9,31 +9,13 @@ const FeedStats: FC = () => {
   )
 
   const pendingOrderNumbers: number[] = []
-  for (const order of orders) {
-    if (order.status === 'pending') {
-      pendingOrderNumbers.push(order.number)
-    }
-    if (pendingOrderNumbers.length >= 10) {
-      break
-    }
-  }
-
   const recentDoneOrderNumbers: number[] = []
 
   for (const order of orders) {
-    if (order.status === 'done') {
-      const now = new Date()
-      const updatedAtDate = new Date(order.updatedAt)
-      const timeDiff = now.getTime() - updatedAtDate.getTime()
-
-      // 900000 ms = 15 minutes
-      if (timeDiff <= 900000) {
-        recentDoneOrderNumbers.push(order.number)
-      }
-    }
-
-    if (recentDoneOrderNumbers.length >= 10) {
-      break
+    if (order.status === 'pending') {
+      pendingOrderNumbers.push(order.number)
+    } else if (order.status === 'done') {
+      recentDoneOrderNumbers.push(order.number)
     }
   }
 
