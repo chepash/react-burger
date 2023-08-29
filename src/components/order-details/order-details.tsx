@@ -11,6 +11,7 @@ import {
 import OrderDetailsIngredient from './order-details-ingredient/order-details-ingredient'
 import { useLocation, useParams } from 'react-router-dom'
 import { setCurrentOrderDetailsAction } from '../../services/actions/modal-actions'
+import NotFound from '../../pages/not-found/not-found'
 
 const OrderDetails: FC = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const OrderDetails: FC = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    const order = orders.find((item) => item.number.toString() === id)
+    const order = orders.find((item) => item._id.toString() === id)
 
     if (id && order) {
       const orderIngredients = transformOrderIngredientsList(
@@ -55,7 +56,7 @@ const OrderDetails: FC = () => {
   }, [dispatch, id, orders, detailedIngredientsData])
 
   if (!currentOrderDetails) {
-    return <>{id}</>
+    return <NotFound />
   }
 
   const orderStatus = currentOrderDetails.originalOrderInfo.status
@@ -71,7 +72,7 @@ const OrderDetails: FC = () => {
             [styles.centered]: !background,
           })}
         >
-          #{id}
+          #{currentOrderDetails.originalOrderInfo.number}
         </p>
         <p className={cn('text text_type_main-medium', 'mb-3')}>{orderName}</p>
 

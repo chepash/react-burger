@@ -201,10 +201,6 @@ const App: FC = () => {
           </>
         )}
       </div>
-      {/*
-      <Modal onClose={handleCloseErrorModal}>
-        <OrderDetails />
-      </Modal> */}
 
       {isErrorModalOpen && (
         <Modal onClose={handleCloseErrorModal}>

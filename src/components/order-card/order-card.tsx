@@ -52,8 +52,8 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
 
     const currentPath = location.pathname
     const newPath = currentPath.includes('/feed')
-      ? `/feed/${order.number}`
-      : `/profile/orders/${order.number}`
+      ? `/feed/${order._id}`
+      : `/profile/orders/${order._id}`
 
     navigate(newPath, {
       state: { backgroundLocation: location },
