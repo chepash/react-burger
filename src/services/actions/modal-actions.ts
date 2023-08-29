@@ -2,20 +2,30 @@ import {
   SET_CURRENT_INGREDIENT,
   SET_IS_ERROR_MODAL_OPEN,
   SET_IS_INGREDIENT_MODAL_OPEN,
-  SET_IS_ORDER_MODAL_OPEN,
+  SET_IS_ORDER_DETAILS_MODAL_OPEN,
+  SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
+  SET_CURENT_ORDER_DETAILS,
 } from '../../utils/constants'
-import { TIngredient } from '../types/data'
+import { TIngredient, TOrderDetails } from '../types/data'
 
 interface ISetCurrentIngredientAction {
   readonly type: typeof SET_CURRENT_INGREDIENT
   readonly payload: TIngredient | null
 }
+interface ISetCurrentOrderDetailsAction {
+  readonly type: typeof SET_CURENT_ORDER_DETAILS
+  readonly payload: TOrderDetails | null
+}
 interface ISetIsIngredientModalOpenAction {
   readonly type: typeof SET_IS_INGREDIENT_MODAL_OPEN
   readonly payload: boolean
 }
-interface ISetIsOrderModalOpenAction {
-  readonly type: typeof SET_IS_ORDER_MODAL_OPEN
+interface ISetIsPlacedNewOrderModalOpenAction {
+  readonly type: typeof SET_IS_PLACED_NEW_ORDER_MODAL_OPEN
+  readonly payload: boolean
+}
+interface ISetIsOrderDetailsModalOpenAction {
+  readonly type: typeof SET_IS_ORDER_DETAILS_MODAL_OPEN
   readonly payload: boolean
 }
 interface ISetIsErrorModalOpenAction {
@@ -24,8 +34,10 @@ interface ISetIsErrorModalOpenAction {
 }
 export type TModalActions =
   | ISetCurrentIngredientAction
+  | ISetCurrentOrderDetailsAction
+  | ISetIsPlacedNewOrderModalOpenAction
   | ISetIsIngredientModalOpenAction
-  | ISetIsOrderModalOpenAction
+  | ISetIsOrderDetailsModalOpenAction
   | ISetIsErrorModalOpenAction
 
 export const setCurrentIngredientAction = (
@@ -36,6 +48,14 @@ export const setCurrentIngredientAction = (
     payload: ingredient,
   }
 }
+export const setCurrentOrderDetailsAction = (
+  currentOrderDetails: TOrderDetails | null
+): ISetCurrentOrderDetailsAction => {
+  return {
+    type: SET_CURENT_ORDER_DETAILS,
+    payload: currentOrderDetails,
+  }
+}
 export const setIsIngredientModalOpenAction = (
   isOpen: boolean
 ): ISetIsIngredientModalOpenAction => {
@@ -44,11 +64,19 @@ export const setIsIngredientModalOpenAction = (
     payload: isOpen,
   }
 }
-export const setIsOrderModalOpenAction = (
+export const setIsPlacedNewOrderModalOpenAction = (
   isOpen: boolean
-): ISetIsOrderModalOpenAction => {
+): ISetIsPlacedNewOrderModalOpenAction => {
   return {
-    type: SET_IS_ORDER_MODAL_OPEN,
+    type: SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
+    payload: isOpen,
+  }
+}
+export const setIsOrderDetailsModalOpenAction = (
+  isOpen: boolean
+): ISetIsOrderDetailsModalOpenAction => {
+  return {
+    type: SET_IS_ORDER_DETAILS_MODAL_OPEN,
     payload: isOpen,
   }
 }

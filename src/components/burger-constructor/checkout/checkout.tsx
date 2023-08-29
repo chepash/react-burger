@@ -5,7 +5,7 @@ import {
 import cn from 'classnames'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { setIsOrderModalOpenAction } from '../../../services/actions/modal-actions'
+import { setIsPlacedNewOrderModalOpenAction } from '../../../services/actions/modal-actions'
 import { createOrderThunk } from '../../../services/actions/order-actions'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import Modal from '../../modal/modal'
@@ -22,7 +22,9 @@ const Checkout: FC = () => {
   )
   const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
   const { isLoading, response } = useSelector((store) => store.orderState)
-  const { isOrderModalOpen } = useSelector((store) => store.modalState)
+  const { isPlacedNewOrderModalOpen: isOrderModalOpen } = useSelector(
+    (store) => store.modalState
+  )
 
   const orderSum = constructorIngredients.reduce(
     (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
@@ -32,14 +34,14 @@ const Checkout: FC = () => {
   const handleOrder = () => {
     if (isLoggedIn) {
       dispatch(createOrderThunk(constructorIngredients, constructorBun))
-      dispatch(setIsOrderModalOpenAction(true))
+      dispatch(setIsPlacedNewOrderModalOpenAction(true))
     } else {
       navigate('/login')
     }
   }
 
   const handleCloseModal = () => {
-    dispatch(setIsOrderModalOpenAction(false))
+    dispatch(setIsPlacedNewOrderModalOpenAction(false))
   }
 
   return (
