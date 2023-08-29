@@ -5,23 +5,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_SUCCESS,
 } from '../actions/feed-actions'
-
-export type TOrder = {
-  _id: string
-  ingredients: string[]
-  status: 'created' | 'pending' | 'done'
-  name: string
-  createdAt: string
-  updatedAt: string
-  number: number
-}
-
-export type TFeedResponse = {
-  success: boolean
-  orders: TOrder[]
-  total: number
-  totalToday: number
-}
+import { TFeedResponse } from '../types/data'
 
 export type TFeedReducerState = {
   wsConnected: boolean
