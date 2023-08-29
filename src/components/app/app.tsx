@@ -11,8 +11,10 @@ import Profile from '../../pages/profile/profile'
 import { getAllIngredientsThunk } from '../../services/actions/ingredients-actions'
 import {
   setCurrentIngredientAction,
+  setCurrentOrderDetailsAction,
   setIsErrorModalOpenAction,
   setIsIngredientModalOpenAction,
+  setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
 import { getUserThunk } from '../../services/actions/user-actions'
 import { useDispatch, useSelector } from '../../services/types/store'
@@ -25,6 +27,7 @@ import ProfileInfo from '../profile/profile-info/profile-info'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
+import OrderDetails from '../order-details/order-details'
 
 const App: FC = () => {
   const dispatch = useDispatch()
@@ -32,6 +35,10 @@ const App: FC = () => {
   const location = useLocation()
 
   const background = location.state && location.state.backgroundLocation
+
+  const isOrderDetailsModalOpen = useSelector(
+    (store) => store.modalState.isOrderDetailsModalOpen
+  )
 
   const isLoading = useSelector((store) => store.ingredientsState.isLoading)
 
@@ -65,10 +72,16 @@ const App: FC = () => {
     dispatch(setIsErrorModalOpenAction(false))
   }
 
-  const handleCloseModal = () => {
+  const handleCloseIngredientModal = () => {
     dispatch(setCurrentIngredientAction(null))
     dispatch(setIsIngredientModalOpenAction(false))
     navigate('/')
+  }
+
+  const handleCloseOrderDetailstModal = () => {
+    dispatch(setCurrentOrderDetailsAction(null))
+    dispatch(setIsOrderDetailsModalOpenAction(false))
+    navigate(-1)
   }
 
   return (
@@ -128,14 +141,15 @@ const App: FC = () => {
                 <Route path="orders" element={<ProfileOrders />} />
               </Route>
 
+              <Route path="/ingredients/:id" element={<IngredientDetails />} />
+
+              <Route path="/feed/:id" element={<OrderDetails />} />
+
               <Route
-                path="/ingredients/:id"
-                element={
-                  <>
-                    <IngredientDetails />
-                  </>
-                }
+                path="/profile/orders/:id"
+                element={<ProtectedRouteElement element={<OrderDetails />} />}
               />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
 
@@ -146,7 +160,7 @@ const App: FC = () => {
                   element={
                     <Modal
                       header="Детали ингредиента"
-                      onClose={handleCloseModal}
+                      onClose={handleCloseIngredientModal}
                     >
                       <IngredientDetails />
                     </Modal>
@@ -154,9 +168,43 @@ const App: FC = () => {
                 />
               </Routes>
             )}
+
+            {background && isOrderDetailsModalOpen && (
+              <Routes>
+                <Route
+                  path="/feed/:id"
+                  element={
+                    <Modal onClose={handleCloseOrderDetailstModal}>
+                      <OrderDetails />
+                    </Modal>
+                  }
+                />
+              </Routes>
+            )}
+
+            {background && isOrderDetailsModalOpen && (
+              <Routes>
+                <Route
+                  path="/profile/orders/:number"
+                  element={
+                    <ProtectedRouteElement
+                      element={
+                        <Modal onClose={handleCloseOrderDetailstModal}>
+                          <OrderDetails />
+                        </Modal>
+                      }
+                    />
+                  }
+                />
+              </Routes>
+            )}
           </>
         )}
       </div>
+      {/*
+      <Modal onClose={handleCloseErrorModal}>
+        <OrderDetails />
+      </Modal> */}
 
       {isErrorModalOpen && (
         <Modal onClose={handleCloseErrorModal}>

@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-details.module.scss'
 
 const IngredientDetails: FC = () => {
+  const dispatch = useDispatch()
+
   const currentIngredient = useSelector(
     (store) => store.modalState.currentIngredient
   )
-  const { id } = useParams()
-  const dispatch = useDispatch()
   const ingredients = useSelector((store) => store.ingredientsState.ingredients)
+  const { id } = useParams()
 
   useEffect(() => {
     if (id) {
