@@ -8,19 +8,20 @@ const Profile: FC = () => {
   const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
   const location = useLocation()
 
-  type TSectionDescriptions = {
-    '/profile': string
-    '/profile/orders': string
+  enum Section {
+    Profile = '/profile',
+    Orders = '/profile/orders',
   }
 
-  const sectionDescriptions: TSectionDescriptions = {
-    '/profile': 'В этом разделе вы можете изменить свои персональные данные',
-    '/profile/orders':
+  const sectionDescriptions: Record<Section, string> = {
+    [Section.Profile]:
+      'В этом разделе вы можете изменить свои персональные данные',
+    [Section.Orders]:
       'В этом разделе вы можете просмотреть свою историю заказов',
   }
 
   const currentSectionDescription =
-    sectionDescriptions[location.pathname as keyof TSectionDescriptions] || ''
+    sectionDescriptions[location.pathname as Section] || ''
 
   if (isUserOrderDetailsPage) {
     return <Outlet />
