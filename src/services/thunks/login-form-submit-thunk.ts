@@ -5,7 +5,7 @@ import {
   loginFormSubmitRequestAction,
   loginFormSubmitSuccessAction,
 } from '../actions/login-actions'
-import { SET_IS_ERROR_MODAL_OPEN } from '../types/action-types'
+import { SET_IS_ERROR_MODAL_OPEN } from '../actions/modal-actions'
 import { AppDispatch, AppThunk } from '../types/store'
 import { getUserThunk } from './get-user-thunk'
 
