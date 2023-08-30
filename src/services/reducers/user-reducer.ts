@@ -8,9 +8,9 @@ import {
   LOGOUT_USER_SUCCESS,
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
-} from '../../utils/constants'
+  TUserActions,
+} from '../actions/user-actions'
 import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
-import { TUserActions } from '../actions/user-actions'
 
 type TUserState = {
   user: TUser

@@ -4,10 +4,10 @@ import {
   PWD_RESET_FORM_SUBMIT_FAILED,
   PWD_RESET_FORM_SUBMIT_REQUEST,
   PWD_RESET_FORM_SUBMIT_SUCCESS,
+  TPwdResetActions,
   UPDATE_PWD_RESET_FORM_STATE,
-} from '../../utils/constants'
+} from '../actions/password-reset-actions'
 import { TPasswordResetResponse } from '../types/data'
-import { TPwdResetActions } from '../actions/password-reset-actions'
 
 type TPasswordResetState = {
   form: {

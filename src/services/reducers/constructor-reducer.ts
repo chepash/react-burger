@@ -1,12 +1,12 @@
-import { TConstructorActions } from '../actions/constructor-actions'
 import defaultBun from '../../images/default-bun.svg'
-import { TIngredient, TIngredientWithUUID } from '../types/data'
 import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   EMPTY_CONSTRUCTOR,
   MOVE_INGREDIENT,
-} from '../../utils/constants'
+  TConstructorActions,
+} from '../actions/constructor-actions'
+import { TIngredient, TIngredientWithUUID } from '../types/data'
 
 export type TConstructorState = {
   constructorIngredients: TIngredientWithUUID[]

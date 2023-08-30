@@ -2,9 +2,9 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-} from '../../utils/constants'
+  TIngredientsActions,
+} from '../actions/ingredients-actions'
 import { TIngredient } from '../types/data'
-import { TIngredientsActions } from '../actions/ingredients-actions'
 
 export type TIngredientsState = {
   ingredients: TIngredient[]

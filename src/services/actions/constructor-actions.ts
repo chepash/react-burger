@@ -1,11 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
-import {
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
-  EMPTY_CONSTRUCTOR,
-  MOVE_INGREDIENT,
-} from '../../utils/constants'
 import { TIngredient, TIngredientWithUUID } from '../types/data'
+
+export const ADD_INGREDIENT = 'ADD_INGREDIENT'
+export const DELETE_INGREDIENT = 'DELETE_INGREDIENT'
+export const EMPTY_CONSTRUCTOR = 'EMPTY_CONSTRUCTOR'
+export const MOVE_INGREDIENT = 'MOVE_INGREDIENT'
 
 interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT

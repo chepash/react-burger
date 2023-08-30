@@ -4,10 +4,10 @@ import {
   PROFILE_FORM_SUBMIT_FAILED,
   PROFILE_FORM_SUBMIT_REQUEST,
   PROFILE_FORM_SUBMIT_SUCCESS,
+  TProfileActions,
   UPDATE_PROFILE_FORM_STATE,
-} from '../../utils/constants'
+} from '../actions/profile-actions'
 import { TUserDataResponse } from '../types/data'
-import { TProfileActions } from '../actions/profile-actions'
 
 type TProfileState = {
   form: {

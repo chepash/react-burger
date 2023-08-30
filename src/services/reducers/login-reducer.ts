@@ -4,10 +4,10 @@ import {
   LOGIN_FORM_SUBMIT_FAILED,
   LOGIN_FORM_SUBMIT_REQUEST,
   LOGIN_FORM_SUBMIT_SUCCESS,
+  TLoginActions,
   UPDATE_LOGIN_FORM_STATE,
-} from '../../utils/constants'
+} from '../actions/login-actions'
 import { TAuthResponse } from '../types/data'
-import { TLoginActions } from '../actions/login-actions'
 
 type TLoginState = {
   form: {

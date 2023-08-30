@@ -1,15 +1,14 @@
-import {
-  CLEAR_USER_STATE,
-  GET_USER_DATA_FAILED,
-  GET_USER_DATA_REQUEST,
-  GET_USER_DATA_SUCCESS,
-  LOGOUT_USER_FAILED,
-  LOGOUT_USER_REQUEST,
-  LOGOUT_USER_SUCCESS,
-  SET_IS_LOGGED_IN,
-  SET_USER_DATA,
-} from '../../utils/constants'
 import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
+
+export const GET_USER_DATA_REQUEST = 'GET_USER_DATA_REQUEST'
+export const GET_USER_DATA_SUCCESS = 'GET_USER_DATA_SUCCESS'
+export const GET_USER_DATA_FAILED = 'GET_USER_DATA_FAILED'
+export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST'
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
+export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED'
+export const SET_USER_DATA = 'SET_USER_DATA'
+export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN'
+export const CLEAR_USER_STATE = 'CLEAR_USER_STATE'
 
 interface IGetUserDataRequestAction {
   readonly type: typeof GET_USER_DATA_REQUEST

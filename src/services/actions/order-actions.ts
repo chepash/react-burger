@@ -1,10 +1,9 @@
-import {
-  CLEAR_ORDER_STATE,
-  CREATE_ORDER_FAILED,
-  CREATE_ORDER_REQUEST,
-  CREATE_ORDER_SUCCESS,
-} from '../../utils/constants'
 import { TPlaceNewOrderResponse } from '../types/data'
+
+export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST'
+export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
+export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED'
+export const CLEAR_ORDER_STATE = 'CLEAR_ORDER_STATE'
 
 interface ICreateOrderRequestAction {
   readonly type: typeof CREATE_ORDER_REQUEST

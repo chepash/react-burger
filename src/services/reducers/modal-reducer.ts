@@ -1,13 +1,13 @@
 import {
+  SET_CURENT_ORDER_DETAILS,
   SET_CURRENT_INGREDIENT,
   SET_IS_ERROR_MODAL_OPEN,
   SET_IS_INGREDIENT_MODAL_OPEN,
   SET_IS_ORDER_DETAILS_MODAL_OPEN,
   SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
-  SET_CURENT_ORDER_DETAILS,
-} from '../../utils/constants'
+  TModalActions,
+} from '../actions/modal-actions'
 import { TIngredient } from '../types/data'
-import { TModalActions } from '../actions/modal-actions'
 import { TOrderDetails } from '../types/ws-data'
 
 type TModalState = {

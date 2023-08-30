@@ -3,9 +3,9 @@ import {
   CREATE_ORDER_FAILED,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
-} from '../../utils/constants'
+  TOrderActions,
+} from '../actions/order-actions'
 import { TPlaceNewOrderResponse } from '../types/data'
-import { TOrderActions } from '../actions/order-actions'
 
 type TOrderState = {
   response: null | TPlaceNewOrderResponse

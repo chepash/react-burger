@@ -4,10 +4,10 @@ import {
   REGISTER_FORM_SUBMIT_FAILED,
   REGISTER_FORM_SUBMIT_REQUEST,
   REGISTER_FORM_SUBMIT_SUCCESS,
+  TRegisterActions,
   UPDATE_REGISTER_FORM_STATE,
-} from '../../utils/constants'
+} from '../actions/register-actions'
 import { TAuthResponse } from '../types/data'
-import { TRegisterActions } from '../actions/register-actions'
 
 type TRegisterState = {
   form: {

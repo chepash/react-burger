@@ -4,10 +4,10 @@ import {
   PWD_RESTORE_FORM_SUBMIT_FAILED,
   PWD_RESTORE_FORM_SUBMIT_REQUEST,
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
+  TPwdRestoreActions,
   UPDATE_PWD_RESTORE_FORM_STATE,
-} from '../../utils/constants'
+} from '../actions/password-restore-actions'
 import { TSendRecoveryEmailResponse } from '../types/data'
-import { TPwdRestoreActions } from '../actions/password-restore-actions'
 
 type TPasswordRestoreState = {
   form: {
