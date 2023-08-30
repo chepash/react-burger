@@ -12,6 +12,7 @@ import {
   logoutUserRequestAction,
   logoutUserSuccessAction,
 } from '../actions/user-actions'
+import { wsCleanUserFeedStateAction } from '../actions/ws-user-feed-actions'
 import { AppDispatch, AppThunk } from '../types/store'
 
 export const handleLogoutThunk = (): AppThunk => (dispatch: AppDispatch) => {
@@ -29,6 +30,7 @@ export const handleLogoutThunk = (): AppThunk => (dispatch: AppDispatch) => {
         dispatch(clearPwdResetStateAction())
         dispatch(clearProfileStateAction())
         dispatch(clearUserStateAction())
+        dispatch(wsCleanUserFeedStateAction())
       }
 
       return dispatch(logoutUserSuccessAction(res))

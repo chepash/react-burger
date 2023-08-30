@@ -1,5 +1,6 @@
 import * as api from '../../utils/api'
 import { emptyConstructorAction } from '../actions/constructor-actions'
+import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import {
   createOrderFailedAction,
   createOrderRequestAction,
@@ -31,6 +32,7 @@ export const createOrderThunk =
         return dispatch(createOrderSuccessAction(res))
       })
       .catch(() => {
+        setIsErrorModalOpenAction(true)
         return dispatch(createOrderFailedAction())
       })
   }

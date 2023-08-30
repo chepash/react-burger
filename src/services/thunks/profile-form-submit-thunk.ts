@@ -21,7 +21,7 @@ export const profileFormSubmitThunk =
         dispatch(updateProfileFormStateAction('password', ''))
         dispatch(getUserThunk())
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setIsErrorModalOpenAction(true))
         return dispatch(profileFormSubmitFailedAction())
       })

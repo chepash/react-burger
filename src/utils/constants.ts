@@ -10,4 +10,4 @@ export const JWT_EXPIRE_ERROR_TEXT = 'jwt expired'
 
 export const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
-export const wsFeedUrl = 'wss://norma.nomoreparties.space/orders/all'
+export const wsBaseUrl = 'wss://norma.nomoreparties.space/orders'

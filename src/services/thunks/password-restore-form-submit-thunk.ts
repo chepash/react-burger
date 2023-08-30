@@ -23,7 +23,7 @@ export const passwordRestoreFormSubmitThunk =
           navigate('/reset-password', { replace: true })
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setIsErrorModalOpenAction(true))
         return dispatch(pwdRestoreFormSubmitFailedAction())
       })

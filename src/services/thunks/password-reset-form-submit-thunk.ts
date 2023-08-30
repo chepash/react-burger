@@ -28,7 +28,7 @@ export const passwordResetFormSubmitThunk =
         }
         return dispatch(pwdResetFormSubmitSuccessAction(res))
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setIsErrorModalOpenAction(true))
         return dispatch(pwdResetFormSubmitFailedAction())
       })

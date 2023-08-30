@@ -4,6 +4,7 @@ import {
   getIngredientsFailedAction,
   getIngredientsSuccessAction,
 } from '../actions/ingredients-actions'
+import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import { AppDispatch, AppThunk } from '../types/store'
 
 export const getAllIngredientsThunk =
@@ -15,6 +16,7 @@ export const getAllIngredientsThunk =
         return dispatch(getIngredientsSuccessAction(res.data))
       })
       .catch(() => {
+        setIsErrorModalOpenAction(true)
         return dispatch(getIngredientsFailedAction())
       })
   }

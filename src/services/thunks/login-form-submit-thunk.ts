@@ -5,7 +5,7 @@ import {
   loginFormSubmitRequestAction,
   loginFormSubmitSuccessAction,
 } from '../actions/login-actions'
-import { SET_IS_ERROR_MODAL_OPEN } from '../actions/modal-actions'
+import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import { AppDispatch, AppThunk } from '../types/store'
 import { getUserThunk } from './get-user-thunk'
 
@@ -26,7 +26,7 @@ export const loginFormSubmitThunk =
         return dispatch(getUserThunk())
       })
       .catch(() => {
-        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
+        dispatch(setIsErrorModalOpenAction(true))
         return dispatch(loginFormSubmitFailedAction())
       })
   }

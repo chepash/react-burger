@@ -35,19 +35,20 @@ const request = async <T>(
   return getResponse<T>(res)
 }
 
-const fetchNewRefreshToken = async (): Promise<TRefreshTokenResponse> => {
-  const refreshToken = localStorage.getItem('refreshToken')
-  const endpoint = 'auth/token'
-  const options: RequestInit = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: refreshToken }),
+export const fetchNewRefreshToken =
+  async (): Promise<TRefreshTokenResponse> => {
+    const refreshToken = localStorage.getItem('refreshToken')
+    const endpoint = 'auth/token'
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    }
+    return request(endpoint, options)
   }
-  return request(endpoint, options)
-}
 
 const requestWithRefresh = async <T>(
   endpoint: string,

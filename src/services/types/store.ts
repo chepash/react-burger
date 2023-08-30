@@ -15,7 +15,24 @@ import { TPwdRestoreActions } from '../actions/password-restore-actions'
 import { TProfileActions } from '../actions/profile-actions'
 import { TRegisterActions } from '../actions/register-actions'
 import { TUserActions } from '../actions/user-actions'
-import { TWSActions } from '../actions/ws-feed-actions'
+import {
+  TWSFeedActions,
+  WS_FEED_CONNECTION_CLOSED,
+  WS_FEED_CONNECTION_END,
+  WS_FEED_CONNECTION_ERROR,
+  WS_FEED_CONNECTION_START,
+  WS_FEED_CONNECTION_SUCCESS,
+  WS_FEED_GET_MESSAGE,
+} from '../actions/ws-feed-actions'
+import {
+  TWSUserFeedActions,
+  WS_USER_FEED_CONNECTION_CLOSED,
+  WS_USER_FEED_CONNECTION_END,
+  WS_USER_FEED_CONNECTION_ERROR,
+  WS_USER_FEED_CONNECTION_START,
+  WS_USER_FEED_CONNECTION_SUCCESS,
+  WS_USER_FEED_GET_MESSAGE,
+} from '../actions/ws-user-feed-actions'
 
 export type TAppActions =
   | TConstructorActions
@@ -28,7 +45,28 @@ export type TAppActions =
   | TProfileActions
   | TRegisterActions
   | TUserActions
-  | TWSActions
+  | TWSFeedActions
+  | TWSUserFeedActions
+
+export type TWSStoreFeedActions = {
+  wsConnect: typeof WS_FEED_CONNECTION_START
+  wsDisconnect: typeof WS_FEED_CONNECTION_END
+  onOpen: typeof WS_FEED_CONNECTION_SUCCESS
+  onClose: typeof WS_FEED_CONNECTION_CLOSED
+  onError: typeof WS_FEED_CONNECTION_ERROR
+  onMessage: typeof WS_FEED_GET_MESSAGE
+}
+
+export type TWSStoreUserFeedActions = {
+  wsConnect: typeof WS_USER_FEED_CONNECTION_START
+  wsDisconnect: typeof WS_USER_FEED_CONNECTION_END
+  onOpen: typeof WS_USER_FEED_CONNECTION_SUCCESS
+  onClose: typeof WS_USER_FEED_CONNECTION_CLOSED
+  onError: typeof WS_USER_FEED_CONNECTION_ERROR
+  onMessage: typeof WS_USER_FEED_GET_MESSAGE
+}
+
+export type TWSStoreActions = TWSStoreFeedActions | TWSStoreUserFeedActions
 
 export type RootState = ReturnType<typeof store.getState>
 

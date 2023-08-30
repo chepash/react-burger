@@ -1,86 +1,88 @@
 import { TFeedResponse } from '../types/ws-data'
 
-export const WS_CONNECTION_START = 'WS_CONNECTION_START'
-export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS'
-export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR'
-export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED'
-export const WS_GET_MESSAGE = 'WS_GET_MESSAGE'
-export const WS_CONNECTION_END = 'WS_CONNECTION_END'
+export const WS_FEED_CONNECTION_START = 'WS_FEED_CONNECTION_START'
+export const WS_FEED_CONNECTION_END = 'WS_FEED_CONNECTION_END'
+export const WS_FEED_CONNECTION_SUCCESS = 'WS_FEED_CONNECTION_SUCCESS'
+export const WS_FEED_CONNECTION_ERROR = 'WS_FEED_CONNECTION_ERROR'
+export const WS_FEED_CONNECTION_CLOSED = 'WS_FEED_CONNECTION_CLOSED'
+export const WS_FEED_GET_MESSAGE = 'WS_FEED_GET_MESSAGE'
 
-export interface IWSConnectionStart {
-  readonly type: typeof WS_CONNECTION_START
+export interface IWSFeedConnect {
+  readonly type: typeof WS_FEED_CONNECTION_START
   readonly payload: string
 }
 
-export interface IWSConnectionEnd {
-  readonly type: typeof WS_CONNECTION_END
+export interface IWSFeedDisconnect {
+  readonly type: typeof WS_FEED_CONNECTION_END
 }
 
-export interface IWSConnectionSuccessAction {
-  readonly type: typeof WS_CONNECTION_SUCCESS
+export interface IWSFeedConnectionSuccessAction {
+  readonly type: typeof WS_FEED_CONNECTION_SUCCESS
 }
 
-export interface IWSConnectionErrorAction {
-  readonly type: typeof WS_CONNECTION_ERROR
+export interface IWSFeedConnectionErrorAction {
+  readonly type: typeof WS_FEED_CONNECTION_ERROR
   readonly payload: Event
 }
 
-export interface IWSConnectionClosedAction {
-  readonly type: typeof WS_CONNECTION_CLOSED
+export interface IWSFeedConnectionClosedAction {
+  readonly type: typeof WS_FEED_CONNECTION_CLOSED
 }
 
-export interface IWSGetMessageAction {
-  readonly type: typeof WS_GET_MESSAGE
+export interface IWSFeedGetMessageAction {
+  readonly type: typeof WS_FEED_GET_MESSAGE
   readonly payload: TFeedResponse
 }
 
-export type TWSActions =
-  | IWSConnectionStart
-  | IWSConnectionSuccessAction
-  | IWSConnectionErrorAction
-  | IWSConnectionClosedAction
-  | IWSGetMessageAction
-  | IWSConnectionEnd
+export type TWSFeedActions =
+  | IWSFeedConnect
+  | IWSFeedDisconnect
+  | IWSFeedConnectionSuccessAction
+  | IWSFeedConnectionErrorAction
+  | IWSFeedConnectionClosedAction
+  | IWSFeedGetMessageAction
 
-export const wsConnectionStart = (url: string): IWSConnectionStart => {
+export const wsFeedConnect = (url: string): IWSFeedConnect => {
   return {
-    type: WS_CONNECTION_START,
+    type: WS_FEED_CONNECTION_START,
     payload: url,
   }
 }
 
-export const wsConnectionEnd = (): IWSConnectionEnd => {
+export const wsFeedDisconnect = (): IWSFeedDisconnect => {
   return {
-    type: WS_CONNECTION_END,
+    type: WS_FEED_CONNECTION_END,
   }
 }
 
-export const wsConnectionErrorAction = (
-  event: Event
-): IWSConnectionErrorAction => {
-  return {
-    type: WS_CONNECTION_ERROR,
-    payload: event,
-  }
-}
+// export const wsFeedConnectionSuccessAction =
+//   (): IWSFeedConnectionSuccessAction => {
+//     return {
+//       type: WS_FEED_CONNECTION_SUCCESS,
+//     }
+//   }
 
-export const wsConnectionClosedAction = (): IWSConnectionClosedAction => {
-  return {
-    type: WS_CONNECTION_CLOSED,
-  }
-}
+// export const wsFeedConnectionErrorAction = (
+//   event: Event
+// ): IWSFeedConnectionErrorAction => {
+//   return {
+//     type: WS_FEED_CONNECTION_ERROR,
+//     payload: event,
+//   }
+// }
 
-export const wsGetMessageAction = (
-  response: TFeedResponse
-): IWSGetMessageAction => {
-  return {
-    type: WS_GET_MESSAGE,
-    payload: response,
-  }
-}
+// export const wsFeedConnectionClosedAction =
+//   (): IWSFeedConnectionClosedAction => {
+//     return {
+//       type: WS_FEED_CONNECTION_CLOSED,
+//     }
+//   }
 
-export const wsConnectionSuccessAction = (): IWSConnectionSuccessAction => {
-  return {
-    type: WS_CONNECTION_SUCCESS,
-  }
-}
+// export const wsFeedGetMessageAction = (
+//   response: TFeedResponse
+// ): IWSFeedGetMessageAction => {
+//   return {
+//     type: WS_FEED_GET_MESSAGE,
+//     payload: response,
+//   }
+// }

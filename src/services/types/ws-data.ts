@@ -21,6 +21,7 @@ export type TFeedResponse = {
   orders: TOrder[]
   total: number
   totalToday: number
+  message?: string
 }
 
 export type TOrderIngredient = {

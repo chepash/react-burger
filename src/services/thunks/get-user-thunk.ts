@@ -1,4 +1,5 @@
 import * as api from '../../utils/api'
+import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import { updateProfileFormStateAction } from '../actions/profile-actions'
 import {
   getUserDataFailedAction,
@@ -26,6 +27,7 @@ export const getUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
       })
       .catch(() => {
         dispatch(setIsLoggedInAction(false))
+        setIsErrorModalOpenAction(true)
         return dispatch(getUserDataFailedAction())
       })
   }

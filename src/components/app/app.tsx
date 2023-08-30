@@ -16,13 +16,13 @@ import {
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
 import {
-  wsConnectionEnd,
-  wsConnectionStart,
+  wsFeedDisconnect,
+  wsFeedConnect,
 } from '../../services/actions/ws-feed-actions'
 import { getAllIngredientsThunk } from '../../services/thunks/get-all-ingredients-thunk'
 import { getUserThunk } from '../../services/thunks/get-user-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
-import { wsFeedUrl } from '../../utils/constants'
+import { wsBaseUrl } from '../../utils/constants'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -70,10 +70,10 @@ const App: FC = () => {
   }, [])
 
   useEffect(() => {
-    dispatch(wsConnectionStart(wsFeedUrl))
+    dispatch(wsFeedConnect(`${wsBaseUrl}/all`))
 
     return () => {
-      dispatch(wsConnectionEnd())
+      dispatch(wsFeedDisconnect())
     }
   }, [])
 
