@@ -5,7 +5,7 @@ import OrderCard from '../order-card/order-card'
 import styles from './feed-orders.module.scss'
 
 const FeedOrders: FC = () => {
-  const feedOrders = useSelector((store) => store.feedState.response.orders)
+  const feedOrders = useSelector((store) => store.feedState.orders)
 
   return (
     <section aria-label="Перечень последних выполненых заказов">

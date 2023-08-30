@@ -1,19 +1,22 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, useEffect } from 'react'
-import styles from './order-details.module.scss'
+import { useLocation, useParams } from 'react-router-dom'
+import { setCurrentOrderDetailsAction } from '../../services/actions/modal-actions'
 import { useDispatch, useSelector } from '../../services/types/store'
-import { OrderStatus } from '../../services/types/ws-data'
+import { OrderStatus, TOrder } from '../../services/types/ws-data'
 import {
   formatUpdatedAtTime,
   transformOrderIngredientsList,
 } from '../../utils/utils-functions'
 import OrderDetailsIngredient from './order-details-ingredient/order-details-ingredient'
-import { useLocation, useParams } from 'react-router-dom'
-import { setCurrentOrderDetailsAction } from '../../services/actions/modal-actions'
-import NotFound from '../../pages/not-found/not-found'
+import styles from './order-details.module.scss'
 
-const OrderDetails: FC = () => {
+type TOrderDetailsProps = {
+  orders: TOrder[]
+}
+
+const OrderDetails: FC<TOrderDetailsProps> = ({ orders }) => {
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -22,9 +25,6 @@ const OrderDetails: FC = () => {
   const currentOrderDetails = useSelector(
     (store) => store.modalState.currentOrderDetails
   )
-  // тут надо разные orders в зависимости от location или делать совершенно новый Детэйлс для профиля
-  const orders = useSelector((store) => store.feedState.response.orders)
-
   const detailedIngredientsData = useSelector(
     (store) => store.ingredientsState.ingredients
   )
@@ -56,7 +56,7 @@ const OrderDetails: FC = () => {
   }, [dispatch, id, orders, detailedIngredientsData])
 
   if (!currentOrderDetails) {
-    return <NotFound />
+    return null
   }
 
   const orderStatus = currentOrderDetails.originalOrderInfo.status

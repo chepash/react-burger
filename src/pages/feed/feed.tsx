@@ -1,8 +1,8 @@
 import cn from 'classnames'
 import { FC } from 'react'
-import styles from './feed.module.scss'
 import FeedOrders from '../../components/feed-orders/feed-orders'
 import FeedStats from '../../components/feed-stats/feed-stats'
+import styles from './feed.module.scss'
 
 const Feed: FC = () => {
   return (

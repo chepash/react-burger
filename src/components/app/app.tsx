@@ -22,12 +22,17 @@ import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import ModalError from '../modal/modal-error/modal-error'
+import OrderDetails from '../order-details/order-details'
 import Preloader from '../preloader/preloader'
 import ProfileInfo from '../profile/profile-info/profile-info'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
-import OrderDetails from '../order-details/order-details'
+import {
+  wsConnectionEnd,
+  wsConnectionStart,
+} from '../../services/actions/ws-feed-actions'
+import { wsFeedUrl } from '../../utils/constants'
 
 const App: FC = () => {
   const dispatch = useDispatch()
@@ -54,13 +59,23 @@ const App: FC = () => {
     (store) => store.modalState.isErrorModalOpen
   )
 
+  const feedOrders = useSelector((store) => store.feedState.orders)
+
   useEffect(() => {
     dispatch(getUserThunk())
   }, [])
 
   useEffect(() => {
     dispatch(getAllIngredientsThunk())
-  }, [dispatch])
+  }, [])
+
+  useEffect(() => {
+    dispatch(wsConnectionStart(wsFeedUrl))
+
+    return () => {
+      dispatch(wsConnectionEnd())
+    }
+  }, [])
 
   useEffect(() => {
     if (fetchIngredientsError || placeOrderError) {
@@ -143,11 +158,18 @@ const App: FC = () => {
 
               <Route path="/ingredients/:id" element={<IngredientDetails />} />
 
-              <Route path="/feed/:id" element={<OrderDetails />} />
+              <Route
+                path="/feed/:id"
+                element={<OrderDetails orders={feedOrders} />}
+              />
 
               <Route
                 path="/profile/orders/:id"
-                element={<ProtectedRouteElement element={<OrderDetails />} />}
+                element={
+                  <ProtectedRouteElement
+                    element={<OrderDetails orders={feedOrders} />}
+                  />
+                }
               />
 
               <Route path="*" element={<NotFound />} />
@@ -175,7 +197,7 @@ const App: FC = () => {
                   path="/feed/:id"
                   element={
                     <Modal onClose={handleCloseOrderDetailstModal}>
-                      <OrderDetails />
+                      <OrderDetails orders={feedOrders} />
                     </Modal>
                   }
                 />
@@ -190,7 +212,7 @@ const App: FC = () => {
                     <ProtectedRouteElement
                       element={
                         <Modal onClose={handleCloseOrderDetailstModal}>
-                          <OrderDetails />
+                          <OrderDetails orders={feedOrders} />
                         </Modal>
                       }
                     />

@@ -1,11 +1,5 @@
 import { TIngredient } from './data'
 
-export enum WebsocketStatus {
-  CONNECTING = 'CONNECTING...',
-  ONLINE = 'ONLINE',
-  OFFLINE = 'OFFLINE',
-}
-
 export enum OrderStatus {
   created = 'Принят',
   pending = 'Готовится',

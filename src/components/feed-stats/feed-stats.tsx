@@ -4,9 +4,7 @@ import { useSelector } from '../../services/types/store'
 import styles from './feed-stats.module.scss'
 
 const FeedStats: FC = () => {
-  const { orders, total, totalToday } = useSelector(
-    (store) => store.feedState.response
-  )
+  const { orders, total, totalToday } = useSelector((store) => store.feedState)
 
   const pendingOrderNumbers: number[] = []
   const recentDoneOrderNumbers: number[] = []

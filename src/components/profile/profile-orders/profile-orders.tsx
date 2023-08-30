@@ -5,7 +5,7 @@ import OrderCard from '../../order-card/order-card'
 import styles from './profile-orders.module.scss'
 
 const ProfileOrders: FC = () => {
-  const orderHistory = useSelector((store) => store.feedState.response.orders)
+  const orderHistory = useSelector((store) => store.feedState.orders)
 
   return (
     <section aria-label="История заказов" className={cn(styles.section)}>
