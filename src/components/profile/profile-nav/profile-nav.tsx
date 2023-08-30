@@ -1,9 +1,9 @@
 import cn from 'classnames'
 import { FC } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { handleLogoutThunk } from '../../../services/actions/user-actions'
-import styles from './profile-nav.module.scss'
+import { handleLogoutThunk } from '../../../services/thunks/handle-logout-thunk'
 import { useDispatch } from '../../../services/types/store'
+import styles from './profile-nav.module.scss'
 
 const ProfileNav: FC = () => {
   const location = useLocation()

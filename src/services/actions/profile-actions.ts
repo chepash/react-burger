@@ -1,4 +1,3 @@
-import * as api from '../../utils/api'
 import {
   CLEAR_PROFILE_FORM_STATE,
   CLEAR_PROFILE_STATE,
@@ -7,10 +6,7 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TUserDataResponse } from '../types/data'
-import { setIsErrorModalOpenAction } from './modal-actions'
-import { getUserThunk } from './user-actions'
 
 interface IUpdateProfileFormStateAction {
   readonly type: typeof UPDATE_PROFILE_FORM_STATE
@@ -89,22 +85,4 @@ export const profileFormSubmitFailedAction =
     return {
       type: PROFILE_FORM_SUBMIT_FAILED,
     }
-  }
-
-export const profileFormSubmitThunk =
-  (changedInputs: Record<string, string>): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(profileFormSubmitRequestAction())
-
-    return api
-      .updateUserData(changedInputs)
-      .then((res) => {
-        dispatch(profileFormSubmitSuccessAction(res))
-        dispatch(updateProfileFormStateAction('password', ''))
-        dispatch(getUserThunk())
-      })
-      .catch((err) => {
-        dispatch(setIsErrorModalOpenAction(true))
-        return dispatch(profileFormSubmitFailedAction())
-      })
   }

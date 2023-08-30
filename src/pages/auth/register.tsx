@@ -6,10 +6,8 @@ import {
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  registratioFormSubmitThunk,
-  updateRegisterFormStateAction,
-} from '../../services/actions/register-actions'
+import { updateRegisterFormStateAction } from '../../services/actions/register-actions'
+import { registerFormSubmitThunk } from '../../services/thunks/register-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
 import styles from './auth.module.scss'
 
@@ -27,7 +25,7 @@ const Register: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    dispatch(registratioFormSubmitThunk(name, email, password, navigate))
+    dispatch(registerFormSubmitThunk(name, email, password, navigate))
   }
 
   return (

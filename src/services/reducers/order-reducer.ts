@@ -4,11 +4,11 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
 } from '../../utils/constants'
-import { TPlaceOrderResponse } from '../types/data'
+import { TPlaceNewOrderResponse } from '../types/data'
 import { TOrderActions } from '../actions/order-actions'
 
 type TOrderState = {
-  response: null | TPlaceOrderResponse
+  response: null | TPlaceNewOrderResponse
   isLoading: boolean
   isError: null | boolean
 }

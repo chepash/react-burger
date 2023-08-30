@@ -1,5 +1,3 @@
-import { NavigateFunction } from 'react-router-dom'
-import * as api from '../../utils/api'
 import {
   CLEAR_PWD_RESET_FORM_STATE,
   CLEAR_PWD_RESET_STATE,
@@ -8,10 +6,7 @@ import {
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESET_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TPasswordResetResponse } from '../types/data'
-import { setIsErrorModalOpenAction } from './modal-actions'
-import { clearPwdRestoreStateAction } from './password-restore-actions'
 
 interface IUpdatePwdResetFormStateAction {
   readonly type: typeof UPDATE_PWD_RESET_FORM_STATE
@@ -91,28 +86,4 @@ export const pwdResetFormSubmitFailedAction =
     return {
       type: PWD_RESET_FORM_SUBMIT_FAILED,
     }
-  }
-
-export const passwordResetFormSubmitThunk =
-  (
-    { token, password }: Record<string, string>,
-    navigate: NavigateFunction
-  ): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(pwdResetFormSubmitRequestAction())
-
-    return api
-      .sendPasswordResetRequest({ token, password })
-      .then((res) => {
-        if (res.success) {
-          dispatch(clearPwdResetFormStateAction())
-          dispatch(clearPwdRestoreStateAction())
-          navigate('/', { replace: true })
-        }
-        return dispatch(pwdResetFormSubmitSuccessAction(res))
-      })
-      .catch((err) => {
-        dispatch(setIsErrorModalOpenAction(true))
-        return dispatch(pwdResetFormSubmitFailedAction())
-      })
   }

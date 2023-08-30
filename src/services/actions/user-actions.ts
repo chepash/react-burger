@@ -1,4 +1,3 @@
-import * as api from '../../utils/api'
 import {
   CLEAR_USER_STATE,
   GET_USER_DATA_FAILED,
@@ -10,18 +9,7 @@ import {
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
-import { clearLoginStateAction } from './login-actions'
-import { setIsErrorModalOpenAction } from './modal-actions'
-import { clearOrderStateAction } from './order-actions'
-import { clearPwdResetStateAction } from './password-reset-actions'
-import { clearPwdRestoreStateAction } from './password-restore-actions'
-import {
-  clearProfileStateAction,
-  updateProfileFormStateAction,
-} from './profile-actions'
-import { clearRegisterStateAction } from './register-actions'
 
 interface IGetUserDataRequestAction {
   readonly type: typeof GET_USER_DATA_REQUEST
@@ -127,51 +115,4 @@ export const clearUserStateAction = (): IClearUserStateAction => {
   return {
     type: CLEAR_USER_STATE,
   }
-}
-
-export const getUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
-  const accessToken = localStorage.getItem('accessToken')
-
-  if (accessToken) {
-    dispatch(getUserDataRequestAction())
-
-    return api
-      .fetchUserData()
-      .then((res) => {
-        dispatch(setUserDataAction(res.user))
-        dispatch(getUserDataSuccessAction(res))
-        dispatch(updateProfileFormStateAction('name', res.user.name))
-        dispatch(updateProfileFormStateAction('email', res.user.email))
-        dispatch(setIsLoggedInAction(true))
-      })
-      .catch(() => {
-        dispatch(setIsLoggedInAction(false))
-        return dispatch(getUserDataFailedAction())
-      })
-  }
-}
-
-export const handleLogoutThunk = (): AppThunk => (dispatch: AppDispatch) => {
-  dispatch(logoutUserRequestAction())
-
-  return api
-    .logoutUser()
-    .then((res) => {
-      if (res.success) {
-        localStorage.clear()
-        dispatch(clearLoginStateAction())
-        dispatch(clearOrderStateAction())
-        dispatch(clearRegisterStateAction())
-        dispatch(clearPwdRestoreStateAction())
-        dispatch(clearPwdResetStateAction())
-        dispatch(clearProfileStateAction())
-        dispatch(clearUserStateAction())
-      }
-
-      return dispatch(logoutUserSuccessAction(res))
-    })
-    .catch(() => {
-      dispatch(setIsErrorModalOpenAction(true))
-      return dispatch(logoutUserFailedAction())
-    })
 }

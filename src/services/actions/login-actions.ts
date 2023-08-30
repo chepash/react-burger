@@ -1,16 +1,12 @@
-import * as api from '../../utils/api'
 import {
   CLEAR_LOGIN_FORM_STATE,
   CLEAR_LOGIN_STATE,
   LOGIN_FORM_SUBMIT_FAILED,
   LOGIN_FORM_SUBMIT_REQUEST,
   LOGIN_FORM_SUBMIT_SUCCESS,
-  SET_IS_ERROR_MODAL_OPEN,
   UPDATE_LOGIN_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TAuthResponse } from '../types/data'
-import { getUserThunk } from './user-actions'
 
 interface IUpdateLoginFormStateAction {
   readonly type: typeof UPDATE_LOGIN_FORM_STATE
@@ -84,25 +80,3 @@ export const loginFormSubmitFailedAction = (): ILoginFormSubmitFailedAction => {
     type: LOGIN_FORM_SUBMIT_FAILED,
   }
 }
-
-export const loginFormSubmitThunk =
-  (email: string, password: string): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(loginFormSubmitRequestAction())
-
-    return api
-      .loginUser(email, password)
-      .then((res) => {
-        const accessTokenWithoutBearer = res.accessToken.replace('Bearer ', '')
-        localStorage.setItem('accessToken', accessTokenWithoutBearer)
-        localStorage.setItem('refreshToken', res.refreshToken)
-
-        dispatch(clearLoginFormStateAction())
-        dispatch(loginFormSubmitSuccessAction(res))
-        return dispatch(getUserThunk())
-      })
-      .catch(() => {
-        dispatch({ type: SET_IS_ERROR_MODAL_OPEN, payload: true })
-        return dispatch(loginFormSubmitFailedAction())
-      })
-  }

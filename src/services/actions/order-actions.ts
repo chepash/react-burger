@@ -1,24 +1,17 @@
-import * as api from '../../utils/api'
 import {
   CLEAR_ORDER_STATE,
   CREATE_ORDER_FAILED,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
-import {
-  TIngredient,
-  TIngredientWithUUID,
-  TPlaceOrderResponse,
-} from '../types/data'
-import { emptyConstructorAction } from './constructor-actions'
+import { TPlaceNewOrderResponse } from '../types/data'
 
 interface ICreateOrderRequestAction {
   readonly type: typeof CREATE_ORDER_REQUEST
 }
 interface ICreateOrderSuccessAction {
   readonly type: typeof CREATE_ORDER_SUCCESS
-  readonly payload: TPlaceOrderResponse
+  readonly payload: TPlaceNewOrderResponse
 }
 interface ICreateOrderFailedAction {
   readonly type: typeof CREATE_ORDER_FAILED
@@ -39,7 +32,7 @@ export const createOrderRequestAction = (): ICreateOrderRequestAction => {
 }
 
 export const createOrderSuccessAction = (
-  placeOrderResponse: TPlaceOrderResponse
+  placeOrderResponse: TPlaceNewOrderResponse
 ): ICreateOrderSuccessAction => {
   return {
     type: CREATE_ORDER_SUCCESS,
@@ -58,30 +51,3 @@ export const clearOrderStateAction = (): IClearOrderStateAction => {
     type: CLEAR_ORDER_STATE,
   }
 }
-
-export const createOrderThunk =
-  (
-    constructorIngredients: TIngredientWithUUID[],
-    constructorBun: TIngredient
-  ): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(createOrderRequestAction())
-
-    const bunId = constructorBun._id
-
-    const constructorIngredientsIds = constructorIngredients.map(
-      (ingredientWithUUID) => ingredientWithUUID.ingredient._id
-    )
-
-    const ingredientsIds = [bunId, ...constructorIngredientsIds, bunId]
-
-    return api
-      .placeOrder(ingredientsIds)
-      .then((res) => {
-        dispatch(emptyConstructorAction())
-        return dispatch(createOrderSuccessAction(res))
-      })
-      .catch(() => {
-        return dispatch(createOrderFailedAction())
-      })
-  }

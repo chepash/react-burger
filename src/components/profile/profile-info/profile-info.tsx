@@ -4,10 +4,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
-import {
-  profileFormSubmitThunk,
-  updateProfileFormStateAction,
-} from '../../../services/actions/profile-actions'
+import { updateProfileFormStateAction } from '../../../services/actions/profile-actions'
+import { profileFormSubmitThunk } from '../../../services/thunks/profile-form-submit-thunk'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import { passwordPattern } from '../../../utils/constants'
 import styles from './profile-info.module.scss'

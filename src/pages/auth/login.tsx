@@ -6,10 +6,8 @@ import {
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  loginFormSubmitThunk,
-  updateLoginFormStateAction,
-} from '../../services/actions/login-actions'
+import { updateLoginFormStateAction } from '../../services/actions/login-actions'
+import { loginFormSubmitThunk } from '../../services/thunks/login-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
 import styles from './auth.module.scss'
 

@@ -158,7 +158,7 @@ export type TCustomRequestInit = RequestInit & {
   headers: TCustomHeadersInit
 }
 
-export type TPlaceOrderResponse = TBaseApiResponse & {
+export type TPlaceNewOrderResponse = TBaseApiResponse & {
   name: string
   order: TPlacedNewOrder
 }

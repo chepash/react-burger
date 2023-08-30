@@ -1,5 +1,3 @@
-import { NavigateFunction } from 'react-router-dom'
-import * as api from '../../utils/api'
 import {
   CLEAR_PWD_RESTORE_FORM_STATE,
   CLEAR_PWD_RESTORE_STATE,
@@ -8,9 +6,7 @@ import {
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESTORE_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TSendRecoveryEmailResponse } from '../types/data'
-import { setIsErrorModalOpenAction } from './modal-actions'
 
 interface IUpdatePwdRestoreFormStateAction {
   readonly type: typeof UPDATE_PWD_RESTORE_FORM_STATE
@@ -92,24 +88,4 @@ export const pwdRestoreFormSubmitFailedAction =
     return {
       type: PWD_RESTORE_FORM_SUBMIT_FAILED,
     }
-  }
-
-export const passwordRestoreFormSubmitThunk =
-  (email: string, navigate: NavigateFunction): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(pwdRestoreFormSubmitRequestAction())
-
-    return api
-      .sendPasswordRecoveryEmail(email)
-      .then((res) => {
-        if (res.success) {
-          dispatch(pwdRestoreFormSubmitSuccessAction(res))
-          dispatch(clearPwdRestoreFormStateAction())
-          navigate('/reset-password', { replace: true })
-        }
-      })
-      .catch((err) => {
-        dispatch(setIsErrorModalOpenAction(true))
-        return dispatch(pwdRestoreFormSubmitFailedAction())
-      })
   }

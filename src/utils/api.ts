@@ -6,7 +6,7 @@ import {
   TFetchIngredientsResponse,
   TLogoutResponse,
   TPasswordResetResponse,
-  TPlaceOrderResponse,
+  TPlaceNewOrderResponse,
   TRefreshTokenResponse,
   TSendRecoveryEmailResponse,
   TUserDataResponse,
@@ -83,9 +83,9 @@ export const fetchIngredients =
     return request(endpoint, options)
   }
 
-export const placeOrder = (
+export const placeNewOrder = (
   ingredientsIds: string[]
-): Promise<TPlaceOrderResponse> => {
+): Promise<TPlaceNewOrderResponse> => {
   const accessToken = localStorage.getItem('accessToken')
   const endpoint = 'orders'
   const options = {

@@ -1,10 +1,8 @@
-import * as api from '../../utils/api'
 import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TIngredient } from '../types/data'
 
 interface IGetIngredientsAction {
@@ -39,16 +37,3 @@ export const getIngredientsSuccessAction = (
 export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
   type: GET_INGREDIENTS_FAILED,
 })
-
-export const getAllIngredientsThunk =
-  (): AppThunk => (dispatch: AppDispatch) => {
-    dispatch(getIngredientsAction())
-    return api
-      .fetchIngredients()
-      .then((res) => {
-        return dispatch(getIngredientsSuccessAction(res.data))
-      })
-      .catch(() => {
-        return dispatch(getIngredientsFailedAction())
-      })
-  }

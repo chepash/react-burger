@@ -1,5 +1,3 @@
-import { NavigateFunction } from 'react-router-dom'
-import * as api from '../../utils/api'
 import {
   CLEAR_REGISTER_FORM_STATE,
   CLEAR_REGISTER_STATE,
@@ -8,10 +6,7 @@ import {
   REGISTER_FORM_SUBMIT_SUCCESS,
   UPDATE_REGISTER_FORM_STATE,
 } from '../../utils/constants'
-import { AppDispatch, AppThunk } from '../types/store'
 import { TAuthResponse } from '../types/data'
-import { setIsErrorModalOpenAction } from './modal-actions'
-import { getUserThunk } from './user-actions'
 
 export interface IUpdateRegisterFormStateAction {
   readonly type: typeof UPDATE_REGISTER_FORM_STATE
@@ -91,38 +86,4 @@ export const registerFormSubmitFailedAction =
     return {
       type: REGISTER_FORM_SUBMIT_FAILED,
     }
-  }
-
-export const registratioFormSubmitThunk =
-  (
-    name: string,
-    email: string,
-    password: string,
-    navigate: NavigateFunction
-  ): AppThunk =>
-  (dispatch: AppDispatch) => {
-    dispatch(registerFormSubmitRequestAction())
-
-    return api
-      .registerUser(name, email, password)
-      .then((res) => {
-        if (res.success) {
-          const accessTokenWithoutBearer = res.accessToken.replace(
-            'Bearer ',
-            ''
-          )
-          localStorage.setItem('accessToken', accessTokenWithoutBearer)
-          localStorage.setItem('refreshToken', res.refreshToken)
-
-          dispatch(clearRegisterFormStateAction())
-          dispatch(registerFormSubmitSuccessAction(res))
-          navigate('/', { replace: true })
-
-          return dispatch(getUserThunk())
-        }
-      })
-      .catch(() => {
-        dispatch(setIsErrorModalOpenAction(true))
-        return dispatch(registerFormSubmitFailedAction())
-      })
   }

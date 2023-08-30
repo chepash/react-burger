@@ -8,7 +8,6 @@ import Feed from '../../pages/feed/feed'
 import HomePage from '../../pages/home-page/home-page'
 import NotFound from '../../pages/not-found/not-found'
 import Profile from '../../pages/profile/profile'
-import { getAllIngredientsThunk } from '../../services/actions/ingredients-actions'
 import {
   setCurrentIngredientAction,
   setCurrentOrderDetailsAction,
@@ -16,8 +15,14 @@ import {
   setIsIngredientModalOpenAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
-import { getUserThunk } from '../../services/actions/user-actions'
+import {
+  wsConnectionEnd,
+  wsConnectionStart,
+} from '../../services/actions/ws-feed-actions'
+import { getAllIngredientsThunk } from '../../services/thunks/get-all-ingredients-thunk'
+import { getUserThunk } from '../../services/thunks/get-user-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import { wsFeedUrl } from '../../utils/constants'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -28,11 +33,6 @@ import ProfileInfo from '../profile/profile-info/profile-info'
 import ProfileOrders from '../profile/profile-orders/profile-orders'
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
 import styles from './app.module.scss'
-import {
-  wsConnectionEnd,
-  wsConnectionStart,
-} from '../../services/actions/ws-feed-actions'
-import { wsFeedUrl } from '../../utils/constants'
 
 const App: FC = () => {
   const dispatch = useDispatch()

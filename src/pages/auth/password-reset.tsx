@@ -7,10 +7,10 @@ import { FC, SyntheticEvent, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
   clearPwdResetStateAction,
-  passwordResetFormSubmitThunk,
   updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
 import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
+import { passwordResetFormSubmitThunk } from '../../services/thunks/password-reset-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
 import { passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'

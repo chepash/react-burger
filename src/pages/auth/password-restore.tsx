@@ -5,12 +5,10 @@ import {
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  passwordRestoreFormSubmitThunk,
-  updatePwdRestoreFormStateAction,
-} from '../../services/actions/password-restore-actions'
-import styles from './auth.module.scss'
+import { updatePwdRestoreFormStateAction } from '../../services/actions/password-restore-actions'
+import { passwordRestoreFormSubmitThunk } from '../../services/thunks/password-restore-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import styles from './auth.module.scss'
 
 const PasswordRestore: FC = () => {
   const dispatch = useDispatch()
