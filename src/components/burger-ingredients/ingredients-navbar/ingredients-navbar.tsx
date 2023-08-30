@@ -17,21 +17,21 @@ const IngredientsNavbar: FC<TIngredientsNavbarProps> = ({
       <Tab
         value="bun"
         active={currentTab === 'bun'}
-        onClick={() => handleCategoryClick}
+        onClick={() => handleCategoryClick('bun')}
       >
         Булки
       </Tab>
       <Tab
         value="sauce"
         active={currentTab === 'sauce'}
-        onClick={() => handleCategoryClick}
+        onClick={() => handleCategoryClick('sauce')}
       >
         Соусы
       </Tab>
       <Tab
         value="main"
         active={currentTab === 'main'}
-        onClick={() => handleCategoryClick}
+        onClick={() => handleCategoryClick('main')}
       >
         Начинки
       </Tab>
