@@ -54,35 +54,3 @@ export const wsFeedDisconnect = (): IWSFeedDisconnect => {
     type: WS_FEED_CONNECTION_END,
   }
 }
-
-// export const wsFeedConnectionSuccessAction =
-//   (): IWSFeedConnectionSuccessAction => {
-//     return {
-//       type: WS_FEED_CONNECTION_SUCCESS,
-//     }
-//   }
-
-// export const wsFeedConnectionErrorAction = (
-//   event: Event
-// ): IWSFeedConnectionErrorAction => {
-//   return {
-//     type: WS_FEED_CONNECTION_ERROR,
-//     payload: event,
-//   }
-// }
-
-// export const wsFeedConnectionClosedAction =
-//   (): IWSFeedConnectionClosedAction => {
-//     return {
-//       type: WS_FEED_CONNECTION_CLOSED,
-//     }
-//   }
-
-// export const wsFeedGetMessageAction = (
-//   response: TFeedResponse
-// ): IWSFeedGetMessageAction => {
-//   return {
-//     type: WS_FEED_GET_MESSAGE,
-//     payload: response,
-//   }
-// }
