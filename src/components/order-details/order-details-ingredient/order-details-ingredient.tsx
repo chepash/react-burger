@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC } from 'react'
-import { TOrderIngredient } from '../../../services/types/data'
+import { TOrderIngredient } from '../../../services/types/ws-data'
 import styles from './order-details-ingredient.module.scss'
 
 type TOrderDetailsIngredientProps = {

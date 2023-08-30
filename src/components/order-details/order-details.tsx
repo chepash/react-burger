@@ -3,7 +3,7 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import styles from './order-details.module.scss'
 import { useDispatch, useSelector } from '../../services/types/store'
-import { OrderStatus } from '../../services/types/data'
+import { OrderStatus } from '../../services/types/ws-data'
 import {
   formatUpdatedAtTime,
   transformOrderIngredientsList,

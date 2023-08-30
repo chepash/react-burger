@@ -10,7 +10,7 @@ import { passwordRestoreReducer } from './reducers/password-restore-reducer'
 import { profileReducer } from './reducers/profile-reducer'
 import { registerReducer } from './reducers/register-reducer'
 import { userReducer } from './reducers/user-reducer'
-import { feedReducer } from './reducers/feed-reducer'
+import { feedReducer } from './reducers/ws-feed-reducer'
 
 export const rootReducer = combineReducers({
   feedState: feedReducer,

@@ -1,4 +1,4 @@
-import { TFeedResponse } from '../services/types/data'
+import { TFeedResponse } from '../services/types/ws-data'
 
 export const API_BASE_URL = 'https://norma.nomoreparties.space/api'
 
@@ -92,7 +92,7 @@ export const ORDERS_RESPONSE: TFeedResponse = {
         '643d69a5c3f7b9001cfa094a',
         '643d69a5c3f7b9001cfa094a',
       ],
-      status: 'created',
+      status: 'pending',
       name: 'Астероидный флюоресцентный бургер',
       createdAt: '2023-08-28T17:47:52.590Z',
       updatedAt: '2023-08-28T17:47:52.775Z',

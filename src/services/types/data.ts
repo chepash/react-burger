@@ -26,11 +26,6 @@ export type TIngredientWithUUID = {
   uuid: string
 }
 
-export type TOrderIngredient = {
-  ingredient: TIngredient
-  amount: number
-}
-
 export type TOwner = {
   name: string
   email: string
@@ -48,35 +43,6 @@ export type TPlacedNewOrder = {
   updatedAt: string
   number: number
   price: number
-}
-
-export type TOrder = {
-  _id: string
-  ingredients: string[]
-  status: 'created' | 'pending' | 'done'
-  name: string
-  createdAt: string
-  updatedAt: string
-  number: number
-}
-
-export enum OrderStatus {
-  created = 'Принят',
-  pending = 'Готовится',
-  done = 'Выполнен',
-}
-
-export type TOrderDetails = {
-  originalOrderInfo: TOrder
-  orderIngredients: TOrderIngredient[]
-  orderSum: number
-}
-
-export type TFeedResponse = {
-  success: boolean
-  orders: TOrder[]
-  total: number
-  totalToday: number
 }
 
 export type TUser = {

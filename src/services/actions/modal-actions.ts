@@ -6,7 +6,8 @@ import {
   SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
   SET_CURENT_ORDER_DETAILS,
 } from '../../utils/constants'
-import { TIngredient, TOrderDetails } from '../types/data'
+import { TIngredient } from '../types/data'
+import { TOrderDetails } from '../types/ws-data'
 
 interface ISetCurrentIngredientAction {
   readonly type: typeof SET_CURRENT_INGREDIENT

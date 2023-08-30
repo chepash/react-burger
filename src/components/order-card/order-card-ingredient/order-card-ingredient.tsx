@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import { FC } from 'react'
-import { TOrderIngredient } from '../../../services/types/data'
+import { TOrderIngredient } from '../../../services/types/ws-data'
 import styles from './order-card-ingredient.module.scss'
 
 type TOrderCardIgredientProps = {

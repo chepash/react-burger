@@ -6,8 +6,9 @@ import {
   SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
   SET_CURENT_ORDER_DETAILS,
 } from '../../utils/constants'
-import { TOrderDetails, TIngredient } from '../types/data'
+import { TIngredient } from '../types/data'
 import { TModalActions } from '../actions/modal-actions'
+import { TOrderDetails } from '../types/ws-data'
 
 type TModalState = {
   currentIngredient: null | TIngredient

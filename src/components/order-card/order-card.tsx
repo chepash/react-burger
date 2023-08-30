@@ -6,7 +6,7 @@ import {
   setCurrentOrderDetailsAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
-import { OrderStatus, TOrder } from '../../services/types/data'
+import { OrderStatus, TOrder } from '../../services/types/ws-data'
 import { useDispatch, useSelector } from '../../services/types/store'
 import {
   formatUpdatedAtTime,

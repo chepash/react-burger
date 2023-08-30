@@ -1,4 +1,5 @@
-import { TIngredient, TOrderIngredient } from '../services/types/data'
+import { TIngredient } from '../services/types/data'
+import { TOrderIngredient } from '../services/types/ws-data'
 
 export const formatUpdatedAtTime = (updatedAt: string): string => {
   const now = new Date()
