@@ -1,10 +1,11 @@
 import cn from 'classnames'
 import { FC } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useMatch } from 'react-router-dom'
 import ProfileNav from '../../components/profile/profile-nav/profile-nav'
 import styles from './profile.module.scss'
 
 const Profile: FC = () => {
+  const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
   const location = useLocation()
 
   type TSectionDescriptions = {
@@ -20,6 +21,10 @@ const Profile: FC = () => {
 
   const currentSectionDescription =
     sectionDescriptions[location.pathname as keyof TSectionDescriptions] || ''
+
+  if (isUserOrderDetailsPage) {
+    return <Outlet />
+  }
 
   return (
     <main className={cn(styles.main, 'pl-5 pr-5', 'mt-30')}>

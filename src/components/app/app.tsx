@@ -15,14 +15,9 @@ import {
   setIsIngredientModalOpenAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
-import {
-  wsFeedDisconnect,
-  wsFeedConnect,
-} from '../../services/actions/ws-feed-actions'
 import { getAllIngredientsThunk } from '../../services/thunks/get-all-ingredients-thunk'
 import { getUserThunk } from '../../services/thunks/get-user-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
-import { wsBaseUrl } from '../../utils/constants'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -60,6 +55,7 @@ const App: FC = () => {
   )
 
   const feedOrders = useSelector((store) => store.feedState.orders)
+  const userFeedOrders = useSelector((store) => store.userFeedState.orders)
 
   useEffect(() => {
     dispatch(getUserThunk())
@@ -67,14 +63,6 @@ const App: FC = () => {
 
   useEffect(() => {
     dispatch(getAllIngredientsThunk())
-  }, [])
-
-  useEffect(() => {
-    dispatch(wsFeedConnect(`${wsBaseUrl}/all`))
-
-    return () => {
-      dispatch(wsFeedDisconnect())
-    }
   }, [])
 
   useEffect(() => {
@@ -110,7 +98,13 @@ const App: FC = () => {
           <>
             <Routes location={background || location}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/feed" element={<Feed />} />
+              <Route path="/feed" element={<Feed />}>
+                <Route
+                  path="/feed/:id"
+                  element={<OrderDetails orders={feedOrders} />}
+                />
+              </Route>
+
               <Route
                 path="/login"
                 element={
@@ -153,24 +147,19 @@ const App: FC = () => {
                 element={<ProtectedRouteElement element={<Profile />} />}
               >
                 <Route path="" element={<ProfileInfo />} />
-                <Route path="orders" element={<ProfileOrders />} />
+                <Route path="orders" element={<ProfileOrders />}>
+                  <Route
+                    path="/profile/orders/:id"
+                    element={
+                      <ProtectedRouteElement
+                        element={<OrderDetails orders={userFeedOrders} />}
+                      />
+                    }
+                  />
+                </Route>
               </Route>
 
               <Route path="/ingredients/:id" element={<IngredientDetails />} />
-
-              <Route
-                path="/feed/:id"
-                element={<OrderDetails orders={feedOrders} />}
-              />
-
-              <Route
-                path="/profile/orders/:id"
-                element={
-                  <ProtectedRouteElement
-                    element={<OrderDetails orders={feedOrders} />}
-                  />
-                }
-              />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -207,12 +196,12 @@ const App: FC = () => {
             {background && isOrderDetailsModalOpen && (
               <Routes>
                 <Route
-                  path="/profile/orders/:number"
+                  path="/profile/orders/:id"
                   element={
                     <ProtectedRouteElement
                       element={
                         <Modal onClose={handleCloseOrderDetailstModal}>
-                          <OrderDetails orders={feedOrders} />
+                          <OrderDetails orders={userFeedOrders} />
                         </Modal>
                       }
                     />
