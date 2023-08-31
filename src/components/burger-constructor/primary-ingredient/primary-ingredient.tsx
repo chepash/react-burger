@@ -4,12 +4,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
 import {
   deleteIngredientAction,
   moveIngredientAction,
 } from '../../../services/actions/constructor-actions'
 import { TIngredientWithUUID } from '../../../services/types/data'
+import { useDispatch } from '../../../services/types/store'
 import styles from './primary-ingredient.module.scss'
 
 type TPrimaryIngredientProps = {

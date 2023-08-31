@@ -1,6 +1,5 @@
 import cn from 'classnames'
 import { FC, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { Outlet, useMatch } from 'react-router-dom'
 import FeedOrders from '../../components/feed-orders/feed-orders'
 import FeedStats from '../../components/feed-stats/feed-stats'
@@ -8,6 +7,7 @@ import {
   wsFeedConnect,
   wsFeedDisconnect,
 } from '../../services/actions/ws-feed-actions'
+import { useDispatch } from '../../services/types/store'
 import { wsBaseUrl } from '../../utils/constants'
 import styles from './feed.module.scss'
 
