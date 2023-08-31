@@ -1,22 +1,31 @@
 import cn from 'classnames'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { getFeedState } from '../../services/selectors/ws-feed-selectors'
 import { useSelector } from '../../services/types/store'
 import styles from './feed-stats.module.scss'
 
 const FeedStats: FC = () => {
   const { orders, total, totalToday } = useSelector(getFeedState)
+  const [pendingOrderNumbers, setPendingOrderNumbers] = useState<number[]>([])
+  const [recentDoneOrderNumbers, setRecentDoneOrderNumbers] = useState<
+    number[]
+  >([])
 
-  const pendingOrderNumbers: number[] = []
-  const recentDoneOrderNumbers: number[] = []
+  useEffect(() => {
+    const pendingNumbers: number[] = []
+    const doneNumbers: number[] = []
 
-  for (const order of orders) {
-    if (order.status === 'pending') {
-      pendingOrderNumbers.push(order.number)
-    } else if (order.status === 'done') {
-      recentDoneOrderNumbers.push(order.number)
+    for (const order of orders) {
+      if (order.status === 'pending') {
+        pendingNumbers.push(order.number)
+      } else if (order.status === 'done') {
+        doneNumbers.push(order.number)
+      }
     }
-  }
+
+    setPendingOrderNumbers(pendingNumbers)
+    setRecentDoneOrderNumbers(doneNumbers)
+  }, [orders])
 
   return (
     <section aria-label="Статусы и общая статистика всех заказов">
