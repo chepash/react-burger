@@ -55,7 +55,7 @@ const App: FC = () => {
   )
 
   const feedOrders = useSelector((store) => store.feedState.orders)
-  const userFeedOrders = useSelector((store) => store.userFeedState.orders)
+  const userFeedOrders = useSelector((store) => store.userHistoryState.orders)
 
   useEffect(() => {
     dispatch(getUserThunk())

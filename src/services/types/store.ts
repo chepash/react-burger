@@ -25,14 +25,14 @@ import {
   WS_FEED_GET_MESSAGE,
 } from '../actions/ws-feed-actions'
 import {
-  TWSUserFeedActions,
-  WS_USER_FEED_CONNECTION_CLOSED,
-  WS_USER_FEED_CONNECTION_END,
-  WS_USER_FEED_CONNECTION_ERROR,
-  WS_USER_FEED_CONNECTION_START,
-  WS_USER_FEED_CONNECTION_SUCCESS,
-  WS_USER_FEED_GET_MESSAGE,
-} from '../actions/ws-user-feed-actions'
+  TWSUserHistoryActions,
+  WS_USER_HISTORY_CONNECTION_CLOSED,
+  WS_USER_HISTORY_DISCONNECT,
+  WS_USER_HISTORY_CONNECTION_ERROR,
+  WS_USER_HISTORY_CONNECT,
+  WS_USER_HISTORY_CONNECTION_SUCCESS,
+  WS_USER_HISTORY_GET_MESSAGE,
+} from '../actions/ws-user-history-actions'
 
 export type TAppActions =
   | TConstructorActions
@@ -46,7 +46,7 @@ export type TAppActions =
   | TRegisterActions
   | TUserActions
   | TWSFeedActions
-  | TWSUserFeedActions
+  | TWSUserHistoryActions
 
 export type TWSStoreFeedActions = {
   wsConnect: typeof WS_FEED_CONNECTION_START
@@ -58,12 +58,12 @@ export type TWSStoreFeedActions = {
 }
 
 export type TWSStoreUserFeedActions = {
-  wsConnect: typeof WS_USER_FEED_CONNECTION_START
-  wsDisconnect: typeof WS_USER_FEED_CONNECTION_END
-  onOpen: typeof WS_USER_FEED_CONNECTION_SUCCESS
-  onClose: typeof WS_USER_FEED_CONNECTION_CLOSED
-  onError: typeof WS_USER_FEED_CONNECTION_ERROR
-  onMessage: typeof WS_USER_FEED_GET_MESSAGE
+  wsConnect: typeof WS_USER_HISTORY_CONNECT
+  wsDisconnect: typeof WS_USER_HISTORY_DISCONNECT
+  onOpen: typeof WS_USER_HISTORY_CONNECTION_SUCCESS
+  onClose: typeof WS_USER_HISTORY_CONNECTION_CLOSED
+  onError: typeof WS_USER_HISTORY_CONNECTION_ERROR
+  onMessage: typeof WS_USER_HISTORY_GET_MESSAGE
 }
 
 export type TWSStoreActions = TWSStoreFeedActions | TWSStoreUserFeedActions

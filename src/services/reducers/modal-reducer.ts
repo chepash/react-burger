@@ -1,5 +1,5 @@
 import {
-  SET_CURENT_ORDER_DETAILS,
+  SET_CURRENT_ORDER_DETAILS,
   SET_CURRENT_INGREDIENT,
   SET_IS_ERROR_MODAL_OPEN,
   SET_IS_INGREDIENT_MODAL_OPEN,
@@ -44,7 +44,7 @@ export const modalReducer = (state = initialState, action: TModalActions) => {
         ...state,
         currentIngredient: action.payload,
       }
-    case SET_CURENT_ORDER_DETAILS:
+    case SET_CURRENT_ORDER_DETAILS:
       return {
         ...state,
         currentOrderDetails: action.payload,

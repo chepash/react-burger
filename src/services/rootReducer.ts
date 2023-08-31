@@ -11,11 +11,11 @@ import { profileReducer } from './reducers/profile-reducer'
 import { registerReducer } from './reducers/register-reducer'
 import { userReducer } from './reducers/user-reducer'
 import { wsFeedReducer } from './reducers/ws-feed-reducer'
-import { wsUserFeedReducer } from './reducers/ws-user-feed-reducer'
+import { wsUserHistoryReducer } from './reducers/ws-user-history-reducer'
 
 export const rootReducer = combineReducers({
   feedState: wsFeedReducer,
-  userFeedState: wsUserFeedReducer,
+  userHistoryState: wsUserHistoryReducer,
   ingredientsState: ingredientsReducer,
   constructorState: constructorReducer,
   orderState: orderReducer,

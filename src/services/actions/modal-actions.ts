@@ -5,7 +5,7 @@ export const SET_CURRENT_INGREDIENT = 'SET_CURRENT_INGREDIENT'
 export const SET_IS_INGREDIENT_MODAL_OPEN = 'SET_IS_INGREDIENT_MODAL_OPEN'
 export const SET_IS_PLACED_NEW_ORDER_MODAL_OPEN =
   'SET_IS_PLACED_NEW_ORDER_MODAL_OPEN'
-export const SET_CURENT_ORDER_DETAILS = 'SET_CURENT_ORDER_DETAILS'
+export const SET_CURRENT_ORDER_DETAILS = 'SET_CURRENT_ORDER_DETAILS'
 export const SET_IS_ORDER_DETAILS_MODAL_OPEN = 'SET_IS_ORDER_DETAILS_MODAL_OPEN'
 export const SET_IS_ERROR_MODAL_OPEN = 'SET_IS_ERROR_MODAL_OPEN'
 
@@ -14,7 +14,7 @@ interface ISetCurrentIngredientAction {
   readonly payload: TIngredient | null
 }
 interface ISetCurrentOrderDetailsAction {
-  readonly type: typeof SET_CURENT_ORDER_DETAILS
+  readonly type: typeof SET_CURRENT_ORDER_DETAILS
   readonly payload: TOrderDetails | null
 }
 interface ISetIsIngredientModalOpenAction {
@@ -53,7 +53,7 @@ export const setCurrentOrderDetailsAction = (
   currentOrderDetails: TOrderDetails | null
 ): ISetCurrentOrderDetailsAction => {
   return {
-    type: SET_CURENT_ORDER_DETAILS,
+    type: SET_CURRENT_ORDER_DETAILS,
     payload: currentOrderDetails,
   }
 }

@@ -2,9 +2,9 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import { Outlet, useMatch } from 'react-router-dom'
 import {
-  wsUserFeedConnect,
-  wsUserFeedDisconnect,
-} from '../../../services/actions/ws-user-feed-actions'
+  wsUserHistoryConnect,
+  wsUserHistoryDisconnect,
+} from '../../../services/actions/ws-user-history-actions'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import { wsBaseUrl } from '../../../utils/constants'
 import OrderCard from '../../order-card/order-card'
@@ -15,13 +15,13 @@ const ProfileOrders: FC = () => {
   const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
 
   const accessToken = localStorage.getItem('accessToken')
-  const orderHistory = useSelector((store) => store.userFeedState.orders)
+  const orderHistory = useSelector((store) => store.userHistoryState.orders)
 
   useEffect(() => {
-    dispatch(wsUserFeedConnect(`${wsBaseUrl}?token=${accessToken}`))
+    dispatch(wsUserHistoryConnect(`${wsBaseUrl}?token=${accessToken}`))
 
     return () => {
-      dispatch(wsUserFeedDisconnect())
+      dispatch(wsUserHistoryDisconnect())
     }
   }, [])
 

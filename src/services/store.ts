@@ -10,13 +10,13 @@ import {
   WS_FEED_GET_MESSAGE,
 } from './actions/ws-feed-actions'
 import {
-  WS_USER_FEED_CONNECTION_CLOSED,
-  WS_USER_FEED_CONNECTION_END,
-  WS_USER_FEED_CONNECTION_ERROR,
-  WS_USER_FEED_CONNECTION_START,
-  WS_USER_FEED_CONNECTION_SUCCESS,
-  WS_USER_FEED_GET_MESSAGE,
-} from './actions/ws-user-feed-actions'
+  WS_USER_HISTORY_CONNECTION_CLOSED,
+  WS_USER_HISTORY_DISCONNECT,
+  WS_USER_HISTORY_CONNECTION_ERROR,
+  WS_USER_HISTORY_CONNECT,
+  WS_USER_HISTORY_CONNECTION_SUCCESS,
+  WS_USER_HISTORY_GET_MESSAGE,
+} from './actions/ws-user-history-actions'
 import { socketMiddleware } from './middleware/socketMiddleware'
 import { rootReducer } from './rootReducer'
 import { TWSStoreFeedActions, TWSStoreUserFeedActions } from './types/store'
@@ -31,12 +31,12 @@ const wsFeedActions: TWSStoreFeedActions = {
 }
 
 const wsUserFeedActions: TWSStoreUserFeedActions = {
-  wsConnect: WS_USER_FEED_CONNECTION_START,
-  wsDisconnect: WS_USER_FEED_CONNECTION_END,
-  onOpen: WS_USER_FEED_CONNECTION_SUCCESS,
-  onError: WS_USER_FEED_CONNECTION_ERROR,
-  onClose: WS_USER_FEED_CONNECTION_CLOSED,
-  onMessage: WS_USER_FEED_GET_MESSAGE,
+  wsConnect: WS_USER_HISTORY_CONNECT,
+  wsDisconnect: WS_USER_HISTORY_DISCONNECT,
+  onOpen: WS_USER_HISTORY_CONNECTION_SUCCESS,
+  onError: WS_USER_HISTORY_CONNECTION_ERROR,
+  onClose: WS_USER_HISTORY_CONNECTION_CLOSED,
+  onMessage: WS_USER_HISTORY_GET_MESSAGE,
 }
 
 export const configureStore = () => {
