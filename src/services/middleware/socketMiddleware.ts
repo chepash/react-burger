@@ -47,18 +47,14 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
             refreshToken &&
             parsedData.message === 'Invalid or missing token'
           ) {
-            console.log('parsedData.message : ', parsedData.message)
             api
               .fetchNewRefreshToken()
               .then((refreshTokenResponse) => {
-                console.log('refreshTokenResponse : ', refreshTokenResponse)
-
                 const newAccessToken = refreshTokenResponse.accessToken.replace(
                   'Bearer ',
                   ''
                 )
                 const newUrl = `${wsBaseUrl}?token=${newAccessToken}`
-                console.log('newUrl : ', newUrl)
                 dispatch({
                   type: wsConnect,
                   payload: newUrl,
@@ -79,10 +75,8 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
 
         socket.onclose = (event) => {
           if (event.code !== 1000) {
-            console.log('error')
             dispatch({ type: onError, payload: event })
           }
-          console.log('close')
           dispatch({ type: onClose })
 
           if (isConnected) {
@@ -93,7 +87,6 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
         }
 
         if (type === wsDisconnect) {
-          console.log('disconnect')
           clearTimeout(reconnectTimer)
           isConnected = false
           reconnectTimer = 0
