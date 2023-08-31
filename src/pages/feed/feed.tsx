@@ -24,7 +24,11 @@ const Feed: FC = () => {
   }, [])
 
   if (isFeedOrderDetailsPage) {
-    return <Outlet />
+    return (
+      <main className={cn(styles.order, 'pt-10')}>
+        <Outlet />
+      </main>
+    )
   } else {
     return (
       <main className={cn(styles.main, 'pl-5 pr-5 pt-10')}>

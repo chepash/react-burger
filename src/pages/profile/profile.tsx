@@ -24,7 +24,11 @@ const Profile: FC = () => {
     sectionDescriptions[location.pathname as Section] || ''
 
   if (isUserOrderDetailsPage) {
-    return <Outlet />
+    return (
+      <main className={cn(styles.order, 'pt-10')}>
+        <Outlet />
+      </main>
+    )
   }
 
   return (
