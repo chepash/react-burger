@@ -6,6 +6,10 @@ import cn from 'classnames'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { setIsPlacedNewOrderModalOpenAction } from '../../../services/actions/modal-actions'
+import { getConstructorState } from '../../../services/selectors/constructor-selectors'
+import { getModalState } from '../../../services/selectors/modal-selectors'
+import { getOrderState } from '../../../services/selectors/order-selectors'
+import { getUser } from '../../../services/selectors/user-selectors'
 import { createOrderThunk } from '../../../services/thunks/create-order-thunk'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import Modal from '../../modal/modal'
@@ -17,14 +21,11 @@ const Checkout: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { constructorIngredients, constructorBun } = useSelector(
-    (store) => store.constructorState
-  )
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
-  const { isLoading, response } = useSelector((store) => store.orderState)
-  const { isPlacedNewOrderModalOpen: isOrderModalOpen } = useSelector(
-    (store) => store.modalState
-  )
+  const { constructorIngredients, constructorBun } =
+    useSelector(getConstructorState)
+  const isLoggedIn = useSelector(getUser)
+  const { isLoading, response } = useSelector(getOrderState)
+  const { isPlacedNewOrderModalOpen } = useSelector(getModalState)
 
   const orderSum = constructorIngredients.reduce(
     (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
@@ -67,7 +68,7 @@ const Checkout: FC = () => {
           Оформить заказ
         </Button>
       </div>
-      {isOrderModalOpen && (
+      {isPlacedNewOrderModalOpen && (
         <Modal
           onClose={handleCloseModal}
           header={isLoading ? 'Оформление заказа...' : ''}

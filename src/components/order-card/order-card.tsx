@@ -6,8 +6,9 @@ import {
   setCurrentOrderDetailsAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
-import { OrderStatus, TOrder } from '../../services/types/ws-data'
+import { getIngredients } from '../../services/selectors/ingredients-selectors'
 import { useDispatch, useSelector } from '../../services/types/store'
+import { OrderStatus, TOrder } from '../../services/types/ws-data'
 import {
   formatUpdatedAtTime,
   transformOrderIngredientsList,
@@ -24,9 +25,7 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const detailedIngredientsData = useSelector(
-    (store) => store.ingredientsState.ingredients
-  )
+  const detailedIngredientsData = useSelector(getIngredients)
 
   const orderIngredients = transformOrderIngredientsList(
     order.ingredients,

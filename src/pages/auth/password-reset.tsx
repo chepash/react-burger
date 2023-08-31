@@ -10,6 +10,8 @@ import {
   updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
 import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
+import { getPasswordResetFormData } from '../../services/selectors/password-reset-selectors'
+import { getIsEmailSent } from '../../services/selectors/password-restore-selectors'
 import { passwordResetFormSubmitThunk } from '../../services/thunks/password-reset-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
 import { passwordPattern } from '../../utils/constants'
@@ -20,13 +22,9 @@ const PasswordReset: FC = () => {
   const navigate = useNavigate()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  const { token, password } = useSelector(
-    (store) => store.passwordResetState.form
-  )
+  const { token, password } = useSelector(getPasswordResetFormData)
 
-  const isEmailSent = useSelector(
-    (store) => store.passwordRestoreState.response?.success
-  )
+  const isEmailSent = useSelector(getIsEmailSent)
 
   const onPasswordIconClick = () => {
     setIsPasswordVisible(!isPasswordVisible)

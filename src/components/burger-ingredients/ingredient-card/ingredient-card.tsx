@@ -10,6 +10,7 @@ import {
   setCurrentIngredientAction,
   setIsIngredientModalOpenAction,
 } from '../../../services/actions/modal-actions'
+import { getConstructorState } from '../../../services/selectors/constructor-selectors'
 import { TIngredient } from '../../../services/types/data'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-card.module.scss'
@@ -23,9 +24,8 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const { constructorIngredients, constructorBun } = useSelector(
-    (store) => store.constructorState
-  )
+  const { constructorIngredients, constructorBun } =
+    useSelector(getConstructorState)
 
   const onClick = () => {
     dispatch(setCurrentIngredientAction(ingredient))

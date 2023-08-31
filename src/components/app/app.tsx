@@ -15,6 +15,11 @@ import {
   setIsIngredientModalOpenAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
+import { getFeedOrders } from '../../services/selectors/ws-feed-selectors'
+import { getIngredientsState } from '../../services/selectors/ingredients-selectors'
+import { getModalState } from '../../services/selectors/modal-selectors'
+import { getOrderState } from '../../services/selectors/order-selectors'
+import { getUserOrdersHistory } from '../../services/selectors/ws-user-history-selectors'
 import { getAllIngredientsThunk } from '../../services/thunks/get-all-ingredients-thunk'
 import { getUserThunk } from '../../services/thunks/get-user-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
@@ -36,26 +41,16 @@ const App: FC = () => {
 
   const background = location.state && location.state.backgroundLocation
 
-  const isOrderDetailsModalOpen = useSelector(
-    (store) => store.modalState.isOrderDetailsModalOpen
-  )
+  const { isOrderDetailsModalOpen, isIngredientModalOpen, isErrorModalOpen } =
+    useSelector(getModalState)
 
-  const isLoading = useSelector((store) => store.ingredientsState.isLoading)
+  const { isLoading, isError: fetchIngredientsError } =
+    useSelector(getIngredientsState)
 
-  const fetchIngredientsError = useSelector(
-    (store) => store.ingredientsState.isError
-  )
+  const { isError: placeOrderError } = useSelector(getOrderState)
 
-  const { isIngredientModalOpen } = useSelector((store) => store.modalState)
-
-  const placeOrderError = useSelector((store) => store.orderState.isError)
-
-  const isErrorModalOpen = useSelector(
-    (store) => store.modalState.isErrorModalOpen
-  )
-
-  const feedOrders = useSelector((store) => store.feedState.orders)
-  const userFeedOrders = useSelector((store) => store.userHistoryState.orders)
+  const feedOrders = useSelector(getFeedOrders)
+  const userOrdersHistory = useSelector(getUserOrdersHistory)
 
   useEffect(() => {
     dispatch(getUserThunk())
@@ -152,7 +147,7 @@ const App: FC = () => {
                     path="/profile/orders/:id"
                     element={
                       <ProtectedRouteElement
-                        element={<OrderDetails orders={userFeedOrders} />}
+                        element={<OrderDetails orders={userOrdersHistory} />}
                       />
                     }
                   />
@@ -201,7 +196,7 @@ const App: FC = () => {
                     <ProtectedRouteElement
                       element={
                         <Modal onClose={handleCloseOrderDetailstModal}>
-                          <OrderDetails orders={userFeedOrders} />
+                          <OrderDetails orders={userOrdersHistory} />
                         </Modal>
                       }
                     />

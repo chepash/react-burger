@@ -3,15 +3,15 @@ import cn from 'classnames'
 import { FC } from 'react'
 import { useDrop } from 'react-dnd'
 import { addIngredientAction } from '../../../services/actions/constructor-actions'
+import { getConstructorState } from '../../../services/selectors/constructor-selectors'
 import { TIngredient } from '../../../services/types/data'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
 import styles from './constructor-kit.module.scss'
 
 const ConstructorKit: FC = () => {
-  const { constructorIngredients, constructorBun } = useSelector(
-    (store) => store.constructorState
-  )
+  const { constructorIngredients, constructorBun } =
+    useSelector(getConstructorState)
   const dispatch = useDispatch()
 
   const [, dropTargetRef] = useDrop({

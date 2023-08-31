@@ -1,11 +1,12 @@
 import cn from 'classnames'
 import { FC } from 'react'
+import { getFeedOrders } from '../../services/selectors/ws-feed-selectors'
 import { useSelector } from '../../services/types/store'
 import OrderCard from '../order-card/order-card'
 import styles from './feed-orders.module.scss'
 
 const FeedOrders: FC = () => {
-  const feedOrders = useSelector((store) => store.feedState.orders)
+  const feedOrders = useSelector(getFeedOrders)
 
   return (
     <section aria-label="Перечень последних выполненых заказов">

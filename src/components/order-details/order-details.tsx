@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { setCurrentOrderDetailsAction } from '../../services/actions/modal-actions'
+import { getIngredients } from '../../services/selectors/ingredients-selectors'
 import { useDispatch, useSelector } from '../../services/types/store'
 import { OrderStatus, TOrder } from '../../services/types/ws-data'
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../utils/utils-functions'
 import OrderDetailsIngredient from './order-details-ingredient/order-details-ingredient'
 import styles from './order-details.module.scss'
+import { getCurrentOrderDetails } from '../../services/selectors/modal-selectors'
 
 type TOrderDetailsProps = {
   orders: TOrder[]
@@ -22,12 +24,8 @@ const OrderDetails: FC<TOrderDetailsProps> = ({ orders }) => {
 
   const background = location.state && location.state.backgroundLocation
 
-  const currentOrderDetails = useSelector(
-    (store) => store.modalState.currentOrderDetails
-  )
-  const detailedIngredientsData = useSelector(
-    (store) => store.ingredientsState.ingredients
-  )
+  const currentOrderDetails = useSelector(getCurrentOrderDetails)
+  const detailedIngredientsData = useSelector(getIngredients)
   const { id } = useParams()
 
   useEffect(() => {

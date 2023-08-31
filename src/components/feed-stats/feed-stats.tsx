@@ -1,10 +1,11 @@
 import cn from 'classnames'
 import { FC } from 'react'
+import { getFeedState } from '../../services/selectors/ws-feed-selectors'
 import { useSelector } from '../../services/types/store'
 import styles from './feed-stats.module.scss'
 
 const FeedStats: FC = () => {
-  const { orders, total, totalToday } = useSelector((store) => store.feedState)
+  const { orders, total, totalToday } = useSelector(getFeedState)
 
   const pendingOrderNumbers: number[] = []
   const recentDoneOrderNumbers: number[] = []

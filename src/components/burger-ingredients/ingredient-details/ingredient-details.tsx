@@ -2,16 +2,16 @@ import cn from 'classnames'
 import { FC, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { setCurrentIngredientAction } from '../../../services/actions/modal-actions'
+import { getIngredients } from '../../../services/selectors/ingredients-selectors'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-details.module.scss'
+import { getCurrentIngredient } from '../../../services/selectors/modal-selectors'
 
 const IngredientDetails: FC = () => {
   const dispatch = useDispatch()
 
-  const currentIngredient = useSelector(
-    (store) => store.modalState.currentIngredient
-  )
-  const ingredients = useSelector((store) => store.ingredientsState.ingredients)
+  const currentIngredient = useSelector(getCurrentIngredient)
+  const ingredients = useSelector(getIngredients)
   const { id } = useParams()
 
   useEffect(() => {

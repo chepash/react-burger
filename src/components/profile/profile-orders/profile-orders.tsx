@@ -5,6 +5,7 @@ import {
   wsUserHistoryConnect,
   wsUserHistoryDisconnect,
 } from '../../../services/actions/ws-user-history-actions'
+import { getUserOrdersHistory } from '../../../services/selectors/ws-user-history-selectors'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import { wsBaseUrl } from '../../../utils/constants'
 import OrderCard from '../../order-card/order-card'
@@ -15,7 +16,7 @@ const ProfileOrders: FC = () => {
   const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
 
   const accessToken = localStorage.getItem('accessToken')
-  const orderHistory = useSelector((store) => store.userHistoryState.orders)
+  const userOrdersHistory = useSelector(getUserOrdersHistory)
 
   useEffect(() => {
     dispatch(wsUserHistoryConnect(`${wsBaseUrl}?token=${accessToken}`))
@@ -32,7 +33,7 @@ const ProfileOrders: FC = () => {
       <section aria-label="История заказов" className={cn(styles.section)}>
         <div className={cn(styles.section_scrollable)}>
           <ul className={cn(styles.list)}>
-            {orderHistory.map((order) => (
+            {userOrdersHistory.map((order) => (
               <OrderCard key={order._id} order={order} />
             ))}
           </ul>

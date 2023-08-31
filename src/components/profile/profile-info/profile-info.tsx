@@ -5,10 +5,12 @@ import {
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
 import { updateProfileFormStateAction } from '../../../services/actions/profile-actions'
+import { getUser } from '../../../services/selectors/user-selectors'
 import { profileFormSubmitThunk } from '../../../services/thunks/profile-form-submit-thunk'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import { passwordPattern } from '../../../utils/constants'
 import styles from './profile-info.module.scss'
+import { getProfileFormData } from '../../../services/selectors/profile-selectors-selectors'
 
 const ProfileInfo: FC = () => {
   const dispatch = useDispatch()
@@ -17,13 +19,11 @@ const ProfileInfo: FC = () => {
     name: inputNameValue,
     email: inputEmailValue,
     password: inputPasswordValue,
-  } = useSelector((store) => store.profileState.form)
+  } = useSelector(getProfileFormData)
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  const { name: userName, email: userEmail } = useSelector(
-    (store) => store.userState.user
-  )
+  const { name: userName, email: userEmail } = useSelector(getUser)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateProfileFormStateAction(e.target.name, e.target.value))

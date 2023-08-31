@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { Navigate, RouteProps, useLocation } from 'react-router-dom'
+import { getIsLoggedIn } from '../../services/selectors/user-selectors'
 import { useSelector } from '../../services/types/store'
 
 type TProtectedRouteElementProps = {
@@ -11,7 +12,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   onlyUnAuth = false,
 }) => {
   const location = useLocation()
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
+  const isLoggedIn = useSelector(getIsLoggedIn)
 
   if (onlyUnAuth && isLoggedIn) {
     const { from } = location.state || { from: { pathname: '/' } }
