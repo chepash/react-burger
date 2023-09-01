@@ -4,14 +4,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import styles from './profile-info.module.scss'
-import {
-  UPDATE_PROFILE_FORM_STATE,
-  profileFormSubmit,
-} from '../../../services/actions/profile-actions'
+import { updateProfileFormStateAction } from '../../../services/actions/profile-actions'
+import { getUser } from '../../../services/selectors/user-selectors'
+import { profileFormSubmitThunk } from '../../../services/thunks/profile-form-submit-thunk'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import { passwordPattern } from '../../../utils/constants'
+import styles from './profile-info.module.scss'
+import { getProfileFormData } from '../../../services/selectors/profile-selectors-selectors'
 
 const ProfileInfo: FC = () => {
   const dispatch = useDispatch()
@@ -20,24 +19,14 @@ const ProfileInfo: FC = () => {
     name: inputNameValue,
     email: inputEmailValue,
     password: inputPasswordValue,
-    // @ts-ignore
-  } = useSelector((store) => store.profileState.form)
+  } = useSelector(getProfileFormData)
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  const { name: userName, email: userEmail } = useSelector(
-    // @ts-ignore
-    (store) => store.userState.user
-  )
+  const { name: userName, email: userEmail } = useSelector(getUser)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateProfileFormStateAction(e.target.name, e.target.value))
   }
 
   const onPasswordIconClick = () => {
@@ -63,32 +52,13 @@ const ProfileInfo: FC = () => {
       }
     })
 
-    // @ts-ignore
-    dispatch(profileFormSubmit(changedInputs))
+    dispatch(profileFormSubmitThunk(changedInputs))
   }
 
   const handleCancel = () => {
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'name',
-        value: userName,
-      },
-    })
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'email',
-        value: userEmail,
-      },
-    })
-    dispatch({
-      type: UPDATE_PROFILE_FORM_STATE,
-      payload: {
-        field: 'password',
-        value: '',
-      },
-    })
+    dispatch(updateProfileFormStateAction('name', userName))
+    dispatch(updateProfileFormStateAction('email', userEmail))
+    dispatch(updateProfileFormStateAction('password', ''))
   }
 
   const isPasswordValid = (password: string): boolean => {

@@ -1,52 +1,49 @@
-import cn from 'classnames'
-import styles from './checkout.module.scss'
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetails from '../order-details/order-details'
-import Modal from '../../modal/modal'
-import { useDispatch, useSelector } from 'react-redux'
-import { createOrder } from '../../../services/actions/order-actions'
-import { SET_IS_ORDER_MODAL_OPEN } from '../../../services/actions/modal-actions'
-import Preloader from '../../preloader/preloader'
-import { useNavigate } from 'react-router-dom'
+import cn from 'classnames'
 import { FC } from 'react'
-import { TIngredientWithUUID } from '../../../utils/types'
+import { useNavigate } from 'react-router-dom'
+import { setIsPlacedNewOrderModalOpenAction } from '../../../services/actions/modal-actions'
+import { getConstructorState } from '../../../services/selectors/constructor-selectors'
+import { getModalState } from '../../../services/selectors/modal-selectors'
+import { getOrderState } from '../../../services/selectors/order-selectors'
+import { getUser } from '../../../services/selectors/user-selectors'
+import { createOrderThunk } from '../../../services/thunks/create-order-thunk'
+import { useDispatch, useSelector } from '../../../services/types/store'
+import { ROUTE_LOGIN } from '../../../utils/constants'
+import Modal from '../../modal/modal'
+import Preloader from '../../preloader/preloader'
+import OrderStatusResponse from '../order-status-response/order-status-response'
+import styles from './checkout.module.scss'
 
 const Checkout: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
-    (store) => store.constructorState
-  )
-  // @ts-ignore
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
-  // @ts-ignore
-  const { isLoading, response } = useSelector((store) => store.orderState)
-  // @ts-ignore
-  const { isOrderModalOpen } = useSelector((store) => store.modalState)
+  const { constructorIngredients, constructorBun } =
+    useSelector(getConstructorState)
+  const isLoggedIn = useSelector(getUser)
+  const { isLoading, response } = useSelector(getOrderState)
+  const { isPlacedNewOrderModalOpen } = useSelector(getModalState)
 
   const orderSum = constructorIngredients.reduce(
-    // @ts-ignore
     (acc, ingredientWithUUID) => acc + ingredientWithUUID.ingredient.price,
     constructorBun.price * 2
   )
 
   const handleOrder = () => {
     if (isLoggedIn) {
-      // @ts-ignore
-      dispatch(createOrder(constructorIngredients, constructorBun))
-      dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: true })
+      dispatch(createOrderThunk(constructorIngredients, constructorBun))
+      dispatch(setIsPlacedNewOrderModalOpenAction(true))
     } else {
-      navigate('/login')
+      navigate(ROUTE_LOGIN)
     }
   }
 
   const handleCloseModal = () => {
-    dispatch({ type: SET_IS_ORDER_MODAL_OPEN, payload: false })
+    dispatch(setIsPlacedNewOrderModalOpenAction(false))
   }
 
   return (
@@ -72,14 +69,14 @@ const Checkout: FC = () => {
           Оформить заказ
         </Button>
       </div>
-      {isOrderModalOpen && (
+      {isPlacedNewOrderModalOpen && (
         <Modal
           onClose={handleCloseModal}
           header={isLoading ? 'Оформление заказа...' : ''}
         >
           {isLoading && <Preloader />}
           {!isLoading && response?.success && (
-            <OrderDetails orderNumber={response.order.number} />
+            <OrderStatusResponse orderNumber={response.order.number} />
           )}
         </Modal>
       )}

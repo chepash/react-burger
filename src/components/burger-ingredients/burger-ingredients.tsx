@@ -1,17 +1,14 @@
 import cn from 'classnames'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { getIngredients } from '../../services/selectors/ingredients-selectors'
+import { TIngredientsCategory } from '../../services/types/data'
+import { useSelector } from '../../services/types/store'
 import styles from './burger-ingredients.module.scss'
 import IngredientsCategory from './ingredients-category/ingredients-category'
 import IngredientsNavbar from './ingredients-navbar/ingredients-navbar'
 
-import { useSelector } from 'react-redux'
-import { TIngredient, TIngredientsCategory } from '../../utils/types'
-
 const BurgerIngredients: FC = () => {
-  const ingredients: TIngredient[] = useSelector(
-    //@ts-ignore
-    (store) => store.ingredientsState.ingredients
-  )
+  const ingredients = useSelector(getIngredients)
 
   const [currentTab, setCurrentTab] = useState<TIngredientsCategory>('bun')
 

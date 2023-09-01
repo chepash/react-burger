@@ -4,35 +4,27 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import {
-  UPDATE_LOGIN_FORM_STATE,
-  loginFormSubmit,
-} from '../../services/actions/login-actions'
-import styles from './auth.module.scss'
 import { FC, SyntheticEvent } from 'react'
+import { Link } from 'react-router-dom'
+import { updateLoginFormStateAction } from '../../services/actions/login-actions'
+import { getLoginFormData } from '../../services/selectors/login-selectors'
+import { loginFormSubmitThunk } from '../../services/thunks/login-form-submit-thunk'
+import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_FORGOT_PASSWORD, ROUTE_REGISTER } from '../../utils/constants'
+import styles from './auth.module.scss'
 
 const Login: FC = () => {
   const dispatch = useDispatch()
 
-  // @ts-ignore
-  const { email, password } = useSelector((store) => store.loginState.form)
+  const { email, password } = useSelector(getLoginFormData)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_LOGIN_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateLoginFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
-    dispatch(loginFormSubmit(email, password))
+    dispatch(loginFormSubmitThunk(email, password))
   }
 
   return (
@@ -81,7 +73,7 @@ const Login: FC = () => {
             Вы — новый пользователь?
           </p>
           <Link
-            to={'/register'}
+            to={ROUTE_REGISTER}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Зарегистрироваться
@@ -97,7 +89,7 @@ const Login: FC = () => {
             Забыли пароль?
           </p>
           <Link
-            to={'/forgot-password'}
+            to={ROUTE_FORGOT_PASSWORD}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Восстановить пароль

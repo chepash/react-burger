@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { ROUTE_HOME } from '../../utils/constants'
 import styles from './not-found.module.scss'
 
 const NotFound: FC = () => {
@@ -15,7 +16,7 @@ const NotFound: FC = () => {
       <br />
       <p className={'text text_type_main-default'}>
         Проверьте адрес или перейдите на{' '}
-        <Link to="/" className={styles.link}>
+        <Link to={ROUTE_HOME} className={styles.link}>
           главную страницу
         </Link>
       </p>

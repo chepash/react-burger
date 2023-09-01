@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import { forwardRef } from 'react'
-import { TIngredient, TIngredientsCategory } from '../../../utils/types'
+import { TIngredient, TIngredientsCategory } from '../../../services/types/data'
 import IngredientCard from '../ingredient-card/ingredient-card'
 import styles from './ingredients-category.module.scss'
 

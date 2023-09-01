@@ -4,34 +4,26 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  UPDATE_PWD_RESTORE_FORM_STATE,
-  passwordRestoreFormSubmit,
-} from '../../services/actions/password-restore-actions'
+import { updatePwdRestoreFormStateAction } from '../../services/actions/password-restore-actions'
+import { getPasswordRestoreFormData } from '../../services/selectors/password-restore-selectors'
+import { passwordRestoreFormSubmitThunk } from '../../services/thunks/password-restore-form-submit-thunk'
+import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const PasswordRestore: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  //@ts-ignore
-  const { email } = useSelector((store) => store.passwordRestoreState.form)
+  const { email } = useSelector(getPasswordRestoreFormData)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PWD_RESTORE_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updatePwdRestoreFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
-    dispatch(passwordRestoreFormSubmit(email, navigate))
+    dispatch(passwordRestoreFormSubmitThunk(email, navigate))
   }
 
   return (
@@ -72,7 +64,7 @@ const PasswordRestore: FC = () => {
             Вспомнили пароль?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Войти

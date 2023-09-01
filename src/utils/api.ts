@@ -3,14 +3,14 @@ import {
   TAuthResponse,
   TCustomRequestInit,
   TErrorResponse,
-  TIngredient,
-  TLogOutResponse,
+  TFetchIngredientsResponse,
+  TLogoutResponse,
   TPasswordResetResponse,
-  TPlaceOrderResponse,
+  TPlaceNewOrderResponse,
   TRefreshTokenResponse,
   TSendRecoveryEmailResponse,
   TUserDataResponse,
-} from './types'
+} from '../services/types/data'
 
 const getResponse = async <T>(res: Response): Promise<T> => {
   if (res.ok) {
@@ -35,19 +35,20 @@ const request = async <T>(
   return getResponse<T>(res)
 }
 
-const fetchNewRefreshToken = async (): Promise<TRefreshTokenResponse> => {
-  const refreshToken = localStorage.getItem('refreshToken')
-  const endpoint = 'auth/token'
-  const options: RequestInit = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: refreshToken }),
+export const fetchNewRefreshToken =
+  async (): Promise<TRefreshTokenResponse> => {
+    const refreshToken = localStorage.getItem('refreshToken')
+    const endpoint = 'auth/token'
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    }
+    return request(endpoint, options)
   }
-  return request(endpoint, options)
-}
 
 const requestWithRefresh = async <T>(
   endpoint: string,
@@ -74,19 +75,18 @@ const requestWithRefresh = async <T>(
   }
 }
 
-export const fetchIngredients = async (): Promise<
-  ReadonlyArray<TIngredient>
-> => {
-  const endpoint = 'ingredients'
-  const options = {
-    method: 'GET',
+export const fetchIngredients =
+  async (): Promise<TFetchIngredientsResponse> => {
+    const endpoint = 'ingredients'
+    const options = {
+      method: 'GET',
+    }
+    return request(endpoint, options)
   }
-  return request(endpoint, options)
-}
 
-export const placeOrder = (
+export const placeNewOrder = (
   ingredientsIds: string[]
-): Promise<TPlaceOrderResponse> => {
+): Promise<TPlaceNewOrderResponse> => {
   const accessToken = localStorage.getItem('accessToken')
   const endpoint = 'orders'
   const options = {
@@ -134,7 +134,7 @@ export const loginUser = (
   return request(endpoint, options)
 }
 
-export const logoutUser = (): Promise<TLogOutResponse> => {
+export const logoutUser = (): Promise<TLogoutResponse> => {
   const refreshToken = localStorage.getItem('refreshToken')
 
   const endpoint = 'auth/logout'

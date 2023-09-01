@@ -1,20 +1,19 @@
-import { FC, ReactNode } from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate, useLocation } from 'react-router-dom'
+import { FC } from 'react'
+import { Navigate, RouteProps, useLocation } from 'react-router-dom'
+import { getIsLoggedIn } from '../../services/selectors/user-selectors'
+import { useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 
 type TProtectedRouteElementProps = {
-  element: ReactNode
   onlyUnAuth?: boolean
-}
+} & RouteProps
 
 const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   element,
   onlyUnAuth = false,
 }) => {
   const location = useLocation()
-
-  // @ts-ignore
-  const isLoggedIn = useSelector((store) => store.userState.isLoggedIn)
+  const isLoggedIn = useSelector(getIsLoggedIn)
 
   if (onlyUnAuth && isLoggedIn) {
     const { from } = location.state || { from: { pathname: '/' } }
@@ -26,7 +25,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   }
 
   if (!onlyUnAuth && !isLoggedIn) {
-    return <Navigate to="/login" state={{ from: location }} />
+    return <Navigate to={ROUTE_LOGIN} state={{ from: location }} />
   }
 
   return <>{element}</>

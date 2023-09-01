@@ -9,3 +9,23 @@ export const SUCCESSFUL_PASSWORD_RESET_MESSAGE = 'Password successfully reset'
 export const JWT_EXPIRE_ERROR_TEXT = 'jwt expired'
 
 export const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+export const wsBaseUrl = 'wss://norma.nomoreparties.space/orders'
+
+export const ROUTE_HOME = '/'
+export const ROUTE_FEED = '/feed'
+export const ROUTE_LOGIN = '/login'
+export const ROUTE_REGISTER = '/register'
+export const ROUTE_FORGOT_PASSWORD = '/forgot-password'
+export const ROUTE_RESET_PASSWORD = '/reset-password'
+export const ROUTE_PROFILE = '/profile'
+export const ROUTE_NOT_FOUND = '*'
+export const ROUTE_INGREDIENTS = '/ingredients'
+
+export const SUBROUTE_ORDERS = 'orders'
+export const SUBROUTE_ID = ':id'
+
+export const ROUTE_PROFILE_ORDERS = `${ROUTE_PROFILE}/${SUBROUTE_ORDERS}`
+export const ROUTE_FEED_ORDER_DETAILS = `${ROUTE_FEED}/${SUBROUTE_ID}`
+export const ROUTE_INGREDIENT_DETAILS = `${ROUTE_INGREDIENTS}/${SUBROUTE_ID}`
+export const ROUTE_PROFILE_ORDER_DETAILS = `${ROUTE_PROFILE}/${SUBROUTE_ORDERS}/${SUBROUTE_ID}`

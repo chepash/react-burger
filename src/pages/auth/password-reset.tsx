@@ -4,15 +4,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
-  CLEAR_PWD_RESET_STATE,
-  UPDATE_PWD_RESET_FORM_STATE,
-  passwordResetFormSubmit,
+  clearPwdResetStateAction,
+  updatePwdResetFormStateAction,
 } from '../../services/actions/password-reset-actions'
-import { CLEAR_PWD_RESTORE_STATE } from '../../services/actions/password-restore-actions'
-import { passwordPattern } from '../../utils/constants'
+import { clearPwdRestoreStateAction } from '../../services/actions/password-restore-actions'
+import { getPasswordResetFormData } from '../../services/selectors/password-reset-selectors'
+import { getIsEmailSent } from '../../services/selectors/password-restore-selectors'
+import { passwordResetFormSubmitThunk } from '../../services/thunks/password-reset-form-submit-thunk'
+import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_HOME, ROUTE_LOGIN, passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const PasswordReset: FC = () => {
@@ -20,34 +22,21 @@ const PasswordReset: FC = () => {
   const navigate = useNavigate()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  const { token, password } = useSelector(
-    // @ts-ignore
-    (store) => store.passwordResetState.form
-  )
+  const { token, password } = useSelector(getPasswordResetFormData)
 
-  const isEmailSent = useSelector(
-    // @ts-ignore
-    (store) => store.passwordRestoreState.response?.success
-  )
+  const isEmailSent = useSelector(getIsEmailSent)
 
   const onPasswordIconClick = () => {
     setIsPasswordVisible(!isPasswordVisible)
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_PWD_RESET_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updatePwdResetFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    // @ts-ignore
-    dispatch(passwordResetFormSubmit({ token, password }, navigate))
+    dispatch(passwordResetFormSubmitThunk({ token, password }, navigate))
   }
 
   const isPasswordValid = (password: string) => {
@@ -59,7 +48,7 @@ const PasswordReset: FC = () => {
   }
 
   if (!isEmailSent) {
-    return <Navigate to="/" replace />
+    return <Navigate to={ROUTE_HOME} replace />
   }
 
   return (
@@ -126,10 +115,10 @@ const PasswordReset: FC = () => {
             Вспомнили пароль?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             onClick={() => {
-              dispatch({ type: CLEAR_PWD_RESET_STATE })
-              dispatch({ type: CLEAR_PWD_RESTORE_STATE })
+              dispatch(clearPwdResetStateAction())
+              dispatch(clearPwdRestoreStateAction())
             }}
             className={cn(styles.link, 'text text_type_main-default')}
           >

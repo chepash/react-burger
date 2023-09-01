@@ -1,0 +1,27 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  row-gap: 20px;
+  column-gap: 40px;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}
+
+.order {
+  display: flex;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}
+
+.header {
+  grid-column: 1 / span 2;
+  height: min-content;
+}

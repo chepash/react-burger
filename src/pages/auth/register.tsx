@@ -5,37 +5,27 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { FC, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  UPDATE_REGISTER_FORM_STATE,
-  registratioFormSubmit,
-} from '../../services/actions/register-actions'
+import { updateRegisterFormStateAction } from '../../services/actions/register-actions'
+import { getRegisterFormData } from '../../services/selectors/register-selectors'
+import { registerFormSubmitThunk } from '../../services/thunks/register-form-submit-thunk'
+import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const Register: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { name, email, password } = useSelector(
-    //@ts-ignore
-    (store) => store.registerState.form
-  )
+  const { name, email, password } = useSelector(getRegisterFormData)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: UPDATE_REGISTER_FORM_STATE,
-      payload: {
-        field: e.target.name,
-        value: e.target.value,
-      },
-    })
+    dispatch(updateRegisterFormStateAction(e.target.name, e.target.value))
   }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    //@ts-ignore
-    dispatch(registratioFormSubmit(name, email, password, navigate))
+    dispatch(registerFormSubmitThunk(name, email, password, navigate))
   }
 
   return (
@@ -98,7 +88,7 @@ const Register: FC = () => {
             Уже зарегистрированы?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Войти

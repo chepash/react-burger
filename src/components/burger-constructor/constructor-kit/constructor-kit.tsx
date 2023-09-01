@@ -1,25 +1,23 @@
-import cn from 'classnames'
-import styles from './constructor-kit.module.scss'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../../services/actions/constructor-actions'
-
-import { useDrop } from 'react-dnd'
-import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
+import cn from 'classnames'
 import { FC } from 'react'
-import { TIngredientWithUUID } from '../../../utils/types'
+import { useDrop } from 'react-dnd'
+import { addIngredientAction } from '../../../services/actions/constructor-actions'
+import { getConstructorState } from '../../../services/selectors/constructor-selectors'
+import { TIngredient } from '../../../services/types/data'
+import { useDispatch, useSelector } from '../../../services/types/store'
+import PrimaryIngredient from '../primary-ingredient/primary-ingredient'
+import styles from './constructor-kit.module.scss'
 
 const ConstructorKit: FC = () => {
-  const { constructorIngredients, constructorBun } = useSelector(
-    // @ts-ignore
-    (store) => store.constructorState
-  )
+  const { constructorIngredients, constructorBun } =
+    useSelector(getConstructorState)
   const dispatch = useDispatch()
 
   const [, dropTargetRef] = useDrop({
     accept: 'ingredient',
-    drop(ingredient) {
-      dispatch(addIngredient(ingredient))
+    drop(ingredient: TIngredient) {
+      dispatch(addIngredientAction(ingredient))
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -55,16 +53,13 @@ const ConstructorKit: FC = () => {
 
       {constructorIngredients.length > 0 && (
         <ul className={cn(styles.list)}>
-          {/* Убрать as после типизации хранилища */}
-          {(constructorIngredients as TIngredientWithUUID[]).map(
-            (item, index) => (
-              <PrimaryIngredient
-                ingredientWithUUID={item}
-                key={item.uuid}
-                index={index}
-              />
-            )
-          )}
+          {constructorIngredients.map((item, index) => (
+            <PrimaryIngredient
+              ingredientWithUUID={item}
+              key={item.uuid}
+              index={index}
+            />
+          ))}
         </ul>
       )}
 

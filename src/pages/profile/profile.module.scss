@@ -1,7 +1,17 @@
 .main {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: min-content 1fr 1fr;
   column-gap: 60px;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+}
+
+.order {
+  display: flex;
+  justify-content: center;
 
   box-sizing: border-box;
   width: 100%;
@@ -11,11 +21,11 @@
 
 .section {
   box-sizing: border-box;
+  min-width: 320px;
   margin: 0;
   padding: 0;
 
   &__description {
-    max-width: 320px;
     padding: 0;
   }
 }

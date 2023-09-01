@@ -1,27 +1,25 @@
 import cn from 'classnames'
 import { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { SET_CURRENT_INGREDIENT } from '../../../services/actions/modal-actions'
+import { setCurrentIngredientAction } from '../../../services/actions/modal-actions'
+import { getIngredients } from '../../../services/selectors/ingredients-selectors'
+import { useDispatch, useSelector } from '../../../services/types/store'
 import styles from './ingredient-details.module.scss'
-import { TIngredient } from '../../../utils/types'
+import { getCurrentIngredient } from '../../../services/selectors/modal-selectors'
 
 const IngredientDetails: FC = () => {
-  const currentIngredient: TIngredient = useSelector(
-    // @ts-ignore
-    (store) => store.modalState.currentIngredient
-  )
-  const { id } = useParams()
   const dispatch = useDispatch()
-  const ingredients: TIngredient[] = useSelector(
-    // @ts-ignore
-    (store) => store.ingredientsState.ingredients
-  )
+
+  const currentIngredient = useSelector(getCurrentIngredient)
+  const ingredients = useSelector(getIngredients)
+  const { id } = useParams()
 
   useEffect(() => {
     if (id) {
       const currentIngredient = ingredients.find((item) => item._id === id)
-      dispatch({ type: SET_CURRENT_INGREDIENT, payload: currentIngredient })
+      if (currentIngredient) {
+        dispatch(setCurrentIngredientAction(currentIngredient))
+      }
     }
   }, [dispatch, id, ingredients])
 
