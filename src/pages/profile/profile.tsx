@@ -2,10 +2,11 @@ import cn from 'classnames'
 import { FC } from 'react'
 import { Outlet, useLocation, useMatch } from 'react-router-dom'
 import ProfileNav from '../../components/profile/profile-nav/profile-nav'
+import { ROUTE_PROFILE_ORDER_DETAILS } from '../../utils/constants'
 import styles from './profile.module.scss'
 
 const Profile: FC = () => {
-  const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
+  const isUserOrderDetailsPage = useMatch(ROUTE_PROFILE_ORDER_DETAILS)
   const location = useLocation()
 
   enum Section {

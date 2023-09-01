@@ -3,6 +3,11 @@ import { FC } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { handleLogoutThunk } from '../../../services/thunks/handle-logout-thunk'
 import { useDispatch } from '../../../services/types/store'
+import {
+  ROUTE_LOGIN,
+  ROUTE_PROFILE,
+  ROUTE_PROFILE_ORDERS,
+} from '../../../utils/constants'
 import styles from './profile-nav.module.scss'
 
 const ProfileNav: FC = () => {
@@ -12,7 +17,7 @@ const ProfileNav: FC = () => {
 
   const handleOnLogoutClick = async () => {
     await dispatch(handleLogoutThunk())
-    navigate('/login')
+    navigate(ROUTE_LOGIN)
   }
 
   return (
@@ -20,14 +25,14 @@ const ProfileNav: FC = () => {
       <ul className={cn(styles.list)}>
         <li className={cn(styles.list__item)}>
           <Link
-            to={'/profile'}
+            to={ROUTE_PROFILE}
             className={cn(
               styles.link,
               'text',
               'text_type_main-medium',
               'text_color_inactive',
               {
-                [styles.link_active]: location.pathname === '/profile',
+                [styles.link_active]: location.pathname === ROUTE_PROFILE,
               }
             )}
           >
@@ -36,14 +41,15 @@ const ProfileNav: FC = () => {
         </li>
         <li className={cn(styles.list__item)}>
           <NavLink
-            to={'/profile/orders'}
+            to={ROUTE_PROFILE_ORDERS}
             className={cn(
               styles.link,
               'text',
               'text_type_main-medium',
               'text_color_inactive',
               {
-                [styles.link_active]: location.pathname === '/profile/orders',
+                [styles.link_active]:
+                  location.pathname === ROUTE_PROFILE_ORDERS,
               }
             )}
           >

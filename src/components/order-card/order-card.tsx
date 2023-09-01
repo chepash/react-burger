@@ -9,6 +9,7 @@ import {
 import { getIngredients } from '../../services/selectors/ingredients-selectors'
 import { useDispatch, useSelector } from '../../services/types/store'
 import { OrderStatus, TOrder } from '../../services/types/ws-data'
+import { ROUTE_FEED, ROUTE_PROFILE_ORDERS } from '../../utils/constants'
 import {
   formatUpdatedAtTime,
   transformOrderIngredientsList,
@@ -50,9 +51,9 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
     dispatch(setIsOrderDetailsModalOpenAction(true))
 
     const currentPath = location.pathname
-    const newPath = currentPath.includes('/feed')
-      ? `/feed/${order._id}`
-      : `/profile/orders/${order._id}`
+    const newPath = currentPath.includes(ROUTE_FEED)
+      ? `${ROUTE_FEED}/${order._id}`
+      : `${ROUTE_PROFILE_ORDERS}/${order._id}`
 
     navigate(newPath, {
       state: { backgroundLocation: location },
@@ -71,7 +72,7 @@ const OrderCard: FC<TOrderCardProps> = ({ order }) => {
         {order.name}
       </p>
 
-      {location.pathname === '/profile/orders' && (
+      {location.pathname === ROUTE_PROFILE_ORDERS && (
         <p
           className={cn('mt-2', 'text text_type_main-small', {
             [styles.status_created]: order.status === 'created',

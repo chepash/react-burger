@@ -12,6 +12,7 @@ import { getOrderState } from '../../../services/selectors/order-selectors'
 import { getUser } from '../../../services/selectors/user-selectors'
 import { createOrderThunk } from '../../../services/thunks/create-order-thunk'
 import { useDispatch, useSelector } from '../../../services/types/store'
+import { ROUTE_LOGIN } from '../../../utils/constants'
 import Modal from '../../modal/modal'
 import Preloader from '../../preloader/preloader'
 import OrderStatusResponse from '../order-status-response/order-status-response'
@@ -37,7 +38,7 @@ const Checkout: FC = () => {
       dispatch(createOrderThunk(constructorIngredients, constructorBun))
       dispatch(setIsPlacedNewOrderModalOpenAction(true))
     } else {
-      navigate('/login')
+      navigate(ROUTE_LOGIN)
     }
   }
 

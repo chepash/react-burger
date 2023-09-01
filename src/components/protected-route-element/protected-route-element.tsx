@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Navigate, RouteProps, useLocation } from 'react-router-dom'
 import { getIsLoggedIn } from '../../services/selectors/user-selectors'
 import { useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 
 type TProtectedRouteElementProps = {
   onlyUnAuth?: boolean
@@ -24,7 +25,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   }
 
   if (!onlyUnAuth && !isLoggedIn) {
-    return <Navigate to="/login" state={{ from: location }} />
+    return <Navigate to={ROUTE_LOGIN} state={{ from: location }} />
   }
 
   return <>{element}</>

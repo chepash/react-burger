@@ -9,6 +9,7 @@ import { updatePwdRestoreFormStateAction } from '../../services/actions/password
 import { getPasswordRestoreFormData } from '../../services/selectors/password-restore-selectors'
 import { passwordRestoreFormSubmitThunk } from '../../services/thunks/password-restore-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const PasswordRestore: FC = () => {
@@ -63,7 +64,7 @@ const PasswordRestore: FC = () => {
             Вспомнили пароль?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Войти

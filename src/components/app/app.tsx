@@ -15,14 +15,29 @@ import {
   setIsIngredientModalOpenAction,
   setIsOrderDetailsModalOpenAction,
 } from '../../services/actions/modal-actions'
-import { getFeedOrders } from '../../services/selectors/ws-feed-selectors'
 import { getIngredientsState } from '../../services/selectors/ingredients-selectors'
 import { getModalState } from '../../services/selectors/modal-selectors'
 import { getOrderState } from '../../services/selectors/order-selectors'
+import { getFeedOrders } from '../../services/selectors/ws-feed-selectors'
 import { getUserOrdersHistory } from '../../services/selectors/ws-user-history-selectors'
 import { getAllIngredientsThunk } from '../../services/thunks/get-all-ingredients-thunk'
 import { getUserThunk } from '../../services/thunks/get-user-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import {
+  ROUTE_FEED,
+  ROUTE_FEED_ORDER_DETAILS,
+  ROUTE_FORGOT_PASSWORD,
+  ROUTE_HOME,
+  ROUTE_INGREDIENT_DETAILS,
+  ROUTE_LOGIN,
+  ROUTE_NOT_FOUND,
+  ROUTE_PROFILE,
+  ROUTE_PROFILE_ORDER_DETAILS,
+  ROUTE_REGISTER,
+  ROUTE_RESET_PASSWORD,
+  SUBROUTE_ID,
+  SUBROUTE_ORDERS,
+} from '../../utils/constants'
 import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -73,7 +88,7 @@ const App: FC = () => {
   const handleCloseIngredientModal = () => {
     dispatch(setCurrentIngredientAction(null))
     dispatch(setIsIngredientModalOpenAction(false))
-    navigate('/')
+    navigate(ROUTE_HOME)
   }
 
   const handleCloseOrderDetailstModal = () => {
@@ -92,16 +107,16 @@ const App: FC = () => {
         ) : (
           <>
             <Routes location={background || location}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/feed" element={<Feed />}>
+              <Route path={ROUTE_HOME} element={<HomePage />} />
+              <Route path={ROUTE_FEED} element={<Feed />}>
                 <Route
-                  path="/feed/:id"
+                  path={SUBROUTE_ID}
                   element={<OrderDetails orders={feedOrders} />}
                 />
               </Route>
 
               <Route
-                path="/login"
+                path={ROUTE_LOGIN}
                 element={
                   <ProtectedRouteElement
                     onlyUnAuth={true}
@@ -110,7 +125,7 @@ const App: FC = () => {
                 }
               />
               <Route
-                path="/register"
+                path={ROUTE_REGISTER}
                 element={
                   <ProtectedRouteElement
                     onlyUnAuth={true}
@@ -119,7 +134,7 @@ const App: FC = () => {
                 }
               />
               <Route
-                path="/forgot-password"
+                path={ROUTE_FORGOT_PASSWORD}
                 element={
                   <ProtectedRouteElement
                     onlyUnAuth={true}
@@ -128,7 +143,7 @@ const App: FC = () => {
                 }
               />
               <Route
-                path="/reset-password"
+                path={ROUTE_RESET_PASSWORD}
                 element={
                   <ProtectedRouteElement
                     onlyUnAuth={true}
@@ -138,13 +153,13 @@ const App: FC = () => {
               />
 
               <Route
-                path="/profile"
+                path={ROUTE_PROFILE}
                 element={<ProtectedRouteElement element={<Profile />} />}
               >
                 <Route path="" element={<ProfileInfo />} />
-                <Route path="orders" element={<ProfileOrders />}>
+                <Route path={SUBROUTE_ORDERS} element={<ProfileOrders />}>
                   <Route
-                    path="/profile/orders/:id"
+                    path={SUBROUTE_ID}
                     element={
                       <ProtectedRouteElement
                         element={<OrderDetails orders={userOrdersHistory} />}
@@ -154,15 +169,18 @@ const App: FC = () => {
                 </Route>
               </Route>
 
-              <Route path="/ingredients/:id" element={<IngredientDetails />} />
+              <Route
+                path={ROUTE_INGREDIENT_DETAILS}
+                element={<IngredientDetails />}
+              />
 
-              <Route path="*" element={<NotFound />} />
+              <Route path={ROUTE_NOT_FOUND} element={<NotFound />} />
             </Routes>
 
             {background && isIngredientModalOpen && (
               <Routes>
                 <Route
-                  path="/ingredients/:id"
+                  path={ROUTE_INGREDIENT_DETAILS}
                   element={
                     <Modal
                       header="Детали ингредиента"
@@ -178,7 +196,7 @@ const App: FC = () => {
             {background && isOrderDetailsModalOpen && (
               <Routes>
                 <Route
-                  path="/feed/:id"
+                  path={ROUTE_FEED_ORDER_DETAILS}
                   element={
                     <Modal onClose={handleCloseOrderDetailstModal}>
                       <OrderDetails orders={feedOrders} />
@@ -191,7 +209,7 @@ const App: FC = () => {
             {background && isOrderDetailsModalOpen && (
               <Routes>
                 <Route
-                  path="/profile/orders/:id"
+                  path={ROUTE_PROFILE_ORDER_DETAILS}
                   element={
                     <ProtectedRouteElement
                       element={

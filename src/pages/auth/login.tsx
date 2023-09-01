@@ -10,6 +10,7 @@ import { updateLoginFormStateAction } from '../../services/actions/login-actions
 import { getLoginFormData } from '../../services/selectors/login-selectors'
 import { loginFormSubmitThunk } from '../../services/thunks/login-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_FORGOT_PASSWORD, ROUTE_REGISTER } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const Login: FC = () => {
@@ -72,7 +73,7 @@ const Login: FC = () => {
             Вы — новый пользователь?
           </p>
           <Link
-            to={'/register'}
+            to={ROUTE_REGISTER}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Зарегистрироваться
@@ -88,7 +89,7 @@ const Login: FC = () => {
             Забыли пароль?
           </p>
           <Link
-            to={'/forgot-password'}
+            to={ROUTE_FORGOT_PASSWORD}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Восстановить пароль

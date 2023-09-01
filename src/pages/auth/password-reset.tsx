@@ -14,7 +14,7 @@ import { getPasswordResetFormData } from '../../services/selectors/password-rese
 import { getIsEmailSent } from '../../services/selectors/password-restore-selectors'
 import { passwordResetFormSubmitThunk } from '../../services/thunks/password-reset-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
-import { passwordPattern } from '../../utils/constants'
+import { ROUTE_HOME, ROUTE_LOGIN, passwordPattern } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const PasswordReset: FC = () => {
@@ -48,7 +48,7 @@ const PasswordReset: FC = () => {
   }
 
   if (!isEmailSent) {
-    return <Navigate to="/" replace />
+    return <Navigate to={ROUTE_HOME} replace />
   }
 
   return (
@@ -115,7 +115,7 @@ const PasswordReset: FC = () => {
             Вспомнили пароль?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             onClick={() => {
               dispatch(clearPwdResetStateAction())
               dispatch(clearPwdRestoreStateAction())

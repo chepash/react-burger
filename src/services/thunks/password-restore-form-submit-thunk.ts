@@ -1,5 +1,6 @@
 import { NavigateFunction } from 'react-router-dom'
 import * as api from '../../utils/api'
+import { ROUTE_RESET_PASSWORD } from '../../utils/constants'
 import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import {
   clearPwdRestoreFormStateAction,
@@ -20,7 +21,7 @@ export const passwordRestoreFormSubmitThunk =
         if (res.success) {
           dispatch(pwdRestoreFormSubmitSuccessAction(res))
           dispatch(clearPwdRestoreFormStateAction())
-          navigate('/reset-password', { replace: true })
+          navigate(ROUTE_RESET_PASSWORD, { replace: true })
         }
       })
       .catch(() => {

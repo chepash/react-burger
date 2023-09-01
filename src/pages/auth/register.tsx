@@ -10,6 +10,7 @@ import { updateRegisterFormStateAction } from '../../services/actions/register-a
 import { getRegisterFormData } from '../../services/selectors/register-selectors'
 import { registerFormSubmitThunk } from '../../services/thunks/register-form-submit-thunk'
 import { useDispatch, useSelector } from '../../services/types/store'
+import { ROUTE_LOGIN } from '../../utils/constants'
 import styles from './auth.module.scss'
 
 const Register: FC = () => {
@@ -87,7 +88,7 @@ const Register: FC = () => {
             Уже зарегистрированы?
           </p>
           <Link
-            to={'/login'}
+            to={ROUTE_LOGIN}
             className={cn(styles.link, 'text text_type_main-default')}
           >
             Войти

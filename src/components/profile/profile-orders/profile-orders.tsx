@@ -7,13 +7,16 @@ import {
 } from '../../../services/actions/ws-user-history-actions'
 import { getUserOrdersHistory } from '../../../services/selectors/ws-user-history-selectors'
 import { useDispatch, useSelector } from '../../../services/types/store'
-import { wsBaseUrl } from '../../../utils/constants'
+import {
+  ROUTE_PROFILE_ORDER_DETAILS,
+  wsBaseUrl,
+} from '../../../utils/constants'
 import OrderCard from '../../order-card/order-card'
 import styles from './profile-orders.module.scss'
 
 const ProfileOrders: FC = () => {
   const dispatch = useDispatch()
-  const isUserOrderDetailsPage = useMatch('/profile/orders/:id')
+  const isUserOrderDetailsPage = useMatch(ROUTE_PROFILE_ORDER_DETAILS)
 
   const accessToken = localStorage.getItem('accessToken')
   const userOrdersHistory = useSelector(getUserOrdersHistory)

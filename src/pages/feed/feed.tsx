@@ -8,12 +8,12 @@ import {
   wsFeedDisconnect,
 } from '../../services/actions/ws-feed-actions'
 import { useDispatch } from '../../services/types/store'
-import { wsBaseUrl } from '../../utils/constants'
+import { ROUTE_FEED_ORDER_DETAILS, wsBaseUrl } from '../../utils/constants'
 import styles from './feed.module.scss'
 
 const Feed: FC = () => {
   const dispatch = useDispatch()
-  const isFeedOrderDetailsPage = useMatch('/feed/:id')
+  const isFeedOrderDetailsPage = useMatch(ROUTE_FEED_ORDER_DETAILS)
 
   useEffect(() => {
     dispatch(wsFeedConnect(`${wsBaseUrl}/all`))
