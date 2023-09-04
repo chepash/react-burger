@@ -55,7 +55,7 @@ export type TErrorResponse = {
   message: string
 }
 
-type TBaseApiResponse = {
+export type TBaseApiResponse = {
   success: boolean
 }
 

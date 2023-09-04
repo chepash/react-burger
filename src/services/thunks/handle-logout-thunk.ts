@@ -21,17 +21,15 @@ export const handleLogoutThunk = (): AppThunk => (dispatch: AppDispatch) => {
   return api
     .logoutUser()
     .then((res) => {
-      if (res.success) {
-        localStorage.clear()
-        dispatch(clearLoginStateAction())
-        dispatch(clearOrderStateAction())
-        dispatch(clearRegisterStateAction())
-        dispatch(clearPwdRestoreStateAction())
-        dispatch(clearPwdResetStateAction())
-        dispatch(clearProfileStateAction())
-        dispatch(clearUserStateAction())
-        dispatch(wsCleanUserHistoryStateAction())
-      }
+      localStorage.clear()
+      dispatch(clearLoginStateAction())
+      dispatch(clearOrderStateAction())
+      dispatch(clearRegisterStateAction())
+      dispatch(clearPwdRestoreStateAction())
+      dispatch(clearPwdResetStateAction())
+      dispatch(clearProfileStateAction())
+      dispatch(clearUserStateAction())
+      dispatch(wsCleanUserHistoryStateAction())
 
       return dispatch(logoutUserSuccessAction(res))
     })

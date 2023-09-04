@@ -1,6 +1,7 @@
 import { API_BASE_URL, JWT_EXPIRE_ERROR_TEXT } from './constants'
 import {
   TAuthResponse,
+  TBaseApiResponse,
   TCustomRequestInit,
   TErrorResponse,
   TFetchIngredientsResponse,
@@ -12,15 +13,24 @@ import {
   TUserDataResponse,
 } from '../services/types/data'
 
-const getResponse = async <T>(res: Response): Promise<T> => {
+const checkSuccess = <T>(json: T & TBaseApiResponse): Promise<T> => {
+  if (json && json.success) {
+    return Promise.resolve(json)
+  }
+  return Promise.reject(`Response is not success: ${json}`)
+}
+
+const checkResponse = async <T>(res: Response): Promise<T> => {
   if (res.ok) {
-    return res.json()
+    return res.json().then((json) => {
+      return checkSuccess<T>(json)
+    })
   }
 
-  return res.json().then((data) => {
+  return res.json().then((json) => {
     const error: TErrorResponse = {
       status: res.status.toString(),
-      message: data.message || `Ошибка: ${res.status}`,
+      message: json.message || `Error: ${res.status}`,
     }
     return Promise.reject(error)
   })
@@ -32,7 +42,7 @@ const request = async <T>(
 ): Promise<T> => {
   const url = `${API_BASE_URL}/${endpoint}`
   const res = await fetch(url, options)
-  return getResponse<T>(res)
+  return checkResponse<T>(res)
 }
 
 export const fetchNewRefreshToken =
@@ -57,7 +67,7 @@ const requestWithRefresh = async <T>(
   const url = `${API_BASE_URL}/${endpoint}`
   try {
     const res = await fetch(url, options)
-    return await getResponse(res)
+    return await checkResponse(res)
   } catch (err) {
     if ((err as Error).message === JWT_EXPIRE_ERROR_TEXT) {
       const refreshData = await fetchNewRefreshToken()
@@ -68,7 +78,7 @@ const requestWithRefresh = async <T>(
       )
       options.headers.authorization = refreshData.accessToken
       const res = await fetch(url, options)
-      return await getResponse<T>(res)
+      return await checkResponse<T>(res)
     } else {
       return Promise.reject(err)
     }

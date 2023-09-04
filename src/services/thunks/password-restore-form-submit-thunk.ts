@@ -18,11 +18,9 @@ export const passwordRestoreFormSubmitThunk =
     return api
       .sendPasswordRecoveryEmail(email)
       .then((res) => {
-        if (res.success) {
-          dispatch(pwdRestoreFormSubmitSuccessAction(res))
-          dispatch(clearPwdRestoreFormStateAction())
-          navigate(ROUTE_RESET_PASSWORD, { replace: true })
-        }
+        dispatch(pwdRestoreFormSubmitSuccessAction(res))
+        dispatch(clearPwdRestoreFormStateAction())
+        navigate(ROUTE_RESET_PASSWORD, { replace: true })
       })
       .catch(() => {
         dispatch(setIsErrorModalOpenAction(true))

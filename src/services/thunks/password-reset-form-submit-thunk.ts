@@ -21,11 +21,10 @@ export const passwordResetFormSubmitThunk =
     return api
       .sendPasswordResetRequest({ token, password })
       .then((res) => {
-        if (res.success) {
-          dispatch(clearPwdResetFormStateAction())
-          dispatch(clearPwdRestoreStateAction())
-          navigate('/', { replace: true })
-        }
+        dispatch(clearPwdResetFormStateAction())
+        dispatch(clearPwdRestoreStateAction())
+        navigate('/', { replace: true })
+
         return dispatch(pwdResetFormSubmitSuccessAction(res))
       })
       .catch(() => {

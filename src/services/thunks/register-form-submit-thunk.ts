@@ -23,20 +23,15 @@ export const registerFormSubmitThunk =
     return api
       .registerUser(name, email, password)
       .then((res) => {
-        if (res.success) {
-          const accessTokenWithoutBearer = res.accessToken.replace(
-            'Bearer ',
-            ''
-          )
-          localStorage.setItem('accessToken', accessTokenWithoutBearer)
-          localStorage.setItem('refreshToken', res.refreshToken)
+        const accessTokenWithoutBearer = res.accessToken.replace('Bearer ', '')
+        localStorage.setItem('accessToken', accessTokenWithoutBearer)
+        localStorage.setItem('refreshToken', res.refreshToken)
 
-          dispatch(clearRegisterFormStateAction())
-          dispatch(registerFormSubmitSuccessAction(res))
-          navigate('/', { replace: true })
+        dispatch(clearRegisterFormStateAction())
+        dispatch(registerFormSubmitSuccessAction(res))
+        navigate('/', { replace: true })
 
-          return dispatch(getUserThunk())
-        }
+        return dispatch(getUserThunk())
       })
       .catch(() => {
         dispatch(setIsErrorModalOpenAction(true))
