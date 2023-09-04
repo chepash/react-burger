@@ -160,11 +160,7 @@ const App: FC = () => {
                 <Route path={SUBROUTE_ORDERS} element={<ProfileOrders />}>
                   <Route
                     path={SUBROUTE_ID}
-                    element={
-                      <ProtectedRouteElement
-                        element={<OrderDetails orders={userOrdersHistory} />}
-                      />
-                    }
+                    element={<OrderDetails orders={userOrdersHistory} />}
                   />
                 </Route>
               </Route>
