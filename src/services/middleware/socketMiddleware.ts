@@ -1,4 +1,7 @@
 import type { Middleware, MiddlewareAPI } from 'redux'
+import * as api from '../../utils/api'
+import { WS_JWT_INVALID_ERROR_TEXT, wsBaseUrl } from '../../utils/constants'
+import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 import {
   AppDispatch,
   RootState,
@@ -6,9 +9,6 @@ import {
   TWSStoreActions,
 } from '../types/store'
 import { TFeedResponse } from '../types/ws-data'
-import * as api from '../../utils/api'
-import { wsBaseUrl } from '../../utils/constants'
-import { setIsErrorModalOpenAction } from '../actions/modal-actions'
 
 export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -45,10 +45,10 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
 
           if (
             refreshToken &&
-            parsedData.message === 'Invalid or missing token'
+            parsedData.message === WS_JWT_INVALID_ERROR_TEXT
           ) {
             api
-              .fetchNewRefreshToken()
+              .fetchNewTokens()
               .then((refreshTokenResponse) => {
                 const newAccessToken = refreshTokenResponse.accessToken.replace(
                   'Bearer ',

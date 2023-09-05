@@ -1,4 +1,8 @@
-import { API_BASE_URL, JWT_EXPIRE_ERROR_TEXT } from './constants'
+import {
+  API_BASE_URL,
+  JWT_EXPIRE_ERROR_TEXT,
+  JWT_MALFORMED_ERROR_TEXT,
+} from './constants'
 import {
   TAuthResponse,
   TBaseApiResponse,
@@ -45,20 +49,19 @@ const request = async <T>(
   return checkResponse<T>(res)
 }
 
-export const fetchNewRefreshToken =
-  async (): Promise<TRefreshTokenResponse> => {
-    const refreshToken = localStorage.getItem('refreshToken')
-    const endpoint = 'auth/token'
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: refreshToken }),
-    }
-    return request(endpoint, options)
+export const fetchNewTokens = async (): Promise<TRefreshTokenResponse> => {
+  const refreshToken = localStorage.getItem('refreshToken')
+  const endpoint = 'auth/token'
+  const options: RequestInit = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: refreshToken }),
   }
+  return request(endpoint, options)
+}
 
 const requestWithRefresh = async <T>(
   endpoint: string,
@@ -69,14 +72,17 @@ const requestWithRefresh = async <T>(
     const res = await fetch(url, options)
     return await checkResponse(res)
   } catch (err) {
-    if ((err as Error).message === JWT_EXPIRE_ERROR_TEXT) {
-      const refreshData = await fetchNewRefreshToken()
-      localStorage.setItem('refreshToken', refreshData.refreshToken)
+    if (
+      (err as Error).message === JWT_EXPIRE_ERROR_TEXT ||
+      (err as Error).message === JWT_MALFORMED_ERROR_TEXT
+    ) {
+      const freshData = await fetchNewTokens()
+      localStorage.setItem('refreshToken', freshData.refreshToken)
       localStorage.setItem(
         'accessToken',
-        refreshData.accessToken.replace('Bearer ', '')
+        freshData.accessToken.replace('Bearer ', '')
       )
-      options.headers.authorization = refreshData.accessToken
+      options.headers.authorization = freshData.accessToken
       const res = await fetch(url, options)
       return await checkResponse<T>(res)
     } else {

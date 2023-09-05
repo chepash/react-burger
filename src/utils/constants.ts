@@ -7,10 +7,12 @@ export const SUCCESSFUL_RECOVERY_MAIL_SEND_MESSAGE = 'Reset email sent'
 export const SUCCESSFUL_PASSWORD_RESET_MESSAGE = 'Password successfully reset'
 
 export const JWT_EXPIRE_ERROR_TEXT = 'jwt expired'
+export const JWT_MALFORMED_ERROR_TEXT = 'jwt malformed'
 
 export const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
 export const wsBaseUrl = 'wss://norma.nomoreparties.space/orders'
+export const WS_JWT_INVALID_ERROR_TEXT = 'Invalid or missing token'
 
 export const ROUTE_HOME = '/'
 export const ROUTE_FEED = '/feed'

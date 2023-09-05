@@ -9,7 +9,7 @@ import { setIsPlacedNewOrderModalOpenAction } from '../../../services/actions/mo
 import { getConstructorState } from '../../../services/selectors/constructor-selectors'
 import { getModalState } from '../../../services/selectors/modal-selectors'
 import { getOrderState } from '../../../services/selectors/order-selectors'
-import { getUser } from '../../../services/selectors/user-selectors'
+import { getIsLoggedIn } from '../../../services/selectors/user-selectors'
 import { createOrderThunk } from '../../../services/thunks/create-order-thunk'
 import { useDispatch, useSelector } from '../../../services/types/store'
 import { ROUTE_LOGIN } from '../../../utils/constants'
@@ -24,7 +24,7 @@ const Checkout: FC = () => {
 
   const { constructorIngredients, constructorBun } =
     useSelector(getConstructorState)
-  const isLoggedIn = useSelector(getUser)
+  const isLoggedIn = useSelector(getIsLoggedIn)
   const { isLoading, response } = useSelector(getOrderState)
   const { isPlacedNewOrderModalOpen } = useSelector(getModalState)
 
