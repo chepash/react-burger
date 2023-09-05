@@ -19,7 +19,7 @@ const ProfileOrders: FC = () => {
   const isUserOrderDetailsPage = useMatch(ROUTE_PROFILE_ORDER_DETAILS)
 
   const accessToken = localStorage.getItem('accessToken')
-  const userOrdersHistory = useSelector(getUserOrdersHistory)
+  let userOrdersHistory = useSelector(getUserOrdersHistory)
 
   useEffect(() => {
     dispatch(wsUserHistoryConnect(`${wsBaseUrl}?token=${accessToken}`))
@@ -36,9 +36,9 @@ const ProfileOrders: FC = () => {
       <section aria-label="История заказов" className={cn(styles.section)}>
         <div className={cn(styles.section_scrollable)}>
           <ul className={cn(styles.list)}>
-            {userOrdersHistory.map((order) => (
-              <OrderCard key={order._id} order={order} />
-            ))}
+            {userOrdersHistory
+              .map((order) => <OrderCard key={order._id} order={order} />)
+              .reverse()}
           </ul>
         </div>
       </section>
