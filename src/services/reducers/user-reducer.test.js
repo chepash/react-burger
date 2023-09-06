@@ -9,9 +9,7 @@ import {
   LOGOUT_USER_SUCCESS,
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
-  TUserActions,
 } from '../actions/user-actions'
-import { TLogoutResponse, TUser, TUserDataResponse } from '../types/data'
 import { userReducer } from './user-reducer'
 
 describe('userReducer', () => {
