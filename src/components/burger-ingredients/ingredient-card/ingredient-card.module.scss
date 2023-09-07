@@ -11,6 +11,10 @@
 
   transition: all 0.2s ease;
 
+  &_transparent {
+    opacity: 0.2;
+  }
+
   &:hover {
     cursor: pointer;
     background-color: #301f3f;

@@ -24,6 +24,14 @@
   }
 }
 
+.target {
+  outline: 3px dashed #a05ef7;
+
+  &_hovered {
+    outline: 3px dashed #52b871;
+  }
+}
+
 .list {
   top: 0;
   right: 8px;
@@ -41,6 +49,8 @@
   padding: 0;
 
   list-style: none;
+
+  border-radius: 20px;
 
   &::-webkit-scrollbar {
     width: 8px;

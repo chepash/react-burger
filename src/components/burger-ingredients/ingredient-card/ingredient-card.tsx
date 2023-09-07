@@ -35,9 +35,12 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
     })
   }
 
-  const [, dragTargetRef] = useDrag({
-    type: 'ingredient',
+  const [{ isDragging }, dragTargetRef] = useDrag({
+    type: ingredient.type,
     item: ingredient,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   })
 
   let amount
@@ -51,7 +54,13 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   }
 
   return (
-    <li className={styles.card} onClick={onClick} ref={dragTargetRef}>
+    <li
+      className={cn(styles.card, {
+        [styles.card_transparent]: isDragging,
+      })}
+      onClick={onClick}
+      ref={dragTargetRef}
+    >
       {amount > 0 && <Counter count={amount} size="default" extraClass="m-1" />}
       <img
         className={cn(styles.card__img, 'mr-4 ml-4')}
