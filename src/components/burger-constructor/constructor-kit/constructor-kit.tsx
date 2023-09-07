@@ -45,7 +45,7 @@ const ConstructorKit: FC = () => {
       {constructorIngredients.length === 0 && (
         <div
           className={cn(
-            styles.burger__ingridient,
+            styles.ingridient,
             'text',
             'text_type_main-small',
             'ml-8',
