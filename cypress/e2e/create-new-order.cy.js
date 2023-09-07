@@ -1,6 +1,6 @@
 describe('Drag and Drop Ingredients in ConstructorKit', () => {
   it('should allow dragging and dropping ingredients', () => {
-    // Visit the page where your ConstructorKit component is rendered
+    // visit the home page
     cy.visit('http://localhost:3000')
 
     // find the specific ingredients and drag-and-drop them to ConstructorKit
@@ -61,42 +61,47 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
       'Мясо бессмертных моллюсков Protostomia'
     )
 
-    // trying to place an order (1st attempt)
+    // try to place an order (1st attempt)
     cy.contains('Оформить заказ').as('placeOrderButton').should('exist')
     cy.get('@placeOrderButton').trigger('click')
 
     cy.url().should('include', '/login')
 
-    // trying to login
+    // try to login
     cy.get('input[name="email"]').type('chepa_test@mail.com')
     cy.get('input[name="password"]').type('DqrbyTJLY9PcQ')
 
     cy.contains('Войти').as('loginSubmitButton').should('exist')
     cy.get('@loginSubmitButton').click()
 
-    // trying to place an order (2nd attempt)
+    // try to place an order (2nd attempt)
     cy.url().should('not.include', '/login')
     cy.contains('Оформление заказа...').should('not.exist')
     cy.get('@placeOrderButton').trigger('click')
     cy.contains('Оформление заказа...').as('modal').should('exist')
 
-    cy.wait(20000)
-    cy.contains('Ваш заказ начали готовить').should('exist')
-
-    cy.get('button[class*=modal_modal__close__]')
-      .as('closeModalButton')
-      .should('exist')
-    cy.get('@closeModalButton').trigger('click')
-
-    // check that the ingredients are not in the ConstructorKit
-    cy.get('@burger-constructor').should(
-      'not.contain',
-      'Краторная булка N-200i'
+    cy.intercept('POST', `https://norma.nomoreparties.space/api/orders`).as(
+      'placeOrderRequest'
     )
-    cy.get('@burger-constructor').should('not.contain', 'Соус Spicy-X')
-    cy.get('@burger-constructor').should(
-      'not.contain',
-      'Мясо бессмертных моллюсков Protostomia'
-    )
+    // wait for the response
+    cy.wait('@placeOrderRequest').then(() => {
+      cy.contains('Ваш заказ начали готовить').should('exist')
+
+      cy.get('button[class*=modal_modal__close__]')
+        .as('closeModalButton')
+        .should('exist')
+      cy.get('@closeModalButton').trigger('click')
+
+      // check that the ingredients are not in the ConstructorKit
+      cy.get('@burger-constructor').should(
+        'not.contain',
+        'Краторная булка N-200i'
+      )
+      cy.get('@burger-constructor').should('not.contain', 'Соус Spicy-X')
+      cy.get('@burger-constructor').should(
+        'not.contain',
+        'Мясо бессмертных моллюсков Protostomia'
+      )
+    })
   })
 })
