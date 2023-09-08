@@ -3,44 +3,52 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
     cy.visit('http://localhost:3000')
   })
 
+  const burgerConstructorSelector = 'div[class*=constructor-kit_burger__]'
+  const modalCloseBtnSelector = 'button[class*=modal_modal__close__]'
+
+  const bunIngredientTextSelector = 'Краторная булка N-200i'
+  const mainIngredientTextSelector = 'Мясо бессмертных моллюсков Protostomia'
+  const sauceIngredientTextSelector = 'Соус Spicy-X'
+
+  const loaderModalTextSelector = 'Оформление заказа...'
+  const orderAcceptTextSelector = 'Ваш заказ начали готовить'
+
   it('should open and close ingredient details modal', () => {
-    cy.contains('Краторная булка N-200i').click()
+    cy.contains(bunIngredientTextSelector).click()
 
     cy.contains('Детали ингредиента')
       .parent('div')
       .as('ingredientDetailsModal')
       .should('exist')
 
-    cy.get('@ingredientDetailsModal').contains('Краторная булка N-200i')
+    cy.get('@ingredientDetailsModal').contains(bunIngredientTextSelector)
 
-    cy.get('button[class*=modal_modal__close__]').click()
+    cy.get(modalCloseBtnSelector).click()
 
     cy.contains('Детали ингредиента').should('not.exist')
   })
 
   it('should allow dragging and dropping ingredients, and delete them', () => {
-    cy.contains('Краторная булка N-200i')
+    cy.contains(bunIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientBun')
       .should('exist')
 
-    cy.contains('Мясо бессмертных моллюсков Protostomia')
+    cy.contains(mainIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientMain')
       .should('exist')
 
-    cy.contains('Соус Spicy-X')
+    cy.contains(sauceIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientSauce')
       .should('exist')
 
     // check drag-and-drop them to ConstructorKit
-    cy.get('div[class*=constructor-kit_burger__]')
-      .as('burger-constructor')
-      .should('exist')
+    cy.get(burgerConstructorSelector).as('burger-constructor').should('exist')
 
     cy.get('@ingredientBun').trigger('mousedown', { which: 1 })
     cy.get('@ingredientBun').trigger('dragstart')
@@ -70,50 +78,54 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
     cy.get('@burger-constructor').trigger('dragend')
 
     // check that the ingredients are in the ConstructorKit
-    cy.get('@burger-constructor').should('contain', 'Краторная булка N-200i')
-    cy.get('@burger-constructor').should('contain', 'Соус Spicy-X')
-    cy.get('@burger-constructor').should('contain', 'Protostomia')
+    cy.get('@burger-constructor').should('contain', bunIngredientTextSelector)
+    cy.get('@burger-constructor').should('contain', sauceIngredientTextSelector)
+    cy.get('@burger-constructor').should('contain', mainIngredientTextSelector)
     cy.get('@burger-constructor')
-      .contains('Protostomia')
+      .contains(mainIngredientTextSelector)
       .parent('span')
       .find('span.constructor-element__action.pr-2')
       .click()
 
     cy.get('@burger-constructor')
-      .contains('Соус Spicy-X')
+      .contains(sauceIngredientTextSelector)
       .parent('span')
       .find('span.constructor-element__action.pr-2')
       .click()
 
     // check that the ingredients are deleted
-    cy.get('@burger-constructor').should('not.contain', 'Соус Spicy-X')
-    cy.get('@burger-constructor').should('not.contain', 'Protostomia')
+    cy.get('@burger-constructor').should(
+      'not.contain',
+      sauceIngredientTextSelector
+    )
+    cy.get('@burger-constructor').should(
+      'not.contain',
+      mainIngredientTextSelector
+    )
   })
 
   it('should allow to place order with auth', () => {
     // find the specific ingredients
-    cy.contains('Краторная булка N-200i')
+    cy.contains(bunIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientBun')
       .should('exist')
 
-    cy.contains('Мясо бессмертных моллюсков Protostomia')
+    cy.contains(mainIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientMain')
       .should('exist')
 
-    cy.contains('Соус Spicy-X')
+    cy.contains(sauceIngredientTextSelector)
       .parent('div')
       .parent('li')
       .as('ingredientSauce')
       .should('exist')
 
     // check drag-and-drop them to ConstructorKit
-    cy.get('div[class*=constructor-kit_burger__]')
-      .as('burger-constructor')
-      .should('exist')
+    cy.get(burgerConstructorSelector).as('burger-constructor').should('exist')
 
     cy.get('@ingredientBun').trigger('mousedown', { which: 1 })
     cy.get('@ingredientBun').trigger('dragstart')
@@ -143,9 +155,9 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
     cy.get('@burger-constructor').trigger('dragend')
 
     // check that the ingredients are in the ConstructorKit
-    cy.get('@burger-constructor').should('contain', 'булка N-200i')
-    cy.get('@burger-constructor').should('contain', 'Соус Spicy-X')
-    cy.get('@burger-constructor').should('contain', 'Protostomia')
+    cy.get('@burger-constructor').should('contain', bunIngredientTextSelector)
+    cy.get('@burger-constructor').should('contain', sauceIngredientTextSelector)
+    cy.get('@burger-constructor').should('contain', mainIngredientTextSelector)
 
     // try to place an order (1st attempt)
     cy.contains('Оформить заказ').as('placeOrderButton').should('exist')
@@ -184,7 +196,7 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
     cy.wait('@loginRequest').then(() => {
       // try to place an order (2nd attempt)
       cy.url().should('not.include', '/login')
-      cy.contains('Оформление заказа...').should('not.exist')
+      cy.contains(loaderModalTextSelector).should('not.exist')
 
       cy.intercept('POST', `https://norma.nomoreparties.space/api/orders`, {
         statusCode: 200,
@@ -212,25 +224,29 @@ describe('Drag and Drop Ingredients in ConstructorKit', () => {
       }).as('placeOrderRequest')
 
       cy.get('@placeOrderButton').click()
-      cy.contains('Оформление заказа...')
-        .parent('div')
-        .as('orderModal')
-        .should('exist')
+      cy.contains(loaderModalTextSelector).should('exist')
 
       // wait for the response
       cy.wait('@placeOrderRequest').then(() => {
-        cy.contains('Ваш заказ начали готовить').should('exist')
+        cy.contains(orderAcceptTextSelector).should('exist')
 
-        cy.get('button[class*=modal_modal__close__]')
-          .as('closeModalButton')
-          .should('exist')
+        cy.get(modalCloseBtnSelector).as('closeModalButton').should('exist')
         cy.get('@closeModalButton').click()
-        cy.contains('Ваш заказ начали готовить').should('not.exist')
+        cy.contains(orderAcceptTextSelector).should('not.exist')
 
         // check that the ingredients are not in the ConstructorKit
-        cy.get('@burger-constructor').should('not.contain', 'булка N-200i')
-        cy.get('@burger-constructor').should('not.contain', 'Соус Spicy-X')
-        cy.get('@burger-constructor').should('not.contain', 'Protostomia')
+        cy.get('@burger-constructor').should(
+          'not.contain',
+          bunIngredientTextSelector
+        )
+        cy.get('@burger-constructor').should(
+          'not.contain',
+          sauceIngredientTextSelector
+        )
+        cy.get('@burger-constructor').should(
+          'not.contain',
+          mainIngredientTextSelector
+        )
       })
     })
   })
