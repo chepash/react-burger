@@ -44,7 +44,7 @@ export const constructorReducer = (
         }
       }
 
-      const constructorIngredients = state.constructorIngredients?.length
+      const constructorIngredients = state.constructorIngredients.length
         ? [...state.constructorIngredients, action.payload]
         : [action.payload]
       return {

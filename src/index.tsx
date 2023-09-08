@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.scss'
-import App from './components/app/app'
 import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom'
+import App from './components/app/app'
+import './index.scss'
 import { configureStore } from './services/store'
-import { BrowserRouter } from 'react-router-dom'
 
 export const store = configureStore()
 
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter basename="/">
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </React.StrictMode>
 )

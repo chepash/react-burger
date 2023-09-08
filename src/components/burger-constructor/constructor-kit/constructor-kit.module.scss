@@ -6,21 +6,29 @@
 
   height: min-content;
   max-height: 70vh;
+}
 
-  &__ingridient {
-    display: flex;
-    align-items: center;
+.ingridient {
+  display: flex;
+  align-items: center;
 
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 536px;
-    min-height: 80px;
-    padding: 0 0 0 124px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 536px;
+  min-height: 80px;
+  padding: 0 0 0 124px;
 
-    letter-spacing: 1px;
+  letter-spacing: 1px;
 
-    background: #2f2f37;
-    border-radius: 50px;
+  background: #2f2f37;
+  border-radius: 50px;
+}
+
+.target {
+  outline: 3px dashed #a05ef7;
+
+  &_hovered {
+    outline: 3px dashed #52b871;
   }
 }
 
@@ -41,6 +49,8 @@
   padding: 0;
 
   list-style: none;
+
+  border-radius: 20px;
 
   &::-webkit-scrollbar {
     width: 8px;

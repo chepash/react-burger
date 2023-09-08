@@ -71,7 +71,7 @@ export const profileReducer = (
       return {
         ...state,
         response: null,
-        error: true,
+        isError: true,
         isLoading: false,
       }
     default:

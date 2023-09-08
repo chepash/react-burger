@@ -14,14 +14,15 @@ const ConstructorKit: FC = () => {
     useSelector(getConstructorState)
   const dispatch = useDispatch()
 
-  const [, dropTargetRef] = useDrop({
-    accept: 'ingredient',
+  const [{ isOver, canDrop, draggingItemType }, dropTargetRef] = useDrop({
+    accept: ['bun', 'sauce', 'main'],
     drop(ingredient: TIngredient) {
       dispatch(addIngredientAction(ingredient))
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
+      draggingItemType: monitor.getItemType(),
     }),
   })
 
@@ -34,17 +35,25 @@ const ConstructorKit: FC = () => {
           text={`${constructorBun.name} (верх)`}
           price={constructorBun.price}
           thumbnail={constructorBun.image_mobile}
+          extraClass={cn({
+            [styles.target]: canDrop && draggingItemType === 'bun',
+            [styles.target_hovered]: isOver && draggingItemType === 'bun',
+          })}
         />
       </div>
 
       {constructorIngredients.length === 0 && (
         <div
           className={cn(
-            styles.burger__ingridient,
+            styles.ingridient,
             'text',
             'text_type_main-small',
             'ml-8',
-            'mr-4'
+            'mr-4',
+            {
+              [styles.target]: canDrop && draggingItemType !== 'bun',
+              [styles.target_hovered]: isOver && draggingItemType !== 'bun',
+            }
           )}
         >
           Добавьте ингридиенты
@@ -52,7 +61,12 @@ const ConstructorKit: FC = () => {
       )}
 
       {constructorIngredients.length > 0 && (
-        <ul className={cn(styles.list)}>
+        <ul
+          className={cn(styles.list, {
+            [styles.target]: canDrop && draggingItemType !== 'bun',
+            [styles.target_hovered]: isOver && draggingItemType !== 'bun',
+          })}
+        >
           {constructorIngredients.map((item, index) => (
             <PrimaryIngredient
               ingredientWithUUID={item}
@@ -70,6 +84,10 @@ const ConstructorKit: FC = () => {
           text={`${constructorBun.name} (низ)`}
           price={constructorBun.price}
           thumbnail={constructorBun.image_mobile}
+          extraClass={cn({
+            [styles.target]: canDrop && draggingItemType === 'bun',
+            [styles.target_hovered]: isOver && draggingItemType === 'bun',
+          })}
         />
       </div>
     </div>
