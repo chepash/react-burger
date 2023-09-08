@@ -39,16 +39,16 @@ export const formatUpdatedAtTime = (updatedAt: string): string => {
 
   if (days === 0) {
     if (today.getTime() === updatedAtDay.getTime()) {
-      return `Сегодня, ${updatedAtDate.toLocaleTimeString([], options)}`
+      return `Сегодня, ${updatedAtDate.toLocaleTimeString('en-GB', options)}`
     } else {
-      return `Вчера, ${updatedAtDate.toLocaleTimeString([], options)}`
+      return `Вчера, ${updatedAtDate.toLocaleTimeString('en-GB', options)}`
     }
   } else if (days === 1) {
-    return `Вчера, ${updatedAtDate.toLocaleTimeString([], options)}`
+    return `Вчера, ${updatedAtDate.toLocaleTimeString('en-GB', options)}`
   } else {
     return `${days} ${getDaysText(
       days
-    )} назад, ${updatedAtDate.toLocaleTimeString([], options)}`
+    )} назад, ${updatedAtDate.toLocaleTimeString('en-GB', options)}`
   }
 }
 
