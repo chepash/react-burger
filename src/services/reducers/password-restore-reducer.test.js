@@ -7,18 +7,12 @@ import {
   PWD_RESTORE_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESTORE_FORM_STATE,
 } from '../actions/password-restore-actions'
-import { passwordRestoreReducer } from './password-restore-reducer'
+import {
+  initialState,
+  passwordRestoreReducer,
+} from './password-restore-reducer'
 
 describe('passwordRestoreReducer', () => {
-  const initialState = {
-    form: {
-      email: '',
-    },
-    response: null,
-    isLoading: false,
-    isError: null,
-  }
-
   it('should return the initial state', () => {
     const newState = passwordRestoreReducer(undefined, {})
     expect(newState).toEqual(initialState)

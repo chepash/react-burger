@@ -7,20 +7,9 @@ import {
   PWD_RESET_FORM_SUBMIT_SUCCESS,
   UPDATE_PWD_RESET_FORM_STATE,
 } from '../actions/password-reset-actions'
-import { passwordResetReducer } from './password-reset-reducer'
+import { initialState, passwordResetReducer } from './password-reset-reducer'
 
 describe('passwordResetReducer', () => {
-  const initialState = {
-    form: {
-      password: '',
-      token: '',
-    },
-    response: null,
-    isLoading: false,
-    isError: null,
-    isPasswordVisible: false,
-  }
-
   it('should return the initial state', () => {
     const newState = passwordResetReducer(undefined, {})
     expect(newState).toEqual(initialState)

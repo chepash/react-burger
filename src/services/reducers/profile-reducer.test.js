@@ -6,20 +6,9 @@ import {
   PROFILE_FORM_SUBMIT_SUCCESS,
   UPDATE_PROFILE_FORM_STATE,
 } from '../actions/profile-actions'
-import { profileReducer } from './profile-reducer'
+import { initialState, profileReducer } from './profile-reducer'
 
 describe('profileReducer', () => {
-  const initialState = {
-    form: {
-      name: '',
-      email: '',
-      password: '',
-    },
-    response: null,
-    isLoading: false,
-    isError: null,
-  }
-
   it('should return the initial state', () => {
     const newState = profileReducer(undefined, {})
     expect(newState).toEqual(initialState)

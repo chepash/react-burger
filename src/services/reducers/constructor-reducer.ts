@@ -13,7 +13,7 @@ export type TConstructorState = {
   constructorBun: TIngredient
 }
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   constructorIngredients: [],
   constructorBun: {
     _id: '',

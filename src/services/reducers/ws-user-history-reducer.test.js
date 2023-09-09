@@ -5,16 +5,9 @@ import {
   WS_USER_HISTORY_CONNECTION_SUCCESS,
   WS_USER_HISTORY_GET_MESSAGE,
 } from '../actions/ws-user-history-actions'
-import { wsUserHistoryReducer } from './ws-user-history-reducer'
-describe('wsUserHistoryReducer', () => {
-  const initialState = {
-    wsConnected: false,
-    orders: [],
-    total: 0,
-    totalToday: 0,
-    error: null,
-  }
+import { initialState, wsUserHistoryReducer } from './ws-user-history-reducer'
 
+describe('wsUserHistoryReducer', () => {
   it('should return the initial state', () => {
     const newState = wsUserHistoryReducer(undefined, {})
     expect(newState).toEqual(initialState)

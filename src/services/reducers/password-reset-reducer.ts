@@ -20,7 +20,7 @@ type TPasswordResetState = {
   isPasswordVisible: boolean
 }
 
-const initialState: TPasswordResetState = {
+export const initialState: TPasswordResetState = {
   form: {
     password: '',
     token: '',

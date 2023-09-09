@@ -6,20 +6,9 @@ import {
   LOGIN_FORM_SUBMIT_SUCCESS,
   UPDATE_LOGIN_FORM_STATE,
 } from '../actions/login-actions'
-import { loginReducer } from './login-reducer'
+import { loginReducer, initialState } from './login-reducer'
 
 describe('loginReducer', () => {
-  const initialState = {
-    form: {
-      email: '',
-      password: '',
-    },
-    response: null,
-    isLoading: false,
-    isError: null,
-    redirectPath: '',
-  }
-
   it('should return the initial state', () => {
     const newState = loginReducer(undefined, {})
     expect(newState).toEqual(initialState)

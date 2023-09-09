@@ -1,34 +1,15 @@
-import defaultBun from '../../images/default-bun.svg'
 import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   EMPTY_CONSTRUCTOR,
   MOVE_INGREDIENT,
 } from '../actions/constructor-actions'
-import { constructorReducer } from './constructor-reducer'
+import { constructorReducer, initialState } from './constructor-reducer'
 
 describe('constructorReducer', () => {
-  const initialState = {
-    constructorIngredients: [],
-    constructorBun: {
-      _id: '',
-      name: 'Добавьте булку',
-      type: 'bun',
-      proteins: 0,
-      fat: 0,
-      carbohydrates: 0,
-      calories: 0,
-      price: 0,
-      image: defaultBun,
-      image_mobile: defaultBun,
-      image_large: defaultBun,
-      __v: 0,
-    },
-  }
-
   it('should return the initial state', () => {
     const newState = constructorReducer(undefined, {})
-    expect(newState).toEqual(initialState)
+    expect(newState).toEqual()
   })
 
   it('should handle ADD_INGREDIENT for bun', () => {

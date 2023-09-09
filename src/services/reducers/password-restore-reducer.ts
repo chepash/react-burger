@@ -18,7 +18,7 @@ type TPasswordRestoreState = {
   isError: boolean | null
 }
 
-const initialState: TPasswordRestoreState = {
+export const initialState: TPasswordRestoreState = {
   form: {
     email: '',
   },

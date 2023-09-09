@@ -17,7 +17,7 @@ type TUserHistoryReducerState = {
   error: Event | null
 }
 
-const initialState: TUserHistoryReducerState = {
+export const initialState: TUserHistoryReducerState = {
   wsConnected: false,
   orders: [],
   total: 0,

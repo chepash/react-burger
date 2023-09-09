@@ -21,7 +21,7 @@ type TModalState = {
   isErrorModalOpen: boolean
 }
 
-const initialState: TModalState = {
+export const initialState: TModalState = {
   currentIngredient: null,
   isIngredientModalOpen: false,
 

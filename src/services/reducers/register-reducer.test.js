@@ -6,20 +6,9 @@ import {
   REGISTER_FORM_SUBMIT_SUCCESS,
   UPDATE_REGISTER_FORM_STATE,
 } from '../actions/register-actions'
-import { registerReducer } from './register-reducer'
+import { initialState, registerReducer } from './register-reducer'
 
 describe('registerReducer', () => {
-  const initialState = {
-    form: {
-      name: '',
-      email: '',
-      password: '',
-    },
-    response: null,
-    isLoading: false,
-    isError: null,
-  }
-
   it('should return the initial state', () => {
     const newState = registerReducer(undefined, {})
     expect(newState).toEqual(initialState)

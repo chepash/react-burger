@@ -6,20 +6,9 @@ import {
   SET_IS_ORDER_DETAILS_MODAL_OPEN,
   SET_IS_PLACED_NEW_ORDER_MODAL_OPEN,
 } from '../actions/modal-actions'
-import { modalReducer } from './modal-reducer'
+import { initialState, modalReducer } from './modal-reducer'
 
 describe('modalReducer', () => {
-  const initialState = {
-    currentIngredient: null,
-    isIngredientModalOpen: false,
-
-    currentOrderDetails: null,
-    isOrderDetailsModalOpen: false,
-
-    isPlacedNewOrderModalOpen: false,
-    isErrorModalOpen: false,
-  }
-
   it('should return the initial state', () => {
     const newState = modalReducer(undefined, {})
     expect(newState).toEqual(initialState)

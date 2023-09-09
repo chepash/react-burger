@@ -10,25 +10,9 @@ import {
   SET_IS_LOGGED_IN,
   SET_USER_DATA,
 } from '../actions/user-actions'
-import { userReducer } from './user-reducer'
+import { initialState, userReducer } from './user-reducer'
 
 describe('userReducer', () => {
-  const initialState = {
-    user: {
-      name: '',
-      email: '',
-    },
-    isLoggedIn: false,
-
-    getUserResponse: null,
-    isGetUserDataError: null,
-
-    logoutResponse: null,
-    isLogoutError: null,
-
-    isLoading: false,
-  }
-
   it('should return the initial state', () => {
     const newState = userReducer(undefined, {})
     expect(newState).toEqual(initialState)

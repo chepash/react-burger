@@ -4,19 +4,9 @@ import {
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_GET_MESSAGE,
 } from '../actions/ws-feed-actions'
-import { wsFeedReducer } from './ws-feed-reducer'
+import { initialState, wsFeedReducer } from './ws-feed-reducer'
 
 describe('wsFeedReducer', () => {
-  const initialState = {
-    wsConnected: false,
-
-    orders: [],
-    total: 0,
-    totalToday: 0,
-
-    error: null,
-  }
-
   it('should return the initial state', () => {
     const newState = wsFeedReducer(undefined, {})
     expect(newState).toEqual(initialState)

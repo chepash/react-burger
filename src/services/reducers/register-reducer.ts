@@ -20,7 +20,7 @@ type TRegisterState = {
   isError: boolean | null
 }
 
-const initialState: TRegisterState = {
+export const initialState: TRegisterState = {
   form: {
     name: '',
     email: '',

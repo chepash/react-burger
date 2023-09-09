@@ -17,7 +17,7 @@ type TFeedReducerState = {
   error: Event | null
 }
 
-const initialState: TFeedReducerState = {
+export const initialState: TFeedReducerState = {
   wsConnected: false,
 
   orders: [],

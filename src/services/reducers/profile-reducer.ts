@@ -20,7 +20,7 @@ type TProfileState = {
   isError: boolean | null
 }
 
-const initialState: TProfileState = {
+export const initialState: TProfileState = {
   form: {
     name: '',
     email: '',

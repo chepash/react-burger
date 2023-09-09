@@ -25,7 +25,7 @@ type TUserState = {
   isLoading: boolean
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: {
     name: '',
     email: '',
