@@ -9,7 +9,7 @@ import { constructorReducer, initialState } from './constructor-reducer'
 describe('constructorReducer', () => {
   it('should return the initial state', () => {
     const newState = constructorReducer(undefined, {})
-    expect(newState).toEqual()
+    expect(newState).toEqual(initialState)
   })
 
   it('should handle ADD_INGREDIENT for bun', () => {
