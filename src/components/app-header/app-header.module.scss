@@ -21,6 +21,10 @@
     align-items: center;
     justify-content: center;
   }
+
+  @media screen and (width >= 1920px) {
+    border-radius: 0 0 50px 50px;
+  }
 }
 
 .list {
